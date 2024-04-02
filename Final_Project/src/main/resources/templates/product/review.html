@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/img/fProLogo.png" />
+<title>리뷰</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<style type="text/css">
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+	min-width: 880px;
+	margin: 0 16.2vw;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* header */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+/*  상단 보여주기 별점 */
+.container {
+	font-family: 'NanumSquareNeo-Variable';
+	font-size: 23px;
+	display: flex;
+	border: 1px solid #32B43A;
+}
+
+.header {
+	display: flex;
+	flex: 1;
+}
+
+#ratingDisplay {
+	font-size: 25px;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.left-section1 {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	margin: auto;
+	border-right: none;
+}
+
+.left-section1 h2 {
+	margin-bottom: 10px;
+}
+
+.left-section1 span {
+	margin-bottom: 10px;
+}
+
+/* 구매만족도 아래 별점  */
+/* 라디오 버튼 숨기기 */
+input[type="radio"] {
+	display: none;
+}
+
+/* 선택되지 않은 라디오 버튼의 라벨 스타일 */
+label {
+	font-family: 'NPSfontBold';
+	display: inline-block;
+	padding: 5px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.sort-options {
+	font-family: 'NPSfontBold';
+	display: flex;
+	justify-content: right;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	white-space: nowrap;
+}
+
+.sort-options label {
+	border: 1px solid #32B43A;
+}
+
+.totalCount {
+	display: flex;
+	flex: 1;
+	margin-left: 9rem;
+	margin-top: 0.4rem;
+}
+
+/* 선택된 라디오 버튼의 라벨 스타일 */
+input[type="radio"]:checked+label {
+	color: #32B43A;
+}
+
+.star-rating {
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+}
+
+.star {
+	font-size: 3.5rem;
+	margin: 0;
+	color: #ccc;
+	cursor: pointer;
+	display: flex;
+}
+
+/* 별점이 선택된 경우의 스타일 */
+.star-rating input:checked+label.star {
+	color: gold; /* 별 색상 변경 */
+}
+
+input[id="star1"]:checked ~.star, input[id="star2"]:checked ~.star,
+	input[id="star3"]:checked ~.star, input[id="star4"]:checked ~.star,
+	input[id="star5"]:checked ~.star {
+	color: gold;
+}
+
+/* 구매만족도 오른쪽 줄 */
+.board {
+	border: 1px solid #32B43A;
+}
+
+/*  평점 비율  */
+.right-section1 {
+	border-left: none;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.bar-graph {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column-reverse; /* 그래프 바를 세로로 나열하고 역순으로 표시합니다. */
+	align-items: flex-start; /* 그래프를 왼쪽에 배치합니다. */
+}
+
+.bar {
+	font-size: 15px;
+	margin-bottom: 10px;
+	position: relative;
+	background-color: #32B43A;
+	margin-right: 10px;
+	height: 20px;
+}
+
+.bar span {
+	z-index: 1;
+	position: absolute;
+	left: -40px;
+	text-align: center;
+	padding: 0.3rem;
+	white-space: nowrap; /* 텍스트가 그래프 바를 넘어가지 않도록 합니다. */
+}
+
+/* 아래 별 */
+.star-rating-1, .star-rating-2 {
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+	font-size: 1.2rem;
+	justify-content: center;
+	padding: 0 0.2rem;
+	text-align: center;
+	width: 10rem;
+}
+
+.star-1, .star-2 {
+	width: 1.5rem;
+	font-size: 1rem;
+	margin: 0;
+	margin-right: 0.5rem;
+	cursor: pointer;
+	display: flex;
+	border-color: transparent;
+}
+
+.star-rating-1 input, .star-rating-2 input {
+	display: none;
+}
+
+.star-rating-1 label, .star-rating-2 label {
+	color: transparent;
+	-webkit-text-stroke-width: 0.05rem;
+	-webkit-text-stroke-color: black;
+	cursor: pointer;
+}
+
+.star-rating-1 input:checked ~ label, .star-rating-2 input:checked ~
+	label {
+	-webkit-text-fill-color: gold;
+}
+
+#ratingDisplay-1, #ratingDisplay-2 {
+	font-family: 'NPSfontBold';
+	font-size: 1rem;
+	text-align: center;
+}
+
+.review {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.left-section2 {
+	flex: 0.5; /* 왼쪽 섹션이 가변 너비를 가지도록 설정 */
+	text-align: center;
+}
+
+.grade {
+	font-family: 'NPSfontBold';
+	font-size: 18px;
+	border: 1px solid #32B43A;
+	padding: 0.3rem;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	width: 3.5rem;
+	margin-left: 3.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.reviewer {
+	font-family: 'NPSfontBold';
+	text-align: center;
+	font-size: 1.2rem;
+	margin-bottom: 5px;
+}
+
+.center-section {
+	flex: 3; /* 중앙 섹션이 왼쪽 섹션보다 넓도록 설정 */
+	padding: 0 20px; /* 가운데 여백 */
+}
+
+.product-name {
+	font-family: 'NPSfontBold';
+	font-size: 1.5rem;
+	margin-bottom: 5px;
+}
+
+.review-content {
+	font-family: 'NPSfontBold';
+	font-size: 1rem;
+	margin-top: 1rem;
+}
+
+.vertical-line {
+	border-left: 1px solid #32B43A;
+}
+
+.review-img {
+	margin-top: 1rem;
+	width: 8rem;
+}
+
+.write-date {
+	font-family: 'NPSfontBold';
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	margin-top: 0.5rem;
+}
+
+.recommend {
+	font-family: 'NPSfontBold';
+	font-size: 17px;
+	text-align: center;
+	width: 6rem;
+	height: 2rem;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 5rem;
+	background-color: #32B43A;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.recommend:hover {
+	opacity: 75%;
+}
+</style>
+</head>
+<body>
+	<section class="reviews">
+		<div class="container">
+			<div class="header">
+				<div class="left-section1">
+					<h2 class="review-title">구매 만족도</h2>
+					<span id="ratingDisplay">0</span>
+					<div class="left-section1 star-rating">
+						<input type="radio" id="star5" name="rating" value="5"> <label
+							for="star5" class="star">★</label> <input type="radio" id="star4"
+							name="rating" value="4"> <label for="star4" class="star">★</label>
+						<input type="radio" id="star3" name="rating" value="3"> <label
+							for="star3" class="star">★</label> <input type="radio" id="star2"
+							name="rating" value="2"> <label for="star2" class="star">★</label>
+						<input type="radio" id="star1" name="rating" value="1"> <label
+							for="star1" class="star">★</label>
+					</div>
+				</div>
+				<div class="board"></div>
+				<div class="right-section1">
+					<h2 class="review-title">평점 비율</h2>
+					<div class="bar-graph">
+						<div class="bar" data-width="30" style="width: 30px;">
+							<span>1점</span>
+						</div>
+						<div class="bar" data-width="50" style="width: 50px;">
+							<span>2점</span>
+						</div>
+						<div class="bar" data-width="100" style="width: 100px;">
+							<span>3점</span>
+						</div>
+						<div class="bar" data-width="180" style="width: 180px;">
+							<span>4점</span>
+						</div>
+						<div class="bar" data-width="250" style="width: 250px;">
+							<span>5점</span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="sort-options">
+			<span class="totalCount" th:text = "'총 '+${count}+' 건'"></span> <input type="radio"
+				id="recommend" name="sort" value="recommend" checked> <label
+				for="recommend">추천순</label> <input type="radio" id="newlist"
+				name="sort" value="highToLow"> <label for="newlist">최신순</label>
+			<input type="radio" id="highToLow" name="sort" value="highToLow">
+			<label for="highToLow">평점 높은순</label> <input type="radio"
+				id="lowToHigh" name="sort" value="lowToHigh"> <label
+				for="lowToHigh">평점 낮은순</label>
+		</div>
+
+		<div class="review">
+			<div class="left-section2" th:each="review : ${reviewList}">
+				<div class="grade" th:text="${review.customer.customerShip}"></div>
+				<div class="reviewer" th:text="${review.customer.customerName}"></div>
+				<span id="ratingDisplay-1" th:text="${review.rating}"></span>
+				<div class="star-rating-1" data-rating="5">
+					<input type="radio" id="star5-1" name="rating" value="5"> <label
+						for="star5-1" class="star-1">★</label> <input type="radio"
+						id="star4-1" name="rating" value="4"> <label for="star4-1"
+						class="star-1">★</label> <input type="radio" id="star3-1"
+						name="rating" value="3"> <label for="star3-1"
+						class="star-1">★</label> <input type="radio" id="star2-1"
+						name="rating" value="2"> <label for="star2-1"
+						class="star-1">★</label> <input type="radio" id="star1-1"
+						name="rating" value="1"> <label for="star1-1"
+						class="star-1">★</label>
+				</div>
+			</div>
+			<div class="vertical-line">
+				<div class="center-section" th:each="review : ${reviewList}">
+					<div class="product-name" th:text="${review.product.productName + ' ' + review.product.weight}"></div>
+					<div class="review-content" th:text="${review.reviewContent}">
+						 <br> 
+						 <img class="review-img" th:src="@{${review.product.imageURL}}" alt="사진">
+						<div class="write-date">
+							<span class="createAt" th:text="${#temporals.format(review.reviewTime,'yyyy.MM.dd. HH:mm:ss')}"></span>
+							<button class="recommend">
+								추천 &nbsp; <span class="recommend-count" th:text="${review.recommend}"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 	<div class="review">
+			<div class="left-section2">
+				<div class="grade">일반</div>
+				<div class="reviewer">박**</div>
+				<span id="ratingDisplay-2" th:text="${reviewList.rating}"></span>
+				<div class="star-rating-2" data-rating="4">
+					<input type="radio" id="star5-2" name="rating" value="5"> <label
+						for="star5-2" class="star-2">★</label> <input type="radio"
+						id="star4-2" name="rating" value="4"> <label for="star4-2"
+						class="star-2">★</label> <input type="radio" id="star3-2"
+						name="rating" value="3"> <label for="star3-2"
+						class="star-2">★</label> <input type="radio" id="star2-2"
+						name="rating" value="2"> <label for="star2-2"
+						class="star-2">★</label> <input type="radio" id="star1-2"
+						name="rating" value="1"> <label for="star1-2"
+						class="star-2">★</label>
+				</div>
+			</div>
+			<div class="vertical-line">
+				<div class="center-section" th:each="review : ${reviewList}">
+					<div class="product-name" th:text="${review.product.productName + ' ' + review.product.weight}"></div>
+					<div class="review-content" th:text="${review.reviewContent}">
+						 <br> 
+						 <img class="review-img" th:src="@{${review.product.imageURL}}" alt="사진">
+						<div class="write-date">
+							<span class="createAt" th:text="${#temporals.format(review.reviewTime,'yyyy.MM.dd. HH:mm:ss')}"></span>
+							<button class="recommend">
+								추천 &nbsp; <span class="recommend-count" th:text="${review.recommend}"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+	</section>
+</body>
+<script>
+$(document).ready(function () {
+
+    // 별점 리뷰 페이지에서 각 리뷰 영역의 별점을 가져와서 평균을 계산하는 함수
+    function calculateAverageRating() {
+        let totalRating = 0;
+        let reviewCount = 0;
+
+        // ratingDisplay-1과 ratingDisplay-2에서 각각의 별점을 가져와서 합산합니다.
+        $('#ratingDisplay-1, #ratingDisplay-2').each(function () {
+            totalRating += parseInt($(this).text());
+            reviewCount++;
+        });
+
+        if (reviewCount > 0) {
+            const averageRating = totalRating / reviewCount;
+            return averageRating.toFixed(1); // 평균을 소수점 첫째 자리까지 표시합니다.
+        } else {
+            return 0;
+        }
+    }
+
+    // 평균 별점을 계산하고 화면에 표시합니다.
+    function displayAverageRating() {
+        const averageRating = calculateAverageRating();
+        $('#ratingDisplay').text(averageRating);
+    }
+
+    // 페이지가 로드될 때 평균 별점을 계산하고 표시합니다.
+    displayAverageRating();
+
+    // 총 리뷰 개수를 업데이트하는 함수
+    function updateTotalCount() {
+        const totalCount = $('.review').length;
+        $('.totalCount').text('총 ' + totalCount + ' 건');
+    }
+
+    // 페이지가 로드될 때 총 리뷰 개수를 업데이트합니다.
+    updateTotalCount();
+
+    // 리뷰가 추가될 때마다 총 리뷰 개수를 업데이트합니다.
+    $('.reviews').on('DOMNodeInserted', function () {
+        updateTotalCount();
+    });
+
+    // 추천순
+    $('#recommend').click(function () {
+        // 리뷰를 그대로 유지하면서 추천순으로 정렬합니다.
+        $('.reviews').append($('.review').get().sort(function (a, b) {
+            return parseInt($(b).find('.recommend-count').text()) - parseInt($(a).find('.recommend-count').text());
+        }));
+    });
+    // 최신 날짜순
+    $('#newlist').click(function () {
+        // 리뷰를 그대로 유지하면서 최신 날짜 순으로 정렬합니다.
+        $('.reviews').append($('.review').get().sort(function (a, b) {
+            return new Date($(b).find('.createAt').text()) - new Date($(a).find('.createAt').text());
+        }));
+    });
+    
+ // 별점 높은순 버튼 클릭 시
+    $('#highToLow').click(function () {
+        sortReviews('highToLow');
+    });
+
+    // 평점 낮은순 버튼 클릭 시
+    $('#lowToHigh').click(function () {
+        sortReviews('lowToHigh');
+    });
+
+    // 리뷰를 정렬하는 함수
+    function sortReviews(sortType) {
+        // 리뷰 요소들을 배열로 가져옵니다.
+        var reviews = $('.review').get();
+
+        // 정렬 방식에 따라 리뷰를 정렬합니다.
+        reviews.sort(function (a, b) {
+            var ratingA = parseInt($(a).find('.star-rating-1 input:checked').val());
+            var ratingB = parseInt($(b).find('.star-rating-1 input:checked').val());
+
+            if (sortType === 'highToLow') {
+                return ratingB - ratingA;
+            } else if (sortType === 'lowToHigh') {
+                return ratingA - ratingB;
+            }
+        });
+
+        // 정렬된 리뷰를 다시 화면에 추가합니다.
+        $('.reviews').empty();
+        $.each(reviews, function(index, element) {
+            $('.reviews').append(element);
+        });
+    }
+
+
+
+    // 추천버튼
+    $('.recommend').each(function () {
+        let countElement = $(this).find('.recommend-count');
+        let count = parseInt(countElement.text());
+
+        $(this).on('click', function () {
+            let isRecommended = $(this).hasClass('recommended');
+
+            if (isRecommended) {
+                count--;
+            } else {
+                count++;
+            }
+            isRecommended = !isRecommended;
+            $(this).toggleClass('recommended', isRecommended);
+            countElement.text(count);
+        });
+    });
+});
+
+// 별점 표시를 업데이트하는 함수
+function updateStarRating(ratingDisplayId, ratingValue) {
+    let starsContainer = document.getElementById(ratingDisplayId).nextElementSibling;
+    let stars = starsContainer.querySelectorAll('.star');
+
+    // 선택된 별점에 해당하는 별들을 색칠하고, 나머지는 회색으로 변경
+    stars.forEach((star, index) => {
+        if (index < ratingValue) {
+            star.style.color = 'gold';
+        } else {
+            star.style.color = '#ccc';
+        }
+    });
+}
+</script>
+</html>

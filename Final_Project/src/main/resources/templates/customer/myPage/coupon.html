@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<!--xeicon 아이콘 -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<!--  구글 폰트 아이콘 -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<title>쿠폰함</title>
+</head>
+<style>
+/* 기본세팅 코드 */
+/* 폰트 */
+/* header */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+/* 좌우 마진 */
+body {
+	margin: 0 16.2vw;
+	min-width: 880px;
+}
+
+/* 쿠폰창 위에 */
+section {
+	margin-top: 1rem;
+}
+
+/* 쿠폰창 위에 */
+section a {
+	text-decoration: none;
+	color: #32b43a;
+}
+
+.xi-coupon {
+	color: rgb(157, 156, 156);
+}
+
+section:first-child {
+	border: 1px solid rgb(232, 231, 231);
+	border-radius: 8px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px;
+}
+
+.seperator {
+	font-size: 200%;
+	opacity: 0.2;
+	padding-bottom: 10px;
+}
+
+/* 쿠폰창 바디 */
+#wrapTab {
+	display: flex;
+	justify-content: space-between;
+	/* 요소들을 좌우로 분산 배치 */
+	align-items: center;
+	/* 요소들을 수직 가운데 정렬 */
+	border-bottom: 2px solid gray;
+}
+
+/* 쿠폰창 위에 */
+section a {
+	text-decoration: none;
+	color: #32b43a;
+}
+
+.xi-coupon {
+	color: rgb(157, 156, 156);
+}
+
+section:first-child {
+	border: 1px solid rgb(232, 231, 231);
+	border-radius: 8px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px;
+}
+
+.seperator {
+	font-size: 200%;
+	opacity: 0.2;
+	padding-bottom: 10px;
+}
+
+/* 쿠폰창 바디 */
+#wrapTab {
+	display: flex;
+	justify-content: space-between;
+	/* 요소들을 좌우로 분산 배치 */
+	align-items: center;
+	border-bottom: 2px solid gray;
+}
+
+#usetab, #oldtab {
+	border: 2px solid gray;
+	border-bottom: none;
+	text-align: center;
+	padding: 10px;
+	flex-shrink: 0;
+}
+
+#oldtab {
+	border-left: none;
+}
+
+#searchBar {
+	display: flex;
+	align-items: center;
+	padding: 0.3rem;
+	flex: 1;
+	overflow: hidden;
+}
+
+#searchBar input {
+	margin-left: auto;
+	margin-right: 5px;
+	width: 150px;
+	outline: none;
+}
+
+#searchBar button {
+	white-space: nowrap;
+}
+
+/* 쿠폰 목록 위 */
+#item_wrap li {
+	list-style-type: disc;
+	list-style-position: inside;
+	font-family: 'NanumSquareNeo-Variable';
+	padding: 0.5rem 0;
+}
+
+.item_wrap_2 {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.5rem;
+	margin-right: 5px;
+}
+
+/* 쿠폰 목록 */
+.coupont {
+	width: 100%;
+	/* 전체 너비를 가짐 */
+	border-collapse: collapse;
+	margin-top: 5px;
+	align-items: center;
+}
+
+.coupont th, .coupont td {
+	padding: 10px;
+	/* 셀 내부 여백 설정 */
+	text-align: center;
+	/* 셀 내부 텍스트 가운데 정렬 */
+	border: 1px solid #000;
+}
+
+.coupont__info, .coupont td:first-child {
+	
+}
+
+.coupont__price, .coupont td:last-child {
+	
+}
+
+/* 쿠폰 내역이 없는 부분을 전체 가로 영역을 차지하도록 설정 */
+.coupont td[colspan="4"] {
+	border: 1px solid #000;
+	width: 100%;
+}
+
+/* page 처리 */
+.page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	list-style: none;
+	padding: 0;
+	margin-top: 20px;
+	list-style: none
+}
+
+.page li {
+	display: inline;
+}
+
+.page li a {
+	display: inline-block;
+	padding: 5px 10px;
+	margin-right: 5px;
+	text-decoration: none;
+	color: #32b43a;
+	border: 1px solid #32b43a;
+	border-radius: 3px;
+}
+
+.page li a:last-child {
+	margin-right: 10px;
+}
+
+.page li a:hover {
+	background-color: #f0f0f0;
+}
+
+.page li.disabled a {
+	pointer-events: none;
+	background-color: #eee;
+	color: gray;
+	border-color: gray;
+}
+
+/* 쿠폰 유의사항 */
+.detail {
+	margin-top: 20px;
+	background-color: #f5f5f5;
+}
+
+.detail ul {
+	list-style: disc;
+	list-style-position: inside;
+	padding: 5px 0;
+}
+
+.detail ul li {
+	font-family: 'NanumSquareNeo-Variable';
+	line-height: 1.2;
+}
+
+.detail ul li b {
+	font-family: 'NPSfontBold';
+	margin-right: 5px;
+}
+
+/*  쿠폰 등록 창 커서 */
+.coupon1 {
+	cursor: pointer;
+}
+</style>
+<body>
+	<div class="coupon__title">
+		<section>
+			<p class="coupon">
+				<i class="xi-coupon"></i> <span style="font-family: 'NPSfontBold';">총
+					보유 쿠폰</span><br> <br> <strong><span th:text="${count}"></span></strong><span>장</span>
+			</p>
+			<div class="seperator">|</div>
+			<p class="coupon1">
+				<span>다른 쿠폰이 있으신가요?</span> <br> <br> <a
+					onclick="loadFragment2('registerCoupon')">쿠폰 등록 ></a>
+			</p>
+		</section>
+	</div>
+	<section>
+		<div id="wrapTab">
+			<a href="#" id="usetab" onclick="openTab('current',0)">사용가능한 쿠폰</a> <a
+				id="oldtab" href="#" onclick="openTab('yet',0)">지난 쿠폰 내역</a>
+			<div id="searchBar">
+				<input type="text" id="searchBar__input" placeholder="쿠폰번호(한글기입불가!)"
+					oninput="this.value = this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '')">
+				<button type="button" id="searchButton" onclick="searchCoupon()">검색</button>
+			</div>
+		</div>
+		<div id="item_wrap">
+			<ul>
+				<li><strong th:text="${name}"></strong>님께서 보유하고 있는 쿠폰입니다.</li>
+
+			</ul>
+			<div class="item_wrap_2">
+				<select id="select">
+					<option value="deadline">기한임박순</option>
+					<option value="current">최근등록순</option>
+				</select>
+				<button type="submit" onclick="sortBy()">이동</button>
+			</div>
+		</div>
+		<div>
+			<table id="couponTable" class="coupont">
+			<thead>
+				<tr>
+					<th class="coupont__number">쿠폰번호</th>
+					<th class="coupont__name">쿠폰내용</th>
+					<th style="color: crimson;" class="coupont__deadline">쿠폰기한</th>
+					<th style="color: crimson;" class="coupont__price">할인금액</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:if="${#lists.isEmpty(coupon)}">
+					<td colspan="5">보유하고 계신 쿠폰 내역이 없습니다.</td>
+				</tr>
+				<tr th:each="list : ${coupon}">
+					<td th:text="${list.code}"></td>
+					<td th:text="${list.message}"></td>
+					<td style="color: crimson;"
+						th:text="${#temporals.format(list.deadlineDate,'yyyy.MM.dd. HH:mm:ss')}"></td>
+					<td style="color: crimson;" th:text="${list.discount}"></td>
+				</tr>
+				</tbody>
+			</table>
+			
+			<ul class="page">
+				<li style="margin-right: 10px;"><a
+					th:if="${page.hasPrevious()}"
+					th:onclick="'loadFragment2(\'coupon\', ' + (${page.number - 1}) + ')'"
+					href="#">&laquo;</a></li>
+
+
+
+				<li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
+					<a th:onclick="'loadFragment2(\'coupon\', ' + ${i} + ')'"
+					th:text="${i + 1}"></a>
+				</li>
+
+
+				<li><a th:if="${page.hasNext()}"
+					th:onclick="'loadFragment2(\'coupon\', ' + (${page.number + 1}) + ')'"
+					href="#">&raquo;</a></li>
+			</ul>
+
+		</div>
+		<div class="detail">
+			<ul>
+				<li><b>할인쿠폰</b>:히히히히히</li>
+				<li><b>중복쿠폰</b>:호호호호</li>
+				<li><b>장바구니쿠폰</b>:아아아아아</li>
+				<li><b>배송쿠폰</b>:ㅋㅋㅋㅋㅋㅋ</li>
+				<li><b>상품증정권</b>:하이하이하이</li>
+				<li><b>할인쿠폰</b>:하히이이이이히히힣</li>
+			</ul>
+		</div>
+	</section>
+	<script>
+		
+	</script>
+</body>
+</html>

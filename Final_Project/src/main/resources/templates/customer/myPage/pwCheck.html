@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+.pwContainer {
+	margin: 0 auto;
+	padding: 30px 10px;
+}
+
+.pwh3 {
+	margin-bottom: 20px;
+	text-align: center;
+	font-family: 'NanumSquareNeo-Variable';	
+}
+
+.pwtab th {
+	padding: 10px 25px;
+	text-align: left;
+	background-color: #FBFBFB;
+	font-family: 'NanumSquareNeo-Variable';	
+	text-align: right;
+}
+
+.pwtab td {
+	padding: 15px 0px 15px 15px;
+	width: 60%;
+	font-family: 'NanumSquareNeo-Variable';	
+}
+
+.pwtab {
+	width: 35%;
+	border: 2px solid gray;
+	min-width: 375px;
+}
+
+.short {
+	padding: 0px 10px;
+	outline: none;
+	font-size: 16px;
+	width: 70%;
+	height: 31px;
+}
+
+.btnBox {
+	text-align: center;
+}
+
+#signUpBtn {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	border: 1px solid black;
+	padding: 5px 10px;
+	border-radius: 6px;
+	font-family: 'NanumSquareNeo-Variable';	
+}
+
+.tabdiv {
+	display: flex;
+	justify-content: center;
+}
+
+.pwh1 {
+	font-size: 30px;
+	font-family: 'NPSfontBold';
+}
+
+.pwContainer__fdiv {
+	display: flex;
+	align-items: flex-end;
+	min-width: 510px;
+}
+
+#pwp {
+	font-size: 0.8rem;
+	font-family: 'NanumSquareNeo-Variable';
+}
+</style>
+
+</head>
+<body>
+    <div class="pwContainer">
+        <div class="pwContainer__fdiv">
+            <h1 class="pwh1">개인 정보 변경</h1>
+            <p id="pwp">고객님의 개인정보보호를 위해 최선을 다하겠습니다.</p>
+        </div>
+        <hr>
+        <h3 class="pwh3">고객님의 개인정보 보호를 위해 본인확인을 진행합니다.</h3>
+        <h3 class="pwh3">쇼핑몰 비밀번호를 입력해주세요.</h3>
+        <div class="tabdiv">
+            <table class="pwtab">
+                <tr>
+                    <th>비밀번호확인</th>
+                    <td><input type="password" class="short" id="pwCheck">
+                        <button id="signUpBtn" onclick="checkPw()">확인</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+
+
+</script>
+</html>

@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+.tabs {
+  display: flex;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+}
+
+.tab:hover {
+  background-color: #f0f0f0;
+}
+
+.accordion-content {
+  display: none;
+}
+
+.accordion-content.active {
+  display: block;
+}
+
+.accordion-content.active h4 {
+  display: block;
+}
+
+/* .accordion-content.active p {
+  display: none;
+} */
+
+.accordion-content h4 {
+  display: none;
+} 
+
+.accordion-content p {
+  display: block;
+} 
+
+.accordion-content p {
+  display: block;
+}
+
+.accordion-content.active p {
+  display: block;
+}
+
+.accordion-content.collapsed h2::after{
+  content: '\25BC';}

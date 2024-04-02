@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+.loginSection {
+	font-family: 'NanumSquareNeo-Variable';
+	margin: auto;
+	width: 40%;
+	border-radius: 5px;
+	text-align: center;
+	padding: 20px;
+	min-width: 370px;
+}
+
+#logh1 {
+	font-family: 'NPSfontBold';
+}
+
+.loginbody {
+	min-width: 880px;
+}
+
+.loginp {
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: 1px solid gray;
+	min-width: 160px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.in {
+	margin-bottom: 5px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#btn {
+	background-color: #32B43A;
+	color: white;
+	grid-row: span 2;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+
+.button-container {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.hbutton {
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	background-color: transparent;
+	cursor: pointer;
+	width: 200px;
+	min-width: 127px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.hbutton:first-child {
+	border: none;
+	background-color: #32B43A;
+	color: white;
+}
+
+#loginBox {
+	display: grid;
+	grid-template-columns: 1.7fr 1fr;
+	gap: 10px;
+}
+.s{
+	text-decoration: none;
+	color: inherit;
+}
+.loginImg{
+	height: 45px;
+	margin-top: 15px;
+	width: 300px;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body class="loginbody">
+	<section class="loginSection">
+		<h1 id="logh1">회원 로그인</h1>
+		<br>
+		<form action="/customer/login" method="post">
+			<div id="loginBox">
+				<input type="text" placeholder="아이디" class="in loginp" name="customerId"> <input
+					type="submit" id="btn" value="로그인" class="loginp"> <input
+					type="password" placeholder="비밀번호" class="in loginp" name="customerPw">
+			</div>
+		</form>
+		<hr>
+		<div class="button-container">
+			<button class="hbutton" onclick="signUpPage()">회원가입</button>
+			<button class="hbutton" id="findIdButton"
+	 onclick="window.open('/customer/findId','아이디찾기','width=550,height=600,location=no,status=no,scrollbars=yes');">아이디 찾기</button>
+			<button class="hbutton" id="changePassword"
+	 onclick="window.open('/customer/changePassword','비밀번호 변경','width=550,height=600,location=no,status=no,scrollbars=yes');">비밀번호 변경</button>
+		</div>
+		<br>
+		<div><a th:href="@{|${kakaoUrl}|}" class="s"><img src="/img/kakao_login_button.png" class="loginImg"/></a></div>
+		<div><a th:href="@{|${naverUrl}|}" class="s"><img src="/img/naver_login.png" class="loginImg"/></a></div>
+	</section>
+
+</body>
+<footer th:replace="hf/footer"></footer>
+<script>
+	function signUpPage() {
+		location.href = '/customer/signUpType';
+	}
+	
+</script>
+</html>

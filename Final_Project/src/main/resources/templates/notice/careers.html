@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>인재 채용</title>
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<style type="text/css">
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
+}
+
+body {
+	min-width: 880px;
+	line-height: 1;
+	min-width: 320px;
+	margin: 0 16.2vw;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* header */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+.employ-title, .employ {
+	min-width: 80rem;
+	flex-shrink: 0;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.employ-title {
+	font-size: 30px;
+	color: #32B43A;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.with-icon {
+	font-size: 17px;
+	padding-left: 30px; /* 아이콘과 입력 텍스트 사이의 여백 조절 */
+}
+
+.icon {
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.carrers_container {
+	min-width: 80rem;
+	position: relative;
+	margin: 20px auto;
+	background-color: white;
+	font-size: 20px;
+	border-bottom: 2px solid black;
+}
+
+.carrers_container input {
+	width: 100%;
+	min-width: 80rem;
+	height: 30px;
+	border: none;
+	outline: none;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+
+.post {
+	min-width: 80rem;
+	font-family: 'NPSfontBold';
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 1px solid #32B43A;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+.post h2 {
+	flex-shrink: 0;
+	font-size: 20px;
+	margin-top: 0;
+}
+
+.post p {
+	flex-shrink: 0;
+	font-size: 15px;
+	margin-top: 5px;
+}
+
+.post a {
+	flex-shrink: 0;
+	color: black;
+	text-decoration: none;
+}
+
+.post span {
+	flex-shrink: 0;
+	display: flex;
+	justify-content: flex-end;
+	font-size: 12px;
+}
+
+.post a:hover {
+	text-decoration: underline;
+}
+
+.search-container {
+	margin-bottom: 20px;
+}
+
+.search-container input[type="text"] {
+	padding: 8px;
+	width: 200px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.pagination {
+	min-width: 80rem;
+	font-family: 'NPSfontBold';
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 1rem;
+}
+
+.pagination a {
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border: 1px solid #4CAF50;
+}
+
+
+#Message {
+	flex-shrink: 0;
+	font-family: 'NPSfontBold';
+	transition: 5s;
+	display: none;
+	text-align: center;
+	font-size: 30px;
+	margin: 30px;
+	color: #32B43A;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<h1 class="employ-title">채용 중인 공고</h1>
+	<h3 class="employ">그린박스에서 지금 채용 중인 포지션을 확인해보세요!</h3>
+	<div class="carrers_container">
+		<input type="text" name="검색" placeholder="검색" class="with-icon">
+		<i class="xi-search icon" id="searchIcon"></i>
+	</div>
+	<div class="post">
+		<h2>
+			<a href="#post1">[그린박스] 테크 대규모 경력 채용 | 물류 백엔드 개발자 (Backend
+				Developer)</a>
+		</h2>
+		<span>2024.03.26 까지</span>
+		<p>테크 대규모 경력채용 | 개발 | 경력 | 정규직</p>
+	</div>
+	<div class="post">
+		<h2>
+			<a href="#post2">[그린박스] 테크 대규모 경력 채용 | 머신러닝 엔지니어</a>
+		</h2>
+		<span>2024.03.26 까지</span>
+		<p>테크 대규모 경력채용 | 개발 | 경력 | 정규직</p>
+	</div>
+	<div class="post">
+		<h2>
+			<a href="#post3">[그린박스] 가공식품MD</a>
+		</h2>
+		<span>2024.03.28 까지</span>
+		<p>MD | 경력 | 정규직</p>
+	</div>
+	<div class="post">
+		<h2>
+			<a href="#post4">[그린박스] 축산MD</a>
+		</h2>
+		<span>2024.03.29 까지</span>
+		<p>MD | 경력 | 정규직</p>
+	</div>
+	<div class="post">
+		<h2>
+			<a href="#post5">[그린박스] QA 엔지니어 (QA Engineer)</a>
+		</h2>
+		<span>2024.04.02 까지</span>
+		<p>그린페이 | QA | 경력 | 정규직</p>
+	</div>
+	<div class="post">
+		<h2>
+			<a href="#post6">[그린박스] 수산MD</a>
+		</h2>
+		<span>2024.04.05 까지</span>
+		<p>MD | 경력 | 정규직</p>
+	</div>
+	<div id="Message">검색 결과가 없습니다.</div>
+</body>
+<footer th:replace="hf/footer"></footer>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var searchInput = document.querySelector(".with-icon");
+		var posts = document.querySelectorAll(".post");
+		var searchResultMessage = document.getElementById("Message");
+		var timeoutId; // 타이머 ID를 저장하기 위한 변수
+
+		if (searchInput && searchResultMessage) {
+			searchInput.addEventListener("input", function() {
+				var searchKeyword = this.value.trim().toLowerCase();
+				var searchResultExist = false;
+
+				// 이전에 설정된 타이머를 취소하여 타이머 재설정
+				clearTimeout(timeoutId);
+
+				posts.forEach(function(post) {
+					var postTitle = post.querySelector("h2").textContent
+							.toLowerCase();
+					var postContent = post.querySelector("p").textContent
+							.toLowerCase();
+
+					if (postTitle.includes(searchKeyword)
+							|| postContent.includes(searchKeyword)) {
+						post.style.display = "block";
+						searchResultExist = true;
+					} else {
+						post.style.display = "none";
+					}
+				});
+
+				// 검색 결과가 없을 경우 일정 시간이 지난 후에 메시지 출력
+				if (!searchResultExist) {
+					timeoutId = setTimeout(function() {
+						searchResultMessage.style.display = "block";
+					}, 300); // 0.3초 후에 메시지 출력
+				} else {
+					searchResultMessage.style.display = "none"; // 검색 결과가 있을 경우 메시지를 숨김
+				}
+			});
+		}
+	});
+</script>
+</html>

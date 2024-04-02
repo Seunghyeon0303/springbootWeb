@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>GreenBox</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<style>
+/* 폰트 */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+body{
+font-family: 'NanumSquareNeo-Variable';
+}
+#siteMap_span {
+	color: #32B43A;
+}
+.siteMap_h1 {
+	font-size: 32px;
+	text-align: center;
+	font-family: 'NPSfontBold';
+}
+.siteMap_h3 {
+	font-size: 24px;
+	text-align: center;
+	font-family: 'NPSfontBold';
+	margin-bottom: 30px;
+}
+#siteMap_ul_div{
+display: flex;
+margin: 0 auto;
+flex-direction: row;
+}
+.siteMap_select_div{
+width: 200px;
+}
+.siteMap_strong{
+color: #0D6AF4;
+font:28px;
+font-weight: bold;
+}
+.siteMap_li{
+height:30px;
+padding: 4px;
+margin: 4px;
+}
+.siteMap_li_a{
+font:20px;
+text-decoration: none;
+color: black;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<div>
+	<br>
+		<h1 class="siteMap_h1">
+			<span id="siteMap_span">GreenBox</span> 서비스 전체 보기
+		</h1>
+		<br>
+		<h3 class="siteMap_h3">원하는 서비스를 쉽고 빠르게 찾으세요.</h3>
+		<br>
+	</div>
+	
+	<div id="siteMap_ul_div">
+		<div class="siteMap_select_div">
+			<ul>
+				<li><strong class="siteMap_strong">회원</strong></li>
+				<br>
+				<li class="siteMap_li"><a th:if="${session.loggedInCustomer == null}" href="/customer/login" class="siteMap_li_a">로그인</a>
+				<a th:href="@{/customer/logout}" class="siteMap_li_a"
+				th:if="${session.loggedInCustomer != null} ">로그아웃</a></li>
+			<li class="siteMap_li"><a href="/customer/signUpType" class="siteMap_li_a">회원가입</a></li>
+				<li class="siteMap_li"><a href="/customer/login" class="siteMap_li_a">아이디 찾기</a></li>
+				<li class="siteMap_li"><a href="/customer/login" class="siteMap_li_a">비밀번호 변경</a></li>
+				<li class="siteMap_li"><a href="/customer/myPage" class="siteMap_li_a">개인 정보 수정</a></li>
+				<li class="siteMap_li"><a href="/customer/myPage" class="siteMap_li_a">회원 탈퇴</a></li>
+				<li class="siteMap_li"><a href="/customer/myPage" class="siteMap_li_a">마이페이지</a></li>
+				<li class="siteMap_li"><a href="/order/orderitem" class="siteMap_li_a">장바구니</a></li>
+			</ul>
+		</div>
+		<div class="siteMap_select_div">
+			<ul>
+				<li><strong class="siteMap_strong">상품</strong></li>
+				<br>
+				<li class="siteMap_li"><a href="/" class="siteMap_li_a">추천상품</a></li>
+				<li class="siteMap_li"><a href="/youtube/search" class="siteMap_li_a">레시피 영상</a></li>
+				<li class="siteMap_li"><a href="/event/" class="siteMap_li_a">이벤트</a></li>
+				<li class="siteMap_li"><a href="#" class="siteMap_li_a">배송조회</a></li>
+			</ul>
+		</div>
+		<div class="siteMap_select_div">
+			<ul>
+				<li><strong class="siteMap_strong">고객지원</strong></li>
+				<br>
+				<li class="siteMap_li"><a href="/faq/" class="siteMap_li_a">FAQ (자주 묻는 질문)</a></li>
+				<li class="siteMap_li"><a href="/notice/notice" class="siteMap_li_a">공지사항</a></li>
+				<li class="siteMap_li"><a href="/notice/policyService" class="siteMap_li_a">이용약관</a></li>
+				<li class="siteMap_li"><a href="/notice/policyPrivacy" class="siteMap_li_a">개인정보 처리방침</a></li>
+				<li class="siteMap_li"><a href="/ask/ask" class="siteMap_li_a">문의하기</a></li>
+			</ul>
+		</div>
+		<div class="siteMap_select_div">
+			<ul>
+				<li><strong class="siteMap_strong">안내</strong></li>
+				<br>
+				<li class="siteMap_li"><a href="/notice/brand" class="siteMap_li_a">브랜드 소개</a></li>
+				<li class="siteMap_li"><a href="/notice/careers" class="siteMap_li_a">채용 정보</a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>요리 검색</title>
+    <link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+    <style>
+    /* 폰트 */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+body {
+	margin: 0 16.2vw;
+}
+#video_title_h1{
+font-size: 32px;
+text-align: center;
+font-family: 'NPSfontBold';
+}
+#video_title_h2{
+font-size: 29px;
+text-align: center;
+}
+#video_title_h3{
+font-size: 26px;
+text-align: center;
+font-family: 'NPSfontBold';
+}
+.video_title_h4{
+font-size: 23px;
+text-align: center;
+border-top: 4px dotted black;
+padding-top: 10px;
+width: 560px;
+}
+#video_title_h5{
+font-size: 20px;
+text-align: center;
+font-family: 'NPSfontBold';
+}
+#video_title_p{
+font-size: 14px;
+text-align: center;
+font-family: 'NPSfontBold';
+}
+
+.video_search_div{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#video_search{
+display: flex;
+width: 560px;
+
+}
+#video_search input{
+display: flex;
+width: 490px;
+
+}
+.video_result{
+font-family: 'NanumSquareNeo-Variable';
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+    </style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+<br><br>
+<h1 id="video_title_h1">원하는 요리를 검색해보세요.</h1><br><br>
+<h3 id="video_title_h3">재료명 뒤에 '요리'를 추가해서 검색하면</h3><br>
+<h3 id="video_title_h3">더욱 다양한 영상을 보실 수 있습니다.</h3><br>
+<h5 id="video_title_h5">(예:소고기 요리)</h5><br>
+<p id="video_title_p">Youtube 정책 상 Youtube 외부 환경에서 재생되지 않는 영상은</p><br>
+<p id="video_title_p">해당 영상의 "YouTube에서 보기"를 통해</p><br> 
+<p id="video_title_p">Youtube 홈페이지에서 시청하실 수 있습니다.</p>
+<br><br>
+<div class="video_search_div">
+<form action="/youtube/search" method="get" id="video_search">
+    <input type="text" name="query" required>
+    <button type="submit">검색하기</button>
+</form>
+</div>
+
+<div th:if="${videos}" class="video_result">
+<br><br>
+    <h2 id="video_title_h2">검색 결과</h2>
+    <br>
+    <div th:each="video : ${videos}">
+    <br>
+    <h4 th:text="${video['title']}"  class="video_title_h4"></h4>
+    <br>
+    <iframe th:src="@{'https://www.youtube.com/embed/' + ${video['videoId']}}" width="560" height="315"
+                frameborder="0" allowfullscreen></iframe>
+                <br>
+    </div>
+</div>
+
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

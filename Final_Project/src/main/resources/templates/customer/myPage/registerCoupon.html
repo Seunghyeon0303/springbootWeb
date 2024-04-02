@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<!--xeicon 아이콘 -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<!--  구글 폰트 아이콘 -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<title>쿠폰 등록 창</title>
+</head>
+<style>
+/* 기본세팅 코드 */
+/* 노란색 : #E3F43B
+초록색 : #32B43A */
+/* 폰트 */
+/* header */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+/* 좌우 마진 */
+.body {
+	margin: 0 16.2vw;
+	min-width: 880px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+
+.regibody > span , couponRegisterBtn {
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+/* 쿠폰 등록  */
+.registerCouponh1 {
+	margin-top: 50px;
+	font-size: 2rem;
+	font-family: 'NPSfontBold';
+}
+.couponRegister {
+	margin-top: 70px;
+	text-align: center;
+}
+
+.couponRegister input {
+	border: 1px solid rgb(206, 205, 205);
+	width: 100%;
+	height: 45px;
+	outline: none;
+}
+
+.couponRegister button {
+	margin-top: 10px;
+	width: 100%;
+	background-color: #32B43A;
+	height: 40px;
+}
+
+.couponRegister button:hover {
+	cursor: pointer;
+}
+
+.detail {
+	padding: 5px;
+	margin-bottom: 30px;
+}
+
+.detail h1 {
+	margin-bottom: 20px;
+}
+
+.detail li {
+	list-style: disc;
+	list-style-position: inside;
+	font-family: 'NanumSquareNeo-Variable';
+}
+#couponCode{
+	font-family: 'NanumSquareNeo-Variable';
+}
+</style>
+<body class="regibody">
+	<h1 class="registerCouponh1">쿠폰 등록</h1>
+	<div class="couponRegister">
+		<input type="text" name="code" id="couponCode" placeholder="쿠폰번호 등록"
+			required>
+		<button id="couponRegisterBtn" onclick="registerCoupon()">등록하기</button>
+	</div>
+	<div class="detail">
+		<h1 class="registerCouponh1">등록안내</h1>
+		<ul>
+			<li>공백없이 쿠폰번호를 입력해주세요</li>
+			<li>등록기간 이후에는 사용할 수 없습니다.</li>
+			<li>한글은 기입할 수 없습니다.</li>
+		</ul>
+		<h1 class="registerCouponh1">이벤트 쿠폰</h1>
+		<ul>
+			<li>공백없이 쿠폰번호를 입력해주세요</li>
+			<li>등록기간 이후에는 사용할 수 없습니다.</li>
+		</ul>
+		<h1 class="registerCouponh1">유상 쿠폰</h1>
+		<ul>
+			<li>""등록기간 이후에는 사용할 수 없습니다.""</li>
+		</ul>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<style type="text/css">
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+#mvp {
+	min-width: 48px;
+	height: 48px;
+	width: 48px;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	align-items: center;
+	padding: 0px 5px;
+	border-radius: 100%;
+	font-weight: normal;
+	font-size: 14px;
+	text-align: center;
+	color: rgb(95, 0, 128);
+	border: 1px solid rgb(95, 0, 128);
+	background-color: rgb(255, 255, 255);
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#userInfo {
+	display: flex;
+	justify-content: space-between;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	align-items: center;
+	text-align: center;
+	background-color: white;
+	padding: 10px 30px;
+	width: 100%;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.tcont {
+	background-color: rgb(223, 212, 212);
+	padding: 40px 20px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#coupon {
+	display: flex;
+	position: relative;
+	align-items: center;
+	cursor: pointer;
+}
+
+#couponCount {
+	color: rgb(95, 0, 128);
+}
+
+.user-and-status {
+	display: flex;
+	align-items: center;
+}
+
+#userName {
+	margin-left: 10px;
+}
+
+.myPageli {
+	padding: 15px 13px 15px 20px;
+	border: 1px solid rgb(242, 242, 242);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 200px;
+	min-height: 56px;
+}
+
+.lcont {
+	width: 200px;
+	height: 500px;
+}
+
+#myPage {
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+.list {
+	cursor: pointer;
+	font-family: 'NPSfontBold';
+}
+
+.main {
+	min-height: 500px;
+}
+
+.bcont {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	min-height: 650px;
+}
+
+.myPagecont {
+	min-width: 880px;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<div class="myPagecont">
+		<div class="tcont">
+			<div id="userInfo">
+				<div class="user-and-status">
+					<div id="mvp">일반</div>
+					<span id="userName" th:text="${loggedInCustomer.customerName}">민경진님</span>
+				</div>
+			</div>
+		</div>
+		<div class="bcont">
+			<div class="lcont">
+				<div id="myPage">
+					<h1>마이컬리</h1>
+				</div>
+				<div>
+					<ul>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment('orderDelivery')">주문내역</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment('cancel')">취소/반품</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+						<!-- 장바구니 항목 -->
+						<li class="myPageli">
+							<p class="list"
+								onclick="window.location.href = '/order/orderitem';">장바구니</p> <span
+							class="material-symbols-outlined">chevron_right</span>
+						</li>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment5('favorite')">찜한상품</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment('inquiry')">문의 하기</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment2('coupon')">쿠폰</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment('registerCoupon')">쿠폰 등록</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment('pwCheck')">개인 정보 수정</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+						<li class="myPageli"><p class="list"
+								onclick="loadFragment('quit')">회원탈퇴</p> <span
+							class="material-symbols-outlined">chevron_right</span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="main">
+				<div id="dynamic-content"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<footer th:replace="hf/footer"></footer>
+<script>
+
+    
+function loadFragment(fragmentName) {
+    fetch(`/customer/fragment/${fragmentName}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('dynamic-content').innerHTML = html;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function checkPw(){
+
+    var pwCheck = document.getElementById('pwCheck').value;
+
+    fetch('/api/customer/pwCheck',{
+    	
+    	method : 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({password: pwCheck}) 
+    }).then(function(response){
+    	if(response.ok){
+    		loadFragment('myInfoRe');
+    	}else{
+            alert('현재 비밀번호와 일치하지 않습니다.');
+            document.getElementById('pwCheck').value='';
+            document.getElementById('pwCheck').focus();
+    	}
+    });
+
+}
+
+// 회원 탈퇴시 비밀번호 체크
+function quitCheckPw(){
+
+    var pwCheck = document.getElementById('pwCheck').value;
+
+    fetch('/api/customer/pwCheck',{
+    	
+    	method : 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({password: pwCheck}) 
+    }).then(function(response){
+    	if(response.ok){
+    		loadFragment('myInfoRe');
+    	}else{
+            alert('현재 비밀번호와 일치하지 않습니다.');
+            document.getElementById('pwCheck').value='';
+            document.getElementById('pwCheck').focus();
+    	}
+    });
+
+}
+
+//찜목록 페이지 불러오기
+function loadFragment5(fragmentName, pageNumber) {
+	var url = `/wishlist/fragmentWishlist/${fragmentName}`;
+	
+	if (pageNumber !== undefined) {
+	     url += '?page=' + pageNumber;
+	};
+	
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('dynamic-content').innerHTML = html;
+        })
+        .catch(error => console.error('Error:', error));
+}
+</script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+	function sample4_execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var roadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 참고 항목 변수
+
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('sample4_postcode').value = data.zonecode;
+						document.getElementById("sample4_roadAddress").value = roadAddr;
+
+						// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+						if (roadAddr !== '') {
+							document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+						} else {
+							document.getElementById("sample4_extraAddress").value = '';
+						}
+
+						var guideTextBox = document.getElementById("guide");
+						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+						if (data.autoRoadAddress) {
+							var expRoadAddr = data.autoRoadAddress
+									+ extraRoadAddr;
+							guideTextBox.innerHTML = '(예상 도로명 주소 : '
+									+ expRoadAddr + ')';
+							guideTextBox.style.display = 'block';
+
+						} else if (data.autoJibunAddress) {
+							var expJibunAddr = data.autoJibunAddress;
+							guideTextBox.innerHTML = '(예상 지번 주소 : '
+									+ expJibunAddr + ')';
+							guideTextBox.style.display = 'block';
+						} else {
+							guideTextBox.innerHTML = '';
+							guideTextBox.style.display = 'none';
+						}
+
+					}
+				}).open();
+	}
+
+	function reWritePw() {
+	    // 'myInfoRePw' 클래스를 가진 모든 요소를 선택
+	    var pwInputTr = document.getElementsByClassName('myInfoRePw');
+
+	    // 선택된 요소들을 반복하여 처리
+	    for (var i = 0; i < pwInputTr.length; i++) {
+	        // 현재 요소의 display 스타일을 'table-row'으로 설정
+	        pwInputTr[i].style.display = 'table-row';
+	    }
+	}
+	
+	document.addEventListener('DOMContentLoaded', (event) => {
+	    loadFragment('orderDelivery');
+	});
+	
+	
+	
+</script>
+<script>
+    $(document).ready(function () {
+    	
+    	const hash = window.location.hash;
+   
+    	
+		if(hash === '#orderDelivery'){
+        	loadFragment('orderDelivery');
+        }
+    	
+    	
+        // 등록 버튼을 클릭했을 때
+        $('#couponRegisterBtn').click(function (event) {
+        	
+        	console.log('등록버튼 누름');
+            
+            // 입력 필드의 값을 가져옴
+            var couponCode = $('#couponCode').val();
+            // 쿠폰번호가 한글인지 확인
+            var isKorean = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test(couponCode);
+            // 한글이 입력된 경우
+            if (isKorean) {
+                alert('한글은 입력할 수 없습니다.');
+                couponCode.val("");
+                return; // 이벤트 취소
+            }
+            // 값이 없는 경우 팝업 창 열지 않음
+            if (couponCode.trim() === '') {
+                alert('쿠폰번호를 입력해주세요.');
+                return;
+            }
+            event.preventDefault();
+            // 팝업 창을 띄우는 함수 호출
+            openPopup();
+        });
+        
+        // 팝업 창을 띄우는 함수
+        function openPopup() {
+            // 팝업 창의 경로 설정
+            var popupURL = "팝업창의_경로_또는_URL";
+            // 팝업 창의 사이즈 및 위치 설정
+            var width = 600;
+            var height = 400;
+            var left = ($(window).width() - width) / 2;
+            var top = ($(window).height() - height) / 2;
+            // 팝업 창 열기
+            window.open(popupURL, "_blank", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top);
+        }
+        
+    });
+
+    
+</script>
+<script>
+
+    var myInfoReBtn = document.getElementById('reWritepasswordCheck');
+	
+ // 비밀번호 체크 함수
+    function checkPassword(currentPassword, reWritePassword, reWritePassword2, callback) {
+        if (currentPassword === '') {
+            // 현재 비밀번호를 입력하지 않은 경우 콜백 함수를 호출하지 않고 반환
+            callback();
+            return;
+        }
+	 
+        if (currentPassword === '') {
+            alert('현재 비밀번호를 입력해주세요.');
+            return;
+        }
+
+        if (reWritePassword === '' && reWritePassword2 === '') {
+            alert('새 비밀번호를 입력해주세요.');
+            return;
+        } else if (reWritePassword !== '' && reWritePassword2 === '') {
+            alert('새 비밀번호 확인을 입력해주세요.');
+            return;
+        } else if (reWritePassword === '' && reWritePassword2 !== '') {
+            alert('새 비밀번호를 입력해주세요.');
+            return;
+        } else if (reWritePassword !== '' && reWritePassword2 !== '') {
+            if (reWritePassword !== reWritePassword2) {
+                alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
+                return;
+            }else if (currentPassword === reWritePassword) {
+                alert('현재 비밀번호와 새 비밀번호가 일치합니다.');
+                return;
+            }
+        }
+
+        const regexLength = /^.{8,20}$/; // 8자에서 20자 사이
+        const regexRepeatedChar = /(.)\1\1/; // 동일한 문자 3번 이상 반복 검사
+        let pwCount = 0;
+        if (/[a-zA-Z]/.test(reWritePassword)) pwCount++;
+        if (/[0-9]/.test(reWritePassword)) pwCount++;
+        if (/[^a-zA-Z0-9]/.test(reWritePassword)) pwCount++;
+
+        if (!regexLength.test(reWritePassword) || pwCount < 2 || regexRepeatedChar.test(reWritePassword)) {
+            alert('비밀번호는 8자~20자의 영문, 숫자, 특수문자중 2가지 이상을 조합하여 사용해야 합니다.');
+            return;
+        }
+
+        fetch('/api/customer/pwCheck', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password: currentPassword })
+        }).then(function (response) {
+            if (response.ok) {
+                callback(); // 비밀번호 체크 완료 후 콜백 함수 호출
+            } else {
+                alert('현재 비밀번호와 일치하지 않습니다.');
+            }
+        });
+    }
+
+    // 회원정보 업데이트 함수
+    function updateCustomerInfo(customerPhone, customerAddress1, customerAddress2, customerAddress3, reWritePassword) {
+        const customerData = {
+            customerPhone: customerPhone,
+            customerPw: reWritePassword,
+            customerAddress1: customerAddress1,
+            customerAddress2: customerAddress2,
+            customerAddress3: customerAddress3
+        };
+
+        fetch('/api/customer/myInfoRe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customerData)
+        }).then(function (response) {
+            if (response.ok) {
+                alert('회원님의 정보가 수정되었습니다.');
+                window.location.href = '/customer/myPage';
+            } else {
+                alert('회원님의 정보가 수정되지 않았습니다.');
+            }
+        });
+    }
+
+    // 메인 함수
+    function myInfoUpdate() {
+        const customerPhone = document.querySelector('#customerPhone').value.trim();
+        const customerAddress1 = document.querySelector('#sample4_postcode').value.trim();
+        const customerAddress2 = document.querySelector('#sample4_roadAddress').value.trim();
+        const customerAddress3 = document.querySelector('#customerAddress3').value.trim();
+        const currentPassword = document.getElementById('currentPassword').value.trim();
+        const reWritePassword = document.getElementById('reWritepassword').value.trim();
+        const reWritePassword2 = document.getElementById('reWritepasswordCheck').value.trim();
+
+        checkPassword(currentPassword, reWritePassword, reWritePassword2, function () {
+            updateCustomerInfo(customerPhone, customerAddress1, customerAddress2, customerAddress3, reWritePassword);
+        });
+    }
+
+
+	function loadFragment2(fragmentName, pageNumber) {
+		var url = `/coupon/fragmentCoupon/${fragmentName}`;
+		
+		if (pageNumber !== undefined) {
+		     url += '?page=' + pageNumber;
+		};
+		
+	    fetch(url)
+	        .then(response => response.text())
+	        .then(html => {
+	            document.getElementById('dynamic-content').innerHTML = html;
+	        })
+	        .catch(error => console.error('Error:', error));
+	}
+
+
+
+
+</script>
+<script type="text/javascript">
+// 탈퇴
+
+
+function quitReason(){
+	// 선택된 라디오 버튼 객체 가져오기
+	const selectedRadioButton = document.querySelector('input[name="withdrawalReason"]:checked');
+	
+	if(selectedRadioButton== null){
+		alert('탈퇴 사유를 선택해주세요.');
+		return;
+	}
+
+	// 선택된 라디오 버튼의 값 가져오기
+	const reason = selectedRadioButton.value;
+
+	//텍스트 입력창 객체 가져오기
+	const otherReasonInput = document.querySelector('#otherReason');
+	
+	// 텍스트 입력창의 값 가져오기
+	const otherReason = otherReasonInput.value;
+	
+	//탈퇴 이유에 따라 처리 분기
+	if (reason  === '8') {
+	  // "기타" 선택 시 텍스트 입력창 값 사용
+	  var quitReason = otherReason;
+	  console.log('탈퇴 이유:', otherReason);
+	} else {
+	  // 선택된 라디오 버튼 값 사용
+	  var quitReason = reason;
+	  console.log('탈퇴 이유:', reason);
+	}
+	
+	const quitReasonJson = {
+			reason : reason,
+			quitReason : quitReason
+	}
+	
+    fetch('/api/customer/quitReason', {
+        method: 'POST',
+        headers: {
+        	'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(quitReasonJson)
+    }).then(function (response) {
+        if (response.ok) {
+            alert('탈퇴가 정상적으로 되었습니다.');
+            window.location.href = '/';
+        } else {
+            alert('탈퇴에 실패했습니다 나중에 다시 시도해주세요.');
+        }
+    });
+	
+}
+
+function quitPwCheck(){
+	
+	var quitPwInput = document.querySelector('#quitPassword').value;
+	
+    fetch('/api/customer/pwCheck', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password: quitPwInput })
+    }).then(function (response) {
+        if (response.ok) {
+        	quitReason();
+        } else {
+            alert('현재 비밀번호와 일치하지 않습니다.');
+        }
+    });
+	
+	
+}
+
+function submitApplication(orderId) {
+	   
+    
+	 fetch('/api/customer/cancel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:orderId 
+    }).then(function (response) {
+        if (response.ok) {
+			alert('취소신청 되었습니다(관리자 확인까지 1~2일 소요됩니다)');
+			loadFragment('orderDelivery')
+        } else {
+            alert('이미 배송이 출발한 주문은 취소가 불가능합니다.');
+        }
+    });
+   
+}
+
+
+
+</script>
+<script>
+    $(document).ready(function () {
+    	const hash = window.location.hash;
+		if(hash === '#orderDelivery'){
+        	loadFragment('orderDelivery');
+        }
+		
+        });
+    // 쿠폰 등록 버튼 눌렀을 시 함수
+	function registerCoupon(){
+		// 입력 필드의 값을 가져옴
+        var couponCode = $('#couponCode').val();
+		
+		 // 쿠폰번호가 한글인지 확인
+        var isKorean = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test(couponCode);
+		 
+     // 값이 없는 경우 바로 리턴
+        if (couponCode.trim() === '') {
+            alert('쿠폰번호를 입력해주세요.');
+        }
+        // 한글이 입력된 경우
+        if (isKorean) {
+            alert('한글은 입력할 수 없습니다.');
+            $('#couponCode').val('');
+            $('#couponCode').focus();
+            return;
+        }
+        // 아작스 
+        $.ajax({
+        	url : '/register/coupon',
+        	// 부분적인 교체를 하는거라서 patch 
+        	type :'PATCH',
+        	data: { code: couponCode },
+        	success: function(data) {
+                // 서버에서 정상적으로 처리되었을 때의 동작
+                alert('쿠폰이 정상적으로 등록되었습니다.');
+            },
+            error: function(xhr) {
+                // 서버에서 오류가 발생했을 때의 처리
+                alert(xhr.responseText);
+                $('#couponCode').val('');
+                $('#couponCode').focus();
+            }
+        });
+        
+	}
+	// 쿠폰 리스트 데이터를 받아와서 HTML 테이블 형식으로 변환하는 함수
+	function generateCouponTableHtml(couponList) {
+	    var html = '';
+	    var message = '';
+
+	    if (couponList.length === 0) {
+	        html += '<tr>';
+	        html += '<td colspan="4" style="text-align: center;">쿠폰 내역이 없습니다.</td>';
+	        html += '</tr>';
+
+	        message = '최근 1년간 고객님이 사용하셨거나 쿠폰 사용 기간이 종료되어 더 이상 사용할 수 없는 쿠폰 내역입니다.';
+	    }
+
+	    if (couponList.length > 0) {
+	        for (var i = 0; i < couponList.length; i++) {
+	            var coupon = couponList[i];
+	            var deadlineDate = new Date(coupon.deadlineDate); // LocalDateTime을 JavaScript Date 객체로 변환
+
+	            // 날짜 형식 지정
+	            var formattedDateTime = deadlineDate.toLocaleString('ko-KR', {
+	                year: 'numeric', // 년 부분 20XX 
+	                month: '2-digit', // 달 부분
+	                day: '2-digit', // 일 부분
+	                hour: '2-digit', // 시간 부분
+	                minute: '2-digit', // 분 부분
+	                second: '2-digit', // 초 부분
+	                hourCycle: 'h24' // 24시간 형식으로 표시
+	            });
+
+	            html += '<tr>';
+	            html += '<td>' + coupon.code + '</td>';
+	            html += '<td>' + coupon.message + '</td>';
+	            html += '<td style="color: crimson;">' + formattedDateTime + '</td>';
+	            html += '<td style="color: crimson;">' + coupon.discount + '</td>';
+	            html += '</tr>';
+	        }
+	    }
+
+	    // 메시지 업데이트
+	    if ($('#oldtab').css('color') === 'crimson') {
+	        $('#item_wrap ul li strong').text('');
+	        $('#item_wrap ul li').text(message).show();
+	    }
+
+	    return html;
+	}
+
+	// 페이지 처리해주는 함수
+	function generatePageHtml(page) {
+	    var totalPages = page.totalPages;
+	    var currentPage = page.number;
+	    var pageHtml = '<ul>';
+
+	    // 이전 페이지 화살표
+	    if (currentPage !== 0) {
+	        pageHtml += '<li id="prevPage"><a href="#" onclick="loadCouponPage(' + (currentPage - 1) + ')">&laquo;</a></li>';
+	    }
+
+	    // 페이지 번호
+	    for (var i = 0; i < totalPages; i++) {
+	        var activeClass = (i === currentPage) ? 'class="active"' : '';
+	        pageHtml += '<li ' + activeClass + '><a href="#" onclick="loadCouponPage(' + i + ')">' + (i + 1) + '</a></li>';
+	    }
+
+	    // 다음 페이지 화살표
+	    if (currentPage !== totalPages - 1) {
+	        pageHtml += '<li id="nextPage"><a href="#" onclick="loadCouponPage(' + (currentPage + 1) + ')">&raquo;</a></li>';
+	    }
+
+	    pageHtml += '</ul>';
+
+	    return pageHtml;
+	}
+
+	// 쿠폰 리스트 데이터와 페이지 정보를 받아와서 HTML 테이블과 페이지를 업데이트하는 함수
+	function updateCouponTableAndPage(couponList, page) {
+	    var tableHtml = generateCouponTableHtml(couponList);
+	    var pageHtml = generatePageHtml(page);
+	    $('#couponTable tbody').html(tableHtml);
+	    $('.page').html(pageHtml);
+	}
+
+	// 쿠폰 정렬 해주는 함수
+	function sortBy() {
+	    var selectOption = $('#select').val();
+	    $.ajax({
+	        url: "/coupon/sortBy",
+	        type: "POST",
+	        data: { sort: selectOption },
+	        success: function(response) {
+	            // 테이블과 페이지 업데이트
+	            updateCouponTableAndPage(response.content, response);
+	        },
+	        error: function() {
+	            console.error('실패');
+	        }
+	    });
+	}
+
+	// searchCoupon() 쿠폰 검색 기능
+	function searchCoupon() {
+	    var searchBarInput = $("#searchBar__input").val();
+
+	    $.ajax({
+	        url: "/coupon/search",
+	        type: "POST",
+	        data: { input: searchBarInput },
+	        success: function(response) {
+	            // 테이블과 페이지 업데이트
+	            updateCouponTableAndPage(response.content, response);
+	            if (searchBarInput === '') {
+	                loadFragment2('coupon');
+	            }  else if (response.content.length === 0) {
+	                var errorMessage = '검색하신 쿠폰 번호를 찾을 수 없습니다.';
+	                $('#item_wrap ul li strong').text('');
+	                $('#item_wrap ul li').text(errorMessage).show();
+	            }
+	        },
+	        error: function() {
+	            console.error('에휴');
+	        }
+	    });
+	}
+
+	// 지난 쿠폰 내역을 누르면 실행되는 함수
+	function openTab(status, pageNumber) {
+	    if (status === "yet") {
+	        $.ajax({
+	            url: "/coupon/check?page=" + pageNumber,
+	            type: "GET",
+	            success: function(response) {
+	                // 테이블과 페이지 업데이트
+	                $("#oldtab").css('color', 'crimson');
+	                updateCouponTableAndPage(response.content, response);
+	            },
+	            error: function(xhr, status, error) {
+	                console.error('응 안돼~');
+	            }
+	        });
+	    }
+	    if (status === "current") {
+	        console.log("Tlqkf");
+	        loadFragment2('coupon');
+	    }
+	}
+
+	function loadCouponPage(pageNumber) {
+	    $.ajax({
+	        url: "/coupon/check?page=" + pageNumber,
+	        type: "GET",
+	        success: function(response) {
+	            // 페이지를 로드하는 로직을 여기에 추가
+	            // 테이블과 페이지 업데이트
+	            updateCouponTableAndPage(response.content, response);
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('응 안돼~');
+	        }
+	    });
+	}
+
+	
+	function addToCart(button) {
+		console.log('버튼 누름');
+		var productID = button.getAttribute('data-product-id');
+		console.log(productID);
+		$.ajax({
+			type : 'POST',
+			url : '/api/order/addToCart',
+			data : JSON.stringify({
+				productID : productID
+			}),
+			contentType : 'application/json',
+			success : function(response) {
+				alert(response);
+			},
+			error : function(xhr, status, error) {
+				alert(xhr.responseText); // 서버에서 반환한 메시지
+				window.location.href = '/customer/login';
+			}
+
+		});
+	}
+	
+	
+	function removeFromWishList(productId){
+		
+		console.log(productId);
+		
+	    fetch('/api/wishlist/deleteWishList',{
+	    	
+	    	method : 'POST',
+	        headers: {
+	            'Content-Type': 'application/json'
+	        },
+	        body : JSON.stringify({productId: productId}) 
+	    }).then(function(response){
+	    	if(response.ok){
+	    		alert('해당 상품이 찜목록에서 삭제되었습니다.');
+	    		loadFragment5('favorite');
+	    	}else{
+	    		alert('찜목록 삭제 실패하였습니다.');
+	    	}
+	    });
+	}
+   
+    
+</script>
+
+</html>
+

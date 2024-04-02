@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style type="text/css">
+
+/* 폰트 */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* 아이콘 */
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+
+body {
+	margin: 0 16.2vw;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.adminCate {
+	padding: 15px 13px 15px 20px;
+	border: 1px solid rgb(242, 242, 242);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 200px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+/*
+a {
+	color: inherit;
+	text-decoration: none;
+}*/
+
+/* 메인 */
+.adminBox {
+	min-width: 880px;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.admin_container {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	min-height: 650px;
+}
+
+.adminBtnList {
+	background-color: #32B43A;
+	color: white;
+	border-radius: 20px;
+	
+}
+
+#adminPa {
+	font-family: 'NPSfontBold';
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+.list {
+	cursor: pointer;
+	font-family: 'NPSfontBold';
+}
+
+.admin_total {
+	width: 200px;
+	height: 500px;
+}
+
+.main {
+	min-height: 500px;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+
+<body>
+	<section>
+		<div class="adminBox">
+
+			<div class="admin_container">
+
+				<div class="admin_total">
+					<div id="adminPa">
+						<h1>관리자</h1>
+					</div>
+					<div class="adminBtnList">
+						<ul>
+							<li class="adminCate"><span class="material-symbols-outlined">add_chart</span>
+								<p class="list" onclick="loadFragment('adminSales')">매출조회
+							</p><span class="material-symbols-outlined">chevron_right</span></li>
+							
+							<li class="adminCate"><span class="material-symbols-outlined">group</span>
+								<p class="list" onclick="loadFragment('adminCustomer')">회원조회
+							</p><span class="material-symbols-outlined">chevron_right</span></li>
+							
+							<li class="adminCate"><span class="material-symbols-outlined">support_agent</span>
+								<p class="list" onclick="loadFragment('adminAsk')">1:1문의
+							</p><span class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span class="material-symbols-outlined">settings</span>
+								<p class="list" onclick="loadFragment('adminBoardSetting')">게시관리
+							</p ><span class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span class="material-symbols-outlined">package_2</span>
+								<p class="list" onclick="loadFragment('adminItem')">상품관리
+							</p ><span class="material-symbols-outlined">chevron_right</span></li>
+							
+							<li class="adminCate"><span class="material-symbols-outlined">price_change</span>
+								<p class="list" onclick="loadFragment('adminCoupon')">쿠폰조회
+							</p><span class="material-symbols-outlined">chevron_right</span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="main">
+					<div id="dynamic-content"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+<footer th:replace="hf/footer"></footer>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    function loadFragment(fragmentName) {
+        fetch(`/admin/${fragmentName}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('dynamic-content').innerHTML = html;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+   document.addEventListener('DOMContentLoaded', (event) => {
+        loadFragment('adminSales');
+    });
+</script>
+<script>
+// JavaScript 코드를 이동합니다.
+document.addEventListener('DOMContentLoaded', function() {
+    google.charts.load('current', {
+        'packages': ['bar']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Day', '일매출'],
+            ['2/29', 87],
+            ['3/1', 120],
+            ['3/2', 200],
+            ['3/3', 5000],
+            ['3/4', 5000]
+        ]);
+
+        var options = {
+            chart: {
+                title: '일매출'
+            },
+            colors: ['#32B43A'],
+        };
+
+        var chart = new google.charts.Bar(document
+            .getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+});
+</script>
+</html>

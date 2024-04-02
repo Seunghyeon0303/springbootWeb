@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>FAQ 게시글 상세 페이지</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<script src="@{/js/jquery-3.6.0.min.js}"></script>
+<style type="text/css">
+#faq_h1 {
+	font-size: 32px;
+	text-align: center;
+}
+
+#faqDetail_table {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#faqDetail_board th {
+	align-items: center;
+	/*border: 1px solid black;*/
+	width: 20%;
+	height: 50px;
+}
+
+#faqDetail_board td {
+	align-items: center;
+	border: 1px solid black;
+	width: 80%;
+	height: 50px;
+}
+
+.faqDetail_buttons {
+	padding: 10px;
+	gap: 50px;
+}
+
+.faqDetail_buttons_a1{
+	width: 120px;
+	height: 35px;
+	padding: 7px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #0D6AF4;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+}
+
+.faqDetail_buttons_a1:hover, .faqDetail_buttons_a1:focus{
+	color: #0D6AF4;
+	background-color: white;
+}
+
+.faqDetail_buttons_a2{
+	width: 120px;
+	height: 35px;
+	padding: 7px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #198754;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+}
+
+.faqDetail_buttons_a2:hover, .faqDetail_buttons_a2:focus{
+	color: #198754;
+	background-color: white;
+}
+
+.faqDetail_buttons_a3{
+	width: 120px;
+	height: 35px;
+	padding: 7px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #DC3545;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+}
+
+.faqDetail_buttons_a3:hover, .faqDetail_buttons_a3:focus{
+	color: #DC3545;
+	background-color: white;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<br>
+	<h1 id="faq_h1">FAQ 게시글 상세 페이지</h1>
+	<br>
+	<div id="faqDetail_table">
+		<table id="faqDetail_board">
+			<tr>
+				<th>글번호</th>
+				<td th:text="${faq.getOcid()}"></td>
+			</tr>
+			<tr>
+				<th>작성 일자</th>
+				<td
+					th:text="${#temporals.format(faq.writeDate,'yyyy-MM-dd HH:mm')}"></td>
+			</tr>
+			<tr>
+				<th>분 류</th>
+				<td th:text="${faq.getCategory()}"></td>
+			</tr>
+			<tr>
+				<th>제 목</th>
+				<td th:text="${faq.getTitle()}"></td>
+			</tr>
+			<tr>
+				<th>내 용</th>
+				<td th:text="${faq.getContent()}"></td>
+			</tr>
+		</table>
+		<br>
+		<div class="faqDetail_buttons">
+			<a class="faqDetail_buttons_a1" th:href="@{/faq/faqList}">FAQ 목록</a>
+			<a class="faqDetail_buttons_a2"
+				th:href="@{'/faq/admin/adminFaqEdit/' + ${faq.ocid}}">수정</a>
+			<a class="faqDetail_buttons_a3"
+				th:attr="onclick=|confirmDelete('${faq.getOcid()}');|"
+				href="javascript:void(0);">삭제</a>
+		</div>
+		<br>
+	</div>
+	<script>
+		function confirmDelete(ocid) {
+			var confirmResponse = confirm("정말로 삭제하시겠습니까?");
+			if (confirmResponse) {
+				// 사용자가 "Yes"를 선택한 경우, 삭제 처리를 위한 URL로 리다이렉트합니다.
+				window.location.href = '/faq/admin/adminFaqDelete/' + ocid;
+			}
+			// "No"를 선택하거나 알림 창을 닫은 경우 아무 것도 하지 않습니다.
+		}
+	</script>
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

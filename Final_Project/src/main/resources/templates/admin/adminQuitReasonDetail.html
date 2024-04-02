@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style type="text/css">
+
+/* 폰트 */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* 아이콘 */
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+
+body {
+	margin: 0 16.2vw;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.adminCate {
+	padding: 15px 13px 15px 20px;
+	border: 1px solid rgb(242, 242, 242);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 200px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+/* 메인 */
+.adminBox {
+	min-width: 880px;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.admin_container {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	min-height: 650px;
+}
+
+.adminBtnList {
+	background-color: #32B43A;
+	color: white;
+	border-radius: 20px;
+}
+
+#adminPa {
+	font-family: 'NPSfontBold';
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+.list {
+	cursor: pointer;
+	font-family: 'NPSfontBold';
+	text-decoration: none;
+	color: white;
+}
+
+.admin_total {
+	width: 200px;
+	height: 500px;
+}
+
+.main {
+	min-height: 500px;
+} /* 왼쪽 카테고리 끝 */
+
+/* 세일즈 css 시작 */
+.material-symbols-outlined.md-50 {
+	color: white;
+	font-size: 50px;
+}
+
+.adminBtnList {
+	background-color: #32B43A;
+	color: white;
+	border-radius: 20px;
+}
+
+#adminPa {
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+/*메인*/
+.adminBox {
+	display: flex;
+	margin: 0 auto;
+	min-width: 620px;
+	padding: 30px 10px;
+}
+
+.adminContents {
+	margin-left: 1%;
+	width: 100%;
+	height: 100%;
+	min-width: 500px;
+}
+
+.adminContent_1 {
+	margin-left: 1%;
+	width: 100%;
+	height: 100%;
+	min-width: 500px;
+}
+
+.adminContent_2 {
+	margin-top: 5%;
+	margin-left: 5%;
+	margin-bottom: 3%;
+	/*  border: 1px solid black;*/
+	display: flex;
+	gap: 5%;
+}
+/* 월, 연매출 */
+.monthly {
+	/*border: 1px solid black;*/
+	background-color: #32B43A;
+	border-radius: 10px;
+	width: 300px;
+	height: 150px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.monthlyTotal {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	color: white;
+}
+
+.monthlyTi {
+	font-size: 20px;
+	font-family: 'NPSfontBold';
+	margin-left: 5%;
+	margin-bottom: 2%;
+}
+
+.monthlyTotal_cost {
+	font-family: 'NPSfontBold';
+	width: 150px;
+	vertical-align: middle;
+	text-align: right;
+}
+
+/* 일매출 안내메시지  */
+.adminSec_total {
+	text-align: right;
+	margin-bottom: 2%;
+	margin-right: 3%;
+}
+
+.searchInput {
+	color: #F15F5F;
+	font-family: 'NanumSquareNeo-Variable';
+	font-size: 1em;
+}
+
+/* 타이틀 */
+.adminMemberTitle {
+	text-align: center;
+	font-size: 2em;
+	margin-bottom: 2%;
+	font-family: 'NPSfontBold';
+}
+
+/* table */
+.adminMemberBoard {
+	margin: auto;
+	width: 95%;
+	border-collapse: collapse;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.adminMemberBoard tr:first-child {
+	background-color: #32B43A;
+	color: white;
+}
+
+.adminMemberBoard tr {
+	background-color: white;
+	border-bottom: 1px solid #ddd;
+}
+
+.adminMemberBoard th, .adminMemberBoard td {
+	padding: 1em 1em;
+	text-align: center;
+}
+
+.adminMemberBoard td {
+	vertical-align: middle;
+	/*font-size:13px;*/
+}
+
+/* 이전으로 버튼 */
+.close_btn {
+	text-align: right;
+	margin-bottom: 5%;
+}
+
+.close {
+	width: 100px;
+	height: 40px;
+	background-color: #32B43A;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+/* 페이징 */
+.adminMember_page_wrap {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	text-align: center;
+	font-size: 0;
+}
+
+.adminMember_page {
+	display: inline-block;
+}
+
+.adminMember_page .none {
+	display: none;
+}
+
+.adminMember_page a {
+	display: block;
+	margin: 0 3px;
+	float: left;
+	border: 1px solid #e6e6e6;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: #999999;
+	text-decoration: none;
+}
+
+.adminMember_page .arrow {
+	border: 1px solid #ccc;
+}
+
+.adminMember_page .prev {
+	background: #f8f8f8 no-repeat center center;
+	margin-right: 7px;
+}
+
+.adminMember_page .next {
+	background: #f8f8f8 no-repeat center center;
+	margin-left: 7px;
+}
+
+.adminMember_page a.active {
+	background-color: #42454c;
+	color: #fff;
+	border: 1px solid #42454c;
+}
+
+
+</style>
+</head>
+<header th:replace="hf/header"></header>
+
+<body>
+	<section>
+		<div class="adminBox">
+
+			<div class="admin_container">
+
+				<div class="admin_total">
+					<div id="adminPa">
+						<h1>관리자</h1>
+					</div>
+					<div class="adminBtnList">
+						<ul>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">add_chart</span> <a
+								class="list" href="/admin/">매출조회</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">group</span> <a class="list"
+								href="/admin/adminCustomer">회원조회</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">support_agent</span> <a
+								class="list" href="/admin/adminAsk">1:1문의</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">settings</span> <a
+								class="list" href="/admin/adminBoard">게시관리</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">package_2</span> <a
+								class="list" href="/admin/adminItem">상품관리</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">price_change</span> <a
+								class="list" href="/admin/adminCoupon">쿠폰조회</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+								
+							<li class="adminCate"><span
+								class="material-symbols-outlined">fact_check</span>
+								<a class="list" href="/admin/adminQuitReason">탈퇴사유조회</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="main">
+					<!-- 메인시작 -->
+					<div id="dynamic-content">
+						<!-- 세일즈 html 시작 -->
+						<div class="adminBox">
+							<!-- 내용 -->
+							<div class="adminContents">
+								<div class="adminContent_1">
+
+									<div class="adminMemberTitle">
+										<h1>고객 탈퇴 사유</h1>
+									</div>
+									<div class="adminSec_total">
+										<p class="searchInput">※고객 자진 탈퇴시 탈퇴사유</p>
+									</div>
+									<!-- 일매출 테이블 시작 -->
+									<div>
+										<div class="adminMemberList">
+											<table class="adminMemberBoard">
+												<tbody class="adminMember_boardList">
+												    
+													<tr class="adminMemberContent">
+														<th class="adminMember_head">기타사유</th>
+													</tr>
+													
+													<tr class="adminMemberContent" th:each="reasonDetail : ${quitReasonDetails}">
+														<td class="adminMember_head" th:text="${reasonDetail.reason}"></td>	
+													</tr>
+													
+													<tr th:if="${quitReasonDetails.isEmpty()}"
+														class="adminMemberContent">
+														<td class="adminMemberContent_a" colspan="8"
+															style="height: 100px;">데이터가 없습니다.</td>
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+										<div class="adminMember_page_wrap" th:if="${page.totalElements > 0}">
+											<div class="adminMember_page">
+												<a class="arrow prev"
+												   th:if="${page.getNumber() != 0}"
+												   th:href="@{/admin/adminCoupon(page=${page.getNumber()-1},keyword=${keyword})}"
+												   > ◀ </a>
+							
+												<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+													<a th:href="@{/admin/adminCoupon(page=${i-1},keyword=${keyword})}"
+													   th:text="${i}"
+													   th:class="${(page.getNumber + 1) == i ? 'active' : ''}">
+													1</a>
+												</th:block>
+						
+												<a th:if="${page.getNumber()+1 < page.getTotalPages()}"
+												   th:href="@{/admin/adminCoupon(page=${page.getNumber() + 1}, keyword=${keyword})}"
+												   class="arrow next"
+												   > ▶ </a>
+											</div>
+										</div>
+										<div class="close_btn">
+												<button class="close" onclick="history.go(-1)">이전으로</button>
+										</div>
+									</div>
+
+								</div>
+								
+							</div>
+
+						</div>
+						<!-- 세일즈 html 끝 -->
+
+
+					</div>
+				</div>
+				<!-- 메인끝 -->
+			</div>
+		</div>
+	</section>
+</body>
+
+<footer th:replace="hf/footer"></footer>
+
+</html>

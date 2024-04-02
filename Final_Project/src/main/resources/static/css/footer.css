@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+.footer {
+	background: #f5f5f5; /* 배경 색상 */
+	color: #333;
+	padding: 20px 0;
+	font-size: 14px;
+}
+
+.footer-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+.footer-section {
+	display: flex;
+	flex-direction: column;
+}
+
+.footer-section h3 {
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.footer-section a {
+	color: #333;
+	text-decoration: none;
+	margin-bottom: 5px;
+	line-height: 1.6; /* 줄 간격 */
+}
+
+.footer-section a:hover {
+	color: #333;
+}
+
+.social-icons {
+	display: flex;
+	margin-top: 20px;
+}
+
+.social-icons a {
+	display: inline-block;
+	margin: 0 10px;
+	line-height: 0; /* 아이콘 정렬을 위해 */
+}
+
+.social-icons a img {
+	width: 24px;
+	height: auto;
+}

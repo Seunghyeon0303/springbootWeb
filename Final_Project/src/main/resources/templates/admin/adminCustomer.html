@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style type="text/css">
+
+/* 폰트 */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* 아이콘 */
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+
+body {
+	margin: 0 16.2vw;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.adminCate {
+	padding: 15px 13px 15px 20px;
+	border: 1px solid rgb(242, 242, 242);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 200px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+/* 메인 */
+.adminBox {
+	min-width: 880px;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.admin_container {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	min-height: 650px;
+}
+
+.adminBtnList {
+	background-color: #32B43A;
+	color: white;
+	border-radius: 20px;
+}
+
+#adminPa {
+	font-family: 'NPSfontBold';
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+.list {
+	cursor: pointer;
+	font-family: 'NPSfontBold';
+	text-decoration: none;
+	color:white;
+}
+
+.admin_total {
+	width: 200px;
+	height: 500px;
+}
+
+.main {
+	min-height: 500px;
+} /* 왼쪽 카테고리 끝 */
+
+/* adminCustomer css 시작 */
+.mypageModal {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* 메인 */
+.adminBox {
+	display: flex;
+	margin: 0 auto;
+	min-width: 620px;
+	padding: 30px 10px;
+}
+
+.adminBtnList {
+	background-color: #32B43A;
+	color: white;
+	border-radius: 20px;
+}
+
+#adminPa {
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+.adminContent_1 {
+	margin-left: 1%;
+	width: 100%;
+	height: 100%;
+	min-width: 500px;
+	/* border: 1px solid #32B43A; */
+	border-radius: 10px;
+}
+
+/* 타이틀 */
+.adminMemberTitle {
+	text-align: center;
+	font-size: 2em;
+	margin-bottom: 2%;
+	font-family: 'NPSfontBold';
+}
+
+/*바로가기, 검색*/
+.itemTop {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* 등록 */
+.adminItemRegister_total {
+	margin-bottom: 2%;
+	margin-left: 3%;
+}
+
+.countCustomer{
+
+	line-height: 20px;
+	font-family: 'NanumSquareNeo-Variable';
+	font-size: 0.8em;
+}
+
+/* 검색 */
+.adminSec_total {
+	text-align: right;
+	margin-bottom: 2%;
+	margin-right: 3%;
+}
+/* 검색 select */
+.adminSecSel {
+	font-family: 'NanumSquareNeo-Variable';
+	height: 22px;
+}
+/* 검색 input */
+.searchInput {
+	width: 150px;
+	line-height: 20px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	text-indent: 5px;
+	color: #666;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+/* 검색 버튼 */
+.searchSubmit {
+	width: 50px;
+	background-color: #ddd;
+	border: transparent;
+	border-radius: 3px;
+	line-height: 20px;
+	font-family: 'NanumSquareNeo-Variable';
+	cursor: pointer;
+	filter: brightness(1);
+}
+
+.searchSubmit:hover {
+	filter: brightness(0.9);
+	transition: filter 1s;
+}
+
+/* table */
+.adminMemberBoard {
+	margin: auto;
+	width: 95%;
+	border-collapse: collapse;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.adminMemberBoard tr:first-child {
+	background-color: #32B43A;
+	color: white;
+}
+
+.adminMemberBoard tr {
+	background-color: white;
+	border-bottom: 1px solid #ddd;
+}
+
+.adminMemberBoard th, .adminMemberBoard td {
+	padding: 1em 1em;
+	text-align: center;
+}
+
+/*왼쪽 리스트 */
+.listBtn {
+	border: 1px solid black;
+}
+
+/* 페이징 */
+.adminMember_page_wrap {
+	margin-top: 2%;
+	text-align: center;
+	font-size: 0;
+}
+
+.adminMember_page {
+	display: inline-block;
+}
+
+.adminMember_page .none {
+	display: none;
+}
+
+.adminMember_page a {
+	display: block;
+	margin: 0 3px;
+	float: left;
+	border: 1px solid #e6e6e6;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: #999999;
+	text-decoration: none;
+}
+
+.adminMember_page .arrow {
+	border: 1px solid #ccc;
+}
+
+.adminMember_page .prev {
+	background: #f8f8f8 no-repeat center center;
+	margin-right: 7px;
+}
+
+.adminMember_page .next {
+	background: #f8f8f8 no-repeat center center;
+	margin-left: 7px;
+}
+
+.adminMember_page a.active {
+	background-color: #42454c;
+	color: #fff;
+	border: 1px solid #42454c;
+}
+
+/* 모달 마이페이지 */
+.mypage {
+	min-width: 40%;
+	width: 50%;
+	height: 40%;
+	padding-top: 30px;
+	padding-left: 50px;
+	padding-right: 50px;
+	border-radius: 3%;
+	/* margin-top: 30px;
+       margin-left: 455px; */
+	/* background-color: rgb(159, 204, 147); */
+	margin: 0 auto;
+}
+
+.mypage_modal {
+	font-family: 'NanumSquareNeo-Variable';
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+}
+/* 모달 타이틀 부분*/
+.mypage_top {
+	padding-bottom: 1em;
+}
+
+.mypage_top_title {
+	font-size: 1.5em;
+}
+
+.mypage_form p {
+	display: inline-block;
+	width: 110px;
+}
+
+.mypage .insert {
+	padding: 10px;
+	height: 450px;
+}
+
+.mypage_form {
+	border-radius: 10px;
+	background: whitesmoke;
+	padding: 2em 2em 2em 2em;
+}
+
+.mypage_form .check {
+	display: none;
+}
+
+.mypage_form input {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 2em;
+}
+
+/* {
+    width: 150px;
+    height: 2em;
+    border: 1px solid;
+    border-radius: 5px;
+    color: rgb(172, 172, 172);
+  } */
+.name_box input, .id_box input, .tel_box input {
+	width: 200px;
+	height: 2em;
+	border: 1px solid;
+	border-radius: 5px;
+	color: rgb(172, 172, 172);
+}
+/* .tel_box input {
+    width: 200px;
+    height: 2em;
+    border: 1px solid;
+    border-radius: 5px;
+    color: rgb(172, 172, 172);
+  } */
+.mail_box input {
+	width: 300px;
+	height: 2em;
+	border: 1px solid;
+	border-radius: 5px;
+	color: rgb(172, 172, 172);
+}
+
+/* .email_box p {
+    display: inline-block;
+    margin-bottom: 15px;
+  } */
+.email_box .me {
+	margin-bottom: 15px;
+}
+
+.addr_box input {
+	width: 300px;
+	height: 5em;
+	border: 1px solid;
+	border-radius: 5px;
+	color: rgb(172, 172, 172);
+}
+
+.addr_box .addr {
+	margin-left: 138px;
+	margin-bottom: 10px;
+}
+
+.addr_box .addr2 {
+	margin-top: 7px;
+	width: 400px;
+}
+
+.clearfix::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+/* 모달 닫기 버튼 */
+.close_btn {
+	font-family: 'NanumSquareNeo-Variable';
+	margin-right: 50px;
+}
+
+.close {
+	width: 100px;
+	height: 40px;
+	background-color: #32B43A;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+#cusName:hover {
+	color:#32B43A;
+}
+/* adminCustomer css 끝*/
+</style>
+</head>
+<header th:replace="hf/header"></header>
+
+<body>
+	<section>
+		<div class="adminBox">
+
+			<div class="admin_container">
+
+				<div class="admin_total">
+					<div id="adminPa">
+						<h1>관리자</h1>
+					</div>
+					<div class="adminBtnList">
+						<ul>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">add_chart</span>
+								<a class="list" href="/admin/">매출조회</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">group</span>
+								<a class="list" href="/admin/adminCustomer">회원조회</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">support_agent</span>
+								<a class="list" href="/admin/adminAsk">1:1문의</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">settings</span>
+								<a class="list" href="/admin/adminBoard">게시관리</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">package_2</span>
+								<a class="list" href="/admin/adminItem">상품관리</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">price_change</span>
+								<a class="list" href="/admin/adminCoupon">쿠폰조회</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>
+							
+							<li class="adminCate"><span
+								class="material-symbols-outlined">fact_check</span>
+								<a class="list" href="/admin/adminQuitReason">탈퇴사유조회</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>		
+								
+						</ul>
+					</div>
+				</div>
+				<div class="main">
+					<!-- 메인시작 -->
+					<div id="dynamic-content">
+						<!-- adminCustomer 시작 -->
+						<div class="adminBox">
+
+							<!-- 내용 -->
+							<div class="adminContent_1">
+								<div class="adminMember">
+									<div class="adminMemberTitle">
+										<h1>회원조회</h1>
+									</div>
+									<div class="itemTop">
+									  <div class="adminItemRegister_total">
+									  		
+											<p class="countCustomer">
+											   총 회원수 : <span th:text="${totalCustomers}"> </span>명 (탈퇴회원 제외)
+											   </p>
+											   
+									  </div>
+									
+									<!-- 상단 검색 -->
+									  <div class="adminSec_total">
+										<form th:action="@{/admin/adminCustomer}">
+											<div class="adminSec">
+												<select class="adminSecSel" name="condition">
+													<option value="customerId">아이디</option>
+													<option value="customerName">이름</option>
+													<option value="customerNameId">아이디 + 이름</option>
+												</select>
+												<input type="text" class="searchInput" placeholder="검색"
+													name="keyword">
+												<button type="submit" class="searchSubmit">검색</button>
+											</div>
+										</form>
+									  </div>
+									</div>
+									<!-- 회원 리스트 -->
+									<div>
+										<div class="adminMemberList">
+											<table class="adminMemberBoard">
+												<tbody class="adminMember_boardList">
+
+													<tr class="adminMemberContent">
+														<th class="adminMember_head">No</th>
+														<th class="adminMember_head">이름</th>
+														<th class="adminMember_head">아이디</th>
+														<th class="adminMember_head">상태변경</th>
+													</tr>
+
+													<tr th:each="customer : ${customer}" class="adminMemberContent">
+														<td th:text="${customer.ocid - 1}" class="adminMemberContent_a">1</td>
+														<td class="adminMemberContent_a">
+														<a th:href="@{/admin/customerDetail(cusOcid=${customer.ocid})}"
+														   th:text="${customer.customerName}"
+														   class="mypageModal" id="cusName">또잉이</a></td>
+														<td th:text="${customer.customerId}" class="adminMemberContent_a">dy</td>
+														<td class="adminMemberContent_a">
+															<button th:onclick= "'delCustomer(' + ${customer.ocid} +')'" class="searchSubmit">탈퇴</button>
+														</td>
+													</tr>
+													
+													
+													<tr th:if="${customer.isEmpty()}" class="adminMemberContent">
+														<td class="adminMemberContent_a" colspan="4">등록된 회원이 없습니다.</td>
+													</tr>
+													
+												</tbody>
+											</table>
+
+										</div>
+										<!-- 페이징 버튼 -->
+										<div class="adminMember_page_wrap" th:if="${page.totalElements > 0}">
+											<div class="adminMember_page">
+												
+												<a class="arrow prev"
+												   th:if="${page.getNumber() != 0}"
+												   th:href="@{/admin/adminCustomer(page=${page.getNumber()-1}, condition=${condition}, keyword=${keyword})}"
+												   > ◀ </a>
+							
+												<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+													<a th:href="@{/admin/adminCustomer(page=${i-1},condition=${condition}, keyword=${keyword})}"
+													   th:text="${i}"
+													   th:class="${(page.getNumber + 1) == i ? 'active' : ''}">
+													1</a>
+												</th:block>
+						
+												<a th:if="${page.getNumber()+1 < page.getTotalPages()}"
+												   th:href="@{/admin/adminCustomer(page=${page.getNumber() + 1},condition=${condition}, keyword=${keyword})}"
+												   class="arrow next"
+												   > ▶ </a>
+												
+												</div>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+							<div></div>
+						</div>
+						<!-- adminCustomer 끝 -->
+
+
+
+					</div>
+				</div>
+				<!-- 메인끝 -->
+			</div>
+		</div>
+	</section>
+</body>
+
+<footer th:replace="hf/footer"></footer>
+
+<script>
+
+function delCustomer(ocid) {
+	
+	console.log('delCustomer버튼클릭됨!');
+	
+    if(confirm("해당 회원 정보를 정말 삭제하시겠습니까?")) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/admin/customerDelete/" + ocid);
+        document.body.appendChild(form);
+        form.submit();
+    }
+    
+}
+
+</script>
+</html>

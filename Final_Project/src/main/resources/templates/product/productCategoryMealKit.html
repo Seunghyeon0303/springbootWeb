@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<div class="product-list">
+	<div th:each="product : ${productList}" class="product">
+
+		<a
+			th:href="@{/product/detail/{productId}(productId=${product.productID})}">
+			<img th:src="@{${product.imageURL}}" alt="상품 이미지" class="productImg" />
+		</a>
+
+		<p>
+			<button class="cart" th:attr="data-product-id=${product.productID}" onclick="addToCart(this)">
+				<i class="xi-cart-o"></i> 장바구니
+			</button>
+			<br> <strong th:text="${product.productName}">상품 이름</strong> <span class="productNot" th:if="${product.count == 0}">(품절)</span><br>
+			<span class="price" th:text="${product.price} + '원'">상품 가격</span>
+			<button class="wish"
+				th:onclick="'addToWishList(\'' + ${product.productID} + '\', event);'">
+				<i th:class="${#lists.contains(wishListProductIds, product.productID) ? 'xi-heart heartIcon' : 'xi-heart-o heartIcon'}"></i>
+			</button>
+		</p>
+	</div>
+</div>
+</html>

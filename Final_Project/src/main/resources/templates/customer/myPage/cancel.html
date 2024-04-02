@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>주문목록/배송조회 페이지</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+</head>
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+body {
+	margin: 0, 16.2vw;
+}
+
+.all {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-width: 640px;
+	font-family: 'NPSfontBold';
+}
+
+.all__container2 {
+	border: 1px solid rgb(209, 209, 209);
+	background-color: rgb(233, 233, 233);
+	border-radius: 2%;
+	display: flex;
+	width: 100%;
+}
+
+.all__container2__header__1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 50%;
+	margin-top: 20px;
+}
+
+.hr2 {
+	border-left: 1px solid rgb(209, 209, 209);
+	height: auto;
+}
+
+.hr3 {
+	border-bottom: 2px solid black;
+	width: 100%;
+}
+
+.all__container2__header__2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 50%;
+	display: none;
+}
+
+.all__container2__header__1__img {
+	width: 150px;
+	height: 150px;
+	margin-bottom: 30px;
+}
+
+.all__container2__header__1__p {
+    font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 30px;
+}
+
+.all__container2__header__1__p__span {
+	color: rgb(194, 165, 0);
+}
+
+.all__container2__header__2__p1 {
+	font-size: 18px;
+	font-weight: 800;
+	margin-bottom: 30px;
+}
+
+.all__container2__header__2__p2 {
+	font-size: 30px;
+	font-weight: 800;
+	margin-bottom: 30px;
+}
+
+.all__box {
+	width: 210px;
+	padding: 3px 0 3px 20px;
+	border: 1px solid #cfcfcf;
+	border-radius: 5px;
+	background-color: white;
+	z-index: 1;
+	position: absoulte;
+	opacity: 1;
+	bottom: 40%;
+	right: 30%;
+	flex-shrink: 0;
+}
+
+.all__box__info {
+	margin-top: 10px;
+}
+
+.all__box__info ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.all__box__info ul li {
+	margin-bottom: 10px;
+}
+
+.all__container3 {
+	width: 100%;
+	margin-top: 50px;
+}
+
+.all__container3__p {
+	color: rgb(78, 78, 78);
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.table{
+width: 100%;
+text-align: center;
+margin-bottom: 20px;
+border-top: 1px solid black;
+}
+
+.table__th{
+border: 1px solid rgb(223, 223, 223);
+padding : 5px;
+background-color: rgb(185, 185, 185);
+}
+
+.table__td{
+border: 1px solid rgb(223, 223, 223);
+padding : 5px;
+}
+
+header{
+font-family: 'NPSfontBold';
+}
+
+</style>
+<body>
+	<div class="all">
+		<!-- container2 -->
+		<div class="all__container2">
+			<div class="all__container2__header__1">
+				<img class="all__container2__header__1__img" src="/img/fProLogo.png">
+				<p class="all__container2__header__1__p" th:text="${customer.customerName} + '님 반갑습니다'"></p>
+			</div>
+			<div class="hr2"></div>
+			<div class="all__container2__header__2">
+				<p class="all__container2__header__2__p1">등급혜택 안내</p>
+				<div class="all__box__info">
+					<ul>
+						<li>
+							<p>0원 이상 구매 시 궁디팡팡</p>
+						</li>
+						<li>
+							<p>0원 이상 구매 시 궁디팡팡</p>
+						</li>
+						<li>
+							<p>0원 이상 구매 시 궁디팡팡</p>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		<!-- container3 -->
+		<div class="all__container3">
+			<p class="all__container3__p"
+				th:text="${customer.customerName} + '님의 취소/반품 내역 총 ' + ${customerOrderSize} + ' 건'"></p>
+			<table class="table" th:each="customerOrder : ${customerOrders}">
+			<tr class="table__tr">
+				<th colspan="1" class="table__th">날짜</th>
+				<th colspan="1" class="table__th">우편번호</th>
+				<th colspan="1" class="table__th">주소</th>
+				<th colspan="1" class="table__th">상세주소</th>
+				<th colspan="1" class="table__th">수령자</th>
+				<th colspan="1" class="table__th">금액</th>
+			</tr>                  
+			<tr>
+                <td colspan="1" class="table__td" th:text="${#temporals.format(customerOrder.orderDate, 'yyyy-MM-dd')}"></td>
+                <td colspan="1" class="table__td" th:text="${customerOrder.customerOrderAddress1}"></td>
+                <td colspan="1" class="table__td" th:text="${customerOrder.customerOrderAddress2}"></td>
+                <td colspan="1" class="table__td" th:text="${customerOrder.customerOrderAddress3}"></td>
+                <td colspan="1" class="table__td" th:text="${customerOrder.customerOrderName}"></td>
+                <td colspan="1" class="table__td" th:text="${customerOrder.price}"></td>
+			</tr>
+			
+			<tr>
+			  <th colspan="2" class="table__th">상품명</th>
+			  <th colspan="2" class="table__th">가격</th>
+			  <th colspan="2" class="table__th">수량</th>
+			</tr>
+			
+            <tr th:each="orderItem : ${customerOrder.orderItems}">
+              <td class="table__td" colspan="2" th:text="${orderItem.product.productName}"></td>
+              <td class="table__td" colspan="2" th:text="${orderItem.price} + '원'"></td>
+              <td class="table__td" colspan="2" th:text="${orderItem.count} + '개'"></td>
+            </tr>
+            <div class="hr3"></div>
+        </table>
+
+
+		</div>
+
+	</div>
+</body>
+
+</html>

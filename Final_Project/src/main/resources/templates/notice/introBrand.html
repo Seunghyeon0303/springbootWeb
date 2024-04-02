@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<style>
+/* 폰트 */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+body {
+min-width:880px;
+margin: 0 16.2vw;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#brand_container {
+	min-width: 880px;
+}
+
+#brand_title, #brand_end {
+	margin-top: 5rem 0;
+	padding: 1.5rem;
+	text-align: center;
+	font-family: 'NPSfontBold';
+	font-size: 32px;
+}
+#brand_title_h3{
+font-size: 26px;}
+#brand_span {
+	color: #32B43A;
+}
+
+.brand_img {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 250px;
+	height: 150px;
+	padding: 1rem 2rem;
+}
+
+.brand_a {
+	text-decoration: none;
+	color: black;
+}
+
+.introSection {
+	margin-bottom: 20px;
+	display: flex;
+}
+.brand_content{
+	min-width: 660px;
+	overflow-x: hidden;
+}
+
+.brand_content  >p {
+	  margin: 20px 0; /* 상하 20px, 좌우 0px의 마진 */
+  padding: 10px; /* 모든 방향에 10px의 패딩 */
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<div id="brand_container">
+		<div id="brand_title">
+			<img alt="브랜드소개_이미지01" src="/img/notice/brand_img01.png"><br>
+			<br>
+			
+				우리의 목표는 오직 하나!<br> 고객 만족뿐입니다.
+			
+		</div>
+
+		<div class="introSection section01">
+			<div>
+				<img class="brand_img" alt="브랜드소개_이미지02"
+					src="/img/notice/brand_img02.png">
+			</div>
+			<div class="brand_content">
+				<h3 id="brand_title_h3">
+					<span id="brand_span">GreenBox</span>는 오늘보다 더 나은 내일의 쇼핑 생활을 만들어
+					나갑니다.
+				</h3>
+				<p>
+					<span id="brand_span">GreenBox</span>가 까다롭게 재료를 선정하는 이유는 오직 하나입니다.
+				</p>
+				<p>음식은 건강의 필수 조건이니까,</p>
+				<p>모든 음식의 기본은 좋은 재료가 그 시작이니까,</p>
+				<p>신선하고 정직한 상품으로</p>
+				<p>
+					고객의 즐거움을 위한 <span id="brand_span">GreenBox</span>는 오늘도 최선을 다합니다.
+				</p>
+			</div>
+		</div>
+
+		<div class="introSection section02">
+			<div>
+				<img class="brand_img" alt="브랜드소개_이미지03"
+					src="/img/notice/brand_img03.png">
+			</div>
+			<div class="brand_content">
+				<h3 id="brand_title_h3">
+					왜 <span id="brand_span">GreenBox</span>인가?
+				</h3>
+				<p>계절마다 다양한 먹거리가 있지만,</p>
+				<p>제철 과일, 채소, 해산물이 있지만,</p>
+				<p>오늘은 뭘 먹을지 고민하는 시간도 아까우신 분들을 위해!</p>
+				<p>내가 구매하는 재료로 뭘 만들어먹을 수 있는지 검색하는 시간도 줄일 수 있도록!</p>
+				<p>배달음식으로는 만족스럽지 않고, 간편한 집밥을 만들수 있도록!</p>
+				<p>해당 제품별로 만들 수 있는 음식에 관한 조리법으로 식사 준비가 더욱 즐거워질 수 있도록!</p>
+				<p>제품 구매 고객에게 제공되는 해당 제품을 활용한 조리 영상까지 활용하시도록!</p>
+				<p>
+					음식에 관한 고민은 <span id="brand_span">GreenBox</span>에 맡겨주세요.
+				</p>
+				<p>
+					<a class="brand_a" href="#">"제품 조리법 이미지"</a>
+				</p>
+				<p>
+					<a class="brand_a" href="#">"제품 조리 영상 이미지"</a>
+				</p>
+				<br>
+				<p>간편하지만 영양 가득한 식사를 위한 진심을 밀키트에 담았습니다.</p>
+			</div>
+		</div>
+
+		<div class="introSection section03">
+			<div>
+				<img class="brand_img" alt="브랜드소개_이미지04"
+					src="/img/notice/brand_img04.png">
+			</div>
+			<div class="brand_content">
+				<h3 id="brand_title_h3">고객 모두에게 즐겁고 편리한 쇼핑 경험을 선사하겠습니다.</h3>
+				<p>제철 과일이, 채소가, 해산물이 영양이 풍부한건 알지만</p>
+				<p>어떤 품목이 제철인지 쉽게 확인하려면 또 검색해야 하는 번거로움을 없앴습니다.</p>
+				<p>
+					<a class="brand_a" href="#">"월별 제철 상품 안내 페이지 이동"</a>
+				</p>
+				<p>
+					<a class="brand_a" href="#">"계절별 제철 상품 안내 페이지 이동"</a>
+				</p>
+			</div>
+		</div>
+
+		<div>
+			<h1 id="brand_end">
+				<span id="brand_span">GreenBox</span>의 진심은 계속됩니다.
+			</h1>
+		</div>
+	</div>
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>추천상품</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+
+.h {
+	margin-top: 10%;
+	font-size: 20px;
+}
+
+.p1 {
+	margin-top: 1%;
+	font-size: 13px;
+	color: grey;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: space-between;
+	min-width: 860px;
+	min-height: 1540px;
+}
+
+.container1 {
+	margin-top: 3%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 300px;
+	
+}
+
+.container1 > a{
+	width: 100%;
+	height: 100%;
+}
+
+.box {
+	width: 25.25%;
+	height: 100%;
+	border-radius: 7px;
+}
+
+.box1 {
+	background-size: cover;
+	background-image: url(/img/꽃갈비살.jpg);
+}
+
+.box2 {
+	background-size: cover;
+	background-image: url(/img/꽃등심.jpg);
+}
+
+.box3 {
+	background-size: cover;
+	background-image: url(/img/차돌박이.jpg);
+}
+
+.box4 {
+	background-size: cover;
+	background-image: url(/img/돌문어.jpg);
+}
+
+.box5 {
+	background-size: cover;
+	background-image: url(/img/새우.jpg);
+}
+
+.box6 {
+	background-size: cover;
+	background-image: url(/img/굴.jpg);
+}
+
+.box7 {
+	background-size: cover;
+	background-image: url(/img/브로콜리.jpg);
+}
+
+.box8 {
+	background-size: cover;
+	background-image: url(/img/아보카도.jpg);
+}
+
+.box9 {
+	background-size: cover;
+	background-image: url(/img/오이.jpg);
+}
+
+img {
+	max-width: 90%;
+	width: 100%;
+	height: 300px;
+	border-radius: 7px;
+}
+
+.btn {
+	border: 1px solid rgb(216, 216, 216);
+	background-color: white;
+	width: 100px;
+	height: 40px;
+	border-radius: 7px;
+	margin-top: 70px;
+	color: gray;
+	margin-bottom: 6%;
+}
+
+.btn:active {
+	background-color: rgb(216, 216, 216);
+}
+
+.hr {
+	border-bottom: 1px solid rgb(209, 209, 209);
+	width: 675px;
+}
+.h{
+	font-family: 'NPSfontBold';
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h3 class="h">육류 인기 순위</h3>
+		<div class="container1">
+			<a th:each="meats, iterStat : ${meatsList}"
+				th:if="${iterStat.index < 3}"
+				th:href="@{/product/detail/{productId}(productId=${meats.productID})}">
+				<img th:src="@{${meats.imageURL}}"></img>
+			</a>
+		</div>
+
+		<h3 class="h">해산물 인기 순위</h3>
+		<div class="container1">
+			<a th:each="seafood, iterStat : ${seafoodList}"
+				th:if="${iterStat.index < 3}"
+				th:href="@{/product/detail/{productId}(productId=${seafood.productID})}">
+				<img th:src="@{${seafood.imageURL}}"></img>
+			</a>
+		</div>
+
+
+
+		<h3 class="h">채소 인기 순위</h3>
+		<div class="container1">
+			<a th:each="vegetables, iterStat : ${vegetablesList}"
+				th:if="${iterStat.index < 3}"
+				th:href="@{/product/detail/{productId}(productId=${vegetables.productID})}">
+				<img th:src="@{${vegetables.imageURL}}"></img>
+			</a>
+		</div>
+
+		<h3 class="h">과일 인기 순위</h3>
+		<div class="container1">
+			<a th:each="fruit, iterStat : ${fruitList}"
+				th:if="${iterStat.index < 3}"
+				th:href="@{/product/detail/{productId}(productId=${fruit.productID})}">
+				<img th:src="@{${fruit.imageURL}}"></img>
+			</a>
+		</div>
+
+		<h3 class="h">밀키트 인기 순위</h3>
+		<div class="container1">
+			<a th:each="mealkit, iterStat : ${mealkitList}"
+				th:if="${iterStat.index < 3}"
+				th:href="@{/product/detail/{productId}(productId=${mealkit.productID})}">
+				<img th:src="@{${mealkit.imageURL}}"></img>
+			</a>
+		</div>
+		<br> <br>
+	</div>
+</body>
+
+</html>

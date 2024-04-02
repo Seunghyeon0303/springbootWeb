@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+
+
+
+.quit_container {
+	padding: 20px;
+}
+
+.quit_pCont {
+	margin-bottom: 20px;
+}
+
+.quit_pCont2 {
+	margin-bottom: 20px;
+	min-width: 640px;
+}
+
+.quit_reasonList {
+	margin: 4px 0px;
+}
+
+#otherReason {
+	width: 300px;
+	height: 25px;
+}
+
+.tabdiv {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.pwtab {
+	width: 35%;
+	min-width: 500px;
+}
+
+.short {
+	padding: 0px 10px;
+	outline: none;
+	font-size: 16px;
+	width: 70%;
+	height: 31px;
+}
+
+.signUpBtn {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	border: 1px solid black;
+	padding: 5px 10px;
+	border-radius: 6px;
+	font-family: 'NanumSquareNeo-Variable';
+	height: 31px;
+}
+
+.quit_container2 {
+	height: 320px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.usingPw {
+	min-width: 150px;
+}
+.quit_p {
+	font-size: 1.3rem;
+	font-weight: bold;
+	min-width: 640px;
+	font-family: 'NPSfontBold';
+}
+</style>
+</head>
+<body>
+	<div class="quit_container">
+		<div class="quit_container2">
+			<div class="quit_pCont">
+				<p class="quit_p">정말 떠나시는 건가요?</p>
+				<p class="quit_p">한 번 더 생각해 보지 않으시겠어요?</p>
+			</div>
+			<div class="quit_pCont2">
+				<p class="quit_p2">계정을 삭제하시려는 이유를 말씀해주세요.</p>
+				<p class="quit_p2">제품 개선에 중요자료로 활용하겠습니다.</p>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason1" name="withdrawalReason"
+					value="1" class="reasons"> <label
+					for="reason1">고객상담서비스 불만</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason2" name="withdrawalReason"
+					value="2" class="reasons"> <label for="reason2">상품가격
+					불만</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason3" name="withdrawalReason"
+					value="3" class="reasons"> <label
+					for="reason3">배송서비스 불만</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason4" name="withdrawalReason"
+					value="4" class="reasons"> <label for="reason4">교환/반품/취소
+					불만</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason5" name="withdrawalReason"
+					value="5" class="reasons"> <label for="reason5">쇼핑몰의
+					신뢰성 불만</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason6" name="withdrawalReason"
+					value="6" class="reasons"> <label for="reason6">개인정보
+					유출 우려</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason7" name="withdrawalReason"
+					value="7" class="reasons"> <label for="reason7">자주이용하지
+					않음</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="radio" id="reason8" name="withdrawalReason"
+					value="8" class="reasons"> <label for="reason8">기타
+					(자세한 사유를 적어주세요)</label>
+			</div>
+			<div class="quit_reasonList">
+				<input type="text" id="otherReason" name="otherReason" />
+			</div>
+		</div>
+		<div class="tabdiv">
+			<table class="pwtab">
+				<tr>
+					<th class="usingPw">사용중인 비밀번호</th>
+					<td><input type="password" class="short" id="quitPassword" placeholder="쇼핑몰 회원만 입력해주세요.">
+						<button class="signUpBtn" id="quitBtn" onclick="quitPwCheck()">탈퇴하기</button></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</body>
+<script>
+	
+</script>
+</html>

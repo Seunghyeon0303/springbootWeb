@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<style>
+        /* 폰트 */
+        @font-face {
+            font-family: 'NPSfontBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NanumSquareNeo-Variable';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            margin: 0 16.2vw;
+        }
+
+        a {
+            /* 링크 색상을 텍스트와 동일하게 설정 */
+            color: inherit;
+            /* 밑줄 제거 */
+            text-decoration: none;
+        }
+
+        /* 상단 '1:1문의' */
+        .askName {
+            font-family: 'NPSfontBold';
+            font-size: 1.5em;
+        }
+
+        /*1:1 문의 입력페이지*/
+        .askP {
+            margin-top: 30px;
+            padding-top: 1em;
+        }
+
+        /*form을 둘러싸고 있는 div*/
+        .askWrite {
+            /* border: 1px solid salmon;*/
+            margin: auto;
+            width: fit-content;
+            /* display: flex;
+    justify-content: center;*/
+        }
+
+        /*form 테이블*/
+        .askTable {
+            border-collapse: separate;
+            border-spacing: 0 1.3em;
+            padding-right: 1em;
+            font-family: 'NanumSquareNeo-Variable';
+        }
+
+        /* '제목', '내용' */
+        .askLine {
+            margin: 1em;
+            padding: 1em;
+            padding-right: 2em;
+
+            vertical-align: top;
+        }
+
+        /* * span 태그 */
+        .req {
+            color: red;
+        }
+
+        /* 제목 input */
+        .titleInput {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1em;
+            width: 100%;
+            font-family: 'NanumSquareNeo-Variable';
+        }
+
+        .titleInput:focus {
+            border: 1px solid black;
+        }
+
+        .titleInput::placeholder {
+            font-family: 'NanumSquareNeo-Variable';
+        }
+
+        /* 내용 textarea*/
+        .contentText {
+        	font-family: 'NanumSquareNeo-Variable';
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1em;
+            width: 100%;
+            height: 20em;
+            resize: none;
+        }
+
+        .contentText::placeholder {
+            font-family: 'NanumSquareNeo-Variable';
+        }
+
+        /* 등록버튼 */
+        .askSubmit {
+            font-family: 'NanumSquareNeo-Variable';
+            width: 100px;
+            height: 40px;
+            background-color: #32B43A;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .askFileNoti {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<section>
+        <div class="askWritePage">
+
+
+            <!-- 1:1 문의 작성페이지 -->
+            <div class="askP">
+                <h1 class="askName">1:1 문의</h1>
+                <br />
+                <hr>
+                <div class="askWrite">
+                    <form action="#" method="post" enctype="multipart/form-data">
+
+                        <table class="askTable">
+                            <tr>
+                                <th class="askLine">제목 <span class="req">*</span> </th>
+                                <td>
+                                    <input type="text" name="title" required class="titleInput" value="기존제목"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="askLine">내용 <span class="req">*</span> </th>
+                                <td>
+                                    <textarea name="content" required class="contentText">기존내용</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="askLine">
+                                    <input type="file" name="file">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <p class="askFileNoti">* 30MB 이하의 이미지만 업로드 가능합니다.</p>
+                                    <p class="askFileNoti">* 상품과 무관한 내용이거나 음란 및 불법적인 내용은 통보없이 삭제될 수 있습니다.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <input type="submit" value="수정" class="askSubmit">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

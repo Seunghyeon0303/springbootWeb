@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 목록</title>
+<link rel="icon" href="/img/fProLogo.png" />
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+
+<script defer
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
+<style type="text/css">
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
+}
+
+body {
+	min-width: 880px;
+	line-height: 1;
+	min-width: 320px;
+	margin: 0 16.2vw;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* header */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+.sidebar {
+	display: flex;
+	align-items: center;
+	margin-top: 2rem;
+	border-bottom: 2px solid #32B43A;
+	width: 100%;
+	min-width: 880px;
+}
+
+.top {
+	font-family: 'NPSfontBold';
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0;
+	width: 100%;
+}
+
+.content {
+	display: flex;
+	flex-direction: row; /* 수직 방향이 아닌 수평 방향으로 요소를 배치 */
+}
+
+.category-menu li {
+	text-align: center;
+	width: 120px;
+	height: 75px;
+	padding-bottom: 5px;
+	margin-bottom:5px;
+	margin-top:5px;
+	padding-top: 5px;
+}
+
+.category-menu li a {
+	font-family: 'NPSfontBold';
+	font-size: 20px;
+	text-decoration: none; /* 링크에 밑줄 제거 */
+	color: black;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.category-menu li a:hover {
+	color: #4CAF50;
+}
+
+.category-text {
+	font-family: 'NPSfontBold';
+	cursor: pointer;
+}
+
+.category-menu {
+	margin-top: 15px;
+	top: 100%;
+	left: 30px;
+}
+
+.active {
+	margin-top: 30px;
+	max-height: 500px; /* 메뉴가 나타날 때 최대 높이를 설정 */
+	display: block;
+	overflow-y: auto; /* 세로 스크롤이 생기도록 설정 */
+}
+
+.ham-button {
+	font-family: 'NPSfontBold';
+	font-size: 20px;
+	gap: 10px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.ham-button:hover {
+	background-color: rgb(175, 245, 183);
+	border-radius: 15px;
+}
+
+.ham-button img {
+	width: 40px;
+	height: 40px;
+}
+
+.product-list {
+	display: grid;
+	font-family: 'NPSfontBold';
+	grid-template-columns: repeat(3, 1fr);
+	gap: 25px;
+	justify-content: center;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.product-container {
+	flex-shrink: 0;
+	font-family: 'NPSfontBold';
+	width: 100%;
+	min-width: 880px;
+	margin-top: 2rem;
+	min-height: 600px;
+}
+
+.product {
+	flex-shrink: 0;
+	font-family: 'NanumSquareNeo-Variable';
+	width: 275px;
+	border: 1px solid #4CAF50;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin: 0 auto;
+}
+
+/* 라디오 버튼 숨기기 */
+input[type="radio"] {
+	display: none;
+}
+
+/* 선택되지 않은 라디오 버튼의 라벨 스타일 */
+label {
+	flex-shrink: 0;
+	display: inline-block;
+	padding: 5px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.totalCount {
+	flex-shrink: 0;
+	display: flex;
+	margin-top: 5px;
+	margin-left: 10px;
+	align-items: center;
+}
+
+.sort-options {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+input[type="radio"]:hover+label {
+	background-color: #4CAF50;
+	color: white;
+}
+
+.cart {
+	font-family: 'NPSfontBold';
+	width: 100%;
+	background-color: white;
+	color: black;
+	font-size: 17px;
+	border: 1px solid #4CAF50;
+	padding: 5px;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-top: 3px;
+	margin-bottom: 10px;
+}
+
+.cart:hover {
+	background-color: #4CAF50;
+}
+
+.discount {
+	color: orange;
+	margin-left: 10px;
+}
+
+.wish {
+	flex-shrink: 0;
+	font-size: 25px;
+	background-color: white;
+	color: black;
+	border: none;
+	padding: 5px;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-left: 15px;
+}
+
+.proCateCont {
+	width: 100%;
+}
+
+.topLeft {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+}
+
+.productImg {
+	width: 16rem;
+	height: 15rem;
+}
+.heartIcon{
+	color: red;
+}
+
+#categories_img {
+	width:20px;
+	height:20px;
+}
+.productNot{
+	color: red;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<div class="proCateCont">
+		<div class="sidebar">
+			<div class="top">
+				<div class="topLeft">
+					<button class="ham-button"
+						onclick="loadFragment3('productCategoryAll')">
+						<img src="/img/hambutton.png" alt="카테고리 아이콘"> CATEGORY
+					</button>
+					<span class="totalCount">총 n 건</span>
+				</div>
+				<div class="sort-options">
+					<input type="radio" id="lowToHigh" name="sort" value="lowToHigh"
+						onclick="sortLowToHigh()"> <label for="lowToHigh">낮은
+						가격순</label> <input type="radio" id="highToLow" name="sort"
+						value="highToLow" onclick="sortHighToLow()"> <label
+						for="highToLow">높은 가격순</label>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<ul class="category-menu" id="categoryMenu">
+				<li><a onclick="loadFragment3('productCategoryMealKit')">
+				<img id="categories_img" src="/img/product/categories/categories_mealkit.png">밀키트</a></li>
+				
+				<li><a onclick="loadFragment3('productCategoryMeat')">
+				<img id="categories_img" src="/img/product/categories/categories_meat.png">고기</a></li>
+				
+				<li><a onclick="loadFragment3('productCategorySeafood')">
+				<img id="categories_img" src="/img/product/categories/categories_seafood.png">해산물</a></li>
+				
+				<li><a onclick="loadFragment3('productCategoryVegetable')">
+				<img id="categories_img" src="/img/product/categories/categories_vegetable.png">채소</a></li>
+				
+				<li><a onclick="loadFragment3('productCategoryFruit')">
+				<img id="categories_img" src="/img/product/categories/categories_fruit.png">과일</a></li>
+			</ul>
+			<div class="product-container">
+				<div id="productCategory-dynamic"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<footer th:replace="hf/footer"></footer>
+<script>
+	
+function addToCart(button) {
+	console.log('버튼 누름');
+	var productID = button.getAttribute('data-product-id');
+	console.log(productID);
+	$.ajax({
+		type : 'POST',
+		url : '/api/order/addToCart',
+		data : JSON.stringify({
+			productID : productID
+		}),
+		contentType : 'application/json',
+		success : function(response) {
+			alert(response);
+		},
+		error : function(xhr, status, error) {
+			alert(xhr.responseText); // 서버에서 반환한 메시지
+			window.location.href = '/customer/login';
+		}
+
+	});
+}
+
+	
+	function loadFragment3(fragmentName) {
+	    fetch(`/product/fragment/${fragmentName}`)
+	        .then(response => response.text())
+	        .then(html => {
+	            document.getElementById('productCategory-dynamic').innerHTML = html;
+	            // 데이터를 가져왔으므로 총 건수 업데이트
+	            updateTotalCount();
+	        })
+	        .catch(error => console.error('Error:', error));
+	}
+	
+	// 낮은 가격순으로 정렬
+	function sortLowToHigh() {
+	    const productContainer = document.querySelector('.product-list');
+	    const products = Array.from(productContainer.querySelectorAll('.product'));
+	    products.sort((a, b) => {
+	        const priceA = parseFloat(a.querySelector('.price').innerText.replace('원', '').replace(/,/g, ''));
+	        const priceB = parseFloat(b.querySelector('.price').innerText.replace('원', '').replace(/,/g, ''));
+	        return priceA - priceB;
+	    });
+	    productContainer.innerHTML = '';
+	    products.forEach(product => productContainer.appendChild(product));
+	}
+
+	// 높은 가격순으로 정렬
+	function sortHighToLow() {
+	    const productContainer = document.querySelector('.product-list');
+	    const products = Array.from(productContainer.querySelectorAll('.product'));
+	    products.sort((a, b) => {
+	        const priceA = parseFloat(a.querySelector('.price').innerText.replace('원', '').replace(/,/g, ''));
+	        const priceB = parseFloat(b.querySelector('.price').innerText.replace('원', '').replace(/,/g, ''));
+	        return priceB - priceA;
+	    });
+	    productContainer.innerHTML = '';
+	    products.forEach(product => productContainer.appendChild(product));
+	}
+	
+	function updateTotalCount() {
+	    // 가져온 상품 목록의 개수를 세어서 업데이트
+	    const productItems = document.querySelectorAll('.product');
+	    const totalCountElement = document.querySelector('.totalCount');
+	    totalCountElement.textContent = `총 ${productItems.length} 건`;
+	}
+	
+    document.addEventListener('DOMContentLoaded', function() {
+        loadFragment3('productCategoryAll');
+    });
+    
+ // 로그인 상태일 때만 찜하기 기능 수행
+    function addToWishList(productId,event) {
+        console.log("찜하기 로직 수행", productId);
+
+        fetch('/api/customer/favorite/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId: productId })
+        })
+        .then(response => {
+            if (response.ok) {
+                response.json().then(function(data) {
+                	if(data.success){
+                    toggleHeartIcon(event.target);
+                    alert(data.message); // 성공 메시지
+                	}else{
+                		alert(data.message);
+                		window.location.href = "/customer/login";
+                	} 
+                	
+                });
+            } else {
+                response.json().then(function(data) {
+                    console.log('등록실패');
+                    alert(data.message); // 실패 메시지
+                });
+            }
+        })
+        .catch(error => {
+            console.error('찜하기 오류: ', error.message);
+            alert('찜하기에 실패했습니다: ' + error.message);
+        });
+    }
+
+    function toggleHeartIcon(icon) {
+        if (icon.classList.contains('xi-heart-o')) {
+            icon.classList.remove('xi-heart-o');
+            icon.classList.add('xi-heart');
+        } else if (icon.classList.contains('xi-heart')) {
+            icon.classList.remove('xi-heart');
+            icon.classList.add('xi-heart-o');
+        }
+    }
+ 
+    function loadWishList() {
+        fetch('/product/category/') // 위시리스트를 가져오는 엔드포인트 경로로 수정
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('위시리스트 데이터를 불러오는데 실패했습니다.');
+                }
+            })
+            .then(html => {
+                // 위시리스트 데이터를 받아서 화면에 표시
+                document.getElementById('wish-list-container').innerHTML = html;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+</script>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상세페이지</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<style>
+/* header */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+body {
+	margin: 0 16vw;
+}
+
+.container1 {
+	display: flex;
+	justify-content: center;
+	margin-top: 12%;
+	width: 1400px;
+	height: 700px;
+	font-family: 'NPSfontBold';
+}
+
+.container1__img {
+	width: 30%;
+	height: 60%;
+	border-radius: 5px;
+}
+
+.container1__content {
+	margin-left: 20%
+}
+
+.h {
+	font-size: 27px;
+	font-weight: 800;
+	margin-bottom: 14%;
+	margin-left: 5%;
+}
+
+.container1__content__t1 {
+	padding-bottom: 9%;
+	font-weight: 500;
+}
+
+.container1__content__t2 {
+	font-weight: 500;
+	padding-bottom: 10%;
+}
+
+.t {
+	text-decoration: line-through;
+}
+
+.price {
+	font-weight: 800;
+}
+
+.container1__content__small {
+	margin-top: -8%;
+	font-size: 10px;
+	color: rgb(165, 165, 165);
+}
+
+.container1__content__priceBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgb(219, 219, 219);
+	height: 7%;
+	width: 100%;
+	border-bottom: 1px solid gray;
+}
+
+#productDetailInput {
+	width: 5%;
+    height: 40%;
+	border: 1px solid rgb(180, 180, 180);
+}
+
+.container1__content__priceBox__btn {
+	background-color: white;
+	border: 1px solid rgb(180, 180, 180);
+	width: 4.88%;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button:active {
+	background-color: rgb(233, 233, 233);
+}
+
+.container1__content__priceBox__item {
+	font-size: 14px;
+	font-weight: 800;
+	margin-right: 15%;
+}
+
+.payment {
+	margin-top: 3%;
+	margin-left: 21%;
+}
+
+.container1__content__btn1 {
+	margin-left: 30%;
+	margin-top: 3%;
+	width: 13%;
+	height: 7%;
+	font-size: 25px;
+	background-color: white
+}
+
+.container1__content__btn2 {
+	margin-top: 3%;
+	width: 13%;
+	height: 7%;
+	font-size: 25px;
+	background-color: white
+}
+
+.container1__content__btn3 {
+	margin-top: 3%;
+	font-size: 25px;
+	width: 40.15%;
+	height: 7%;
+	font-weight: 600;
+	background-color: rgb(219, 219, 219);
+}
+
+.container2 {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	min-width: 1117px;
+	font-family: 'NPSfontBold';
+}
+
+.container2__a {
+	padding: 20px 22px 0px 22px;
+	font-size: 25px;
+	border-style: solid;
+	color: black;
+	border-color: rgb(190, 190, 190);
+	text-decoration: none;
+	background-color: white;
+}
+
+.a1 {
+	border-width: 1px 0px 0px 1px;
+	width: 200px;
+	text-align: center;
+}
+
+.a2 {
+	border-width: 1px 0px 0px 1px;
+	width: 200px;
+	text-align: center;
+}
+
+.a3 {
+	border-width: 1px 1px 0px 1px;
+	width: 200px;
+	text-align: center;
+}
+
+.productDetail_tabs {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.productDetail_tab {
+	cursor: pointer;
+	padding: 10px;
+	border: 1px solid #ccc;
+	margin-right: 5px;
+}
+
+.productDetail_tab:hover {
+	background-color: #f0f0f0;
+}
+
+.productDetail_tab_a {
+	text-decoration: none;
+	color: black;
+}
+/* 리뷰 탭 전부 */
+.productDetail_review {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/*리뷰 탭 css 시작*/
+.productDetail_item {
+	padding: 10px;
+	margin: 10px;
+	display: flex;
+	width: 780px;
+}
+
+/*  상단 보여주기 별점 */
+.container {
+	font-family: 'NanumSquareNeo-Variable';
+	font-size: 23px;
+	display: flex;
+	border: 1px solid #32B43A;
+}
+
+.header {
+	display: flex;
+	flex: 1;
+}
+
+#ratingDisplay {
+	font-size: 25px;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.left-section1 {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	margin: auto;
+	border-right: none;
+	width: 390px;
+}
+
+.left-section1 h2 {
+	margin-bottom: 10px;
+}
+
+.left-section1 span {
+	margin-bottom: 10px;
+}
+
+/* 구매만족도 아래 별점  */
+/* 라디오 버튼 숨기기 */
+input[type="radio"] {
+	display: none;
+}
+
+/* 선택되지 않은 라디오 버튼의 라벨 스타일 */
+label {
+	font-family: 'NPSfontBold';
+	display: inline-block;
+	padding: 5px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.sort-options {
+	font-family: 'NPSfontBold';
+	display: flex;
+	justify-content: right;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	white-space: nowrap;
+	width: 780px;
+}
+
+.sort-options label {
+	border: 1px solid #32B43A;
+}
+
+.totalCount {
+	display: flex;
+	flex: 1;
+	margin-left: 9rem;
+	margin-top: 0.4rem;
+}
+
+/* 선택된 라디오 버튼의 라벨 스타일 */
+input[type="radio"]:checked+label {
+	color: #32B43A;
+}
+
+.star-rating {
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+}
+
+.star {
+	font-size: 3.5rem;
+	margin: 0;
+	color: #ccc;
+	cursor: pointer;
+	display: flex;
+}
+
+/* 별점이 선택된 경우의 스타일 */
+.star-rating input:checked+label.star {
+	color: gold; /* 별 색상 변경 */
+}
+
+input[id="star1"]:checked ~.star, input[id="star2"]:checked ~.star,
+	input[id="star3"]:checked ~.star, input[id="star4"]:checked ~.star,
+	input[id="star5"]:checked ~.star {
+	color: gold;
+}
+
+/* 구매만족도 오른쪽 줄 */
+.board {
+	border: 1px solid #32B43A;
+}
+
+/*  평점 비율  */
+.right-section1 {
+	border-left: none;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	margin-top: 20px;
+	width: 390px;
+}
+
+.bar-graph {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column-reverse; /* 그래프 바를 세로로 나열하고 역순으로 표시합니다. */
+	align-items: flex-start; /* 그래프를 왼쪽에 배치합니다. */
+}
+
+.bar {
+	font-size: 15px;
+	margin-bottom: 10px;
+	position: relative;
+	background-color: #32B43A;
+	margin-right: 10px;
+	height: 20px;
+}
+
+.bar span {
+	z-index: 1;
+	position: absolute;
+	left: -40px;
+	text-align: center;
+	padding: 0.3rem;
+	white-space: nowrap; /* 텍스트가 그래프 바를 넘어가지 않도록 합니다. */
+}
+
+/* 아래 별 */
+.star-rating-1, .star-rating-2 {
+	display: flex;
+	align-items: center;
+	flex-direction: row-reverse;
+	font-size: 1.2rem;
+	justify-content: center;
+	padding: 0 0.2rem;
+	text-align: center;
+	width: 10rem;
+}
+
+.star-1, .star-2 {
+	width: 1.5rem;
+	font-size: 1rem;
+	margin: 0;
+	margin-right: 0.5rem;
+	cursor: pointer;
+	display: flex;
+	border-color: transparent;
+}
+
+.star-rating-1 input, .star-rating-2 input {
+	display: none;
+}
+
+.star-rating-1 label, .star-rating-2 label {
+	color: transparent;
+	-webkit-text-stroke-width: 0.05rem;
+	-webkit-text-stroke-color: black;
+	cursor: pointer;
+}
+
+.star-rating-1 input:checked ~ label, .star-rating-2 input:checked ~
+	label {
+	-webkit-text-fill-color: gold;
+}
+
+#ratingDisplay-1, #ratingDisplay-2 {
+	font-family: 'NPSfontBold';
+	font-size: 1rem;
+	text-align: center;
+}
+
+.review {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.left-section2 {
+	flex: 0.5; /* 왼쪽 섹션이 가변 너비를 가지도록 설정 */
+	text-align: center;
+}
+
+.grade {
+	font-family: 'NPSfontBold';
+	font-size: 18px;
+	border: 1px solid #32B43A;
+	padding: 0.3rem;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	width: 3.5rem;
+	margin-left: 3.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.reviewer {
+	font-family: 'NPSfontBold';
+	text-align: center;
+	font-size: 1.2rem;
+	margin-bottom: 5px;
+}
+
+.center-section {
+	flex: 3; /* 중앙 섹션이 왼쪽 섹션보다 넓도록 설정 */
+	padding: 0 20px; /* 가운데 여백 */
+}
+
+.product-name {
+	font-family: 'NPSfontBold';
+	font-size: 1.5rem;
+	margin-bottom: 5px;
+}
+
+.review-content {
+	font-family: 'NPSfontBold';
+	font-size: 1rem;
+	margin-top: 1rem;
+}
+
+.vertical-line {
+	border-left: 1px solid #32B43A;
+}
+
+.review-img {
+	margin-top: 1rem;
+	width: 8rem;
+}
+
+.write-date {
+	font-family: 'NPSfontBold';
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	margin-top: 0.5rem;
+}
+
+.recommend {
+	font-family: 'NPSfontBold';
+	font-size: 17px;
+	text-align: center;
+	width: 6rem;
+	height: 2rem;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 5rem;
+	background-color: #32B43A;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.recommend:hover {
+	opacity: 75%;
+}
+/* 레시피 부분*/
+.recipe_h1 {
+	text-align: center;
+	min-width: 880px;
+	font-size: 32px;
+	font-weight: bold;
+	padding: 5px;
+	margin: 5px;
+}
+
+.recipe_img {
+	box-sizing: border-box;
+	width: 170px;
+	height: 121px;
+}
+
+.recipe_container1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 13px;
+	min-width: 880px;
+}
+
+.recipe_container1 p {
+	padding: 2px;
+	margin: 2px;
+	font-size: 16px;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+
+	<div class="container1" th:if="${product != null}">
+		<img class="container1__img" th:src="@{${product.imageURL}}"></img>
+		<div class="container1__content">
+			<h3 class="h" th:text="|${product.productName} ${product.weight}|"></h3>
+			<table>
+				<tr>
+					<td class="container1__content__t1">정가</td>
+					<td class="container1__content__t2 t" th:text="${product.price}"
+						th:attr="data-product-price=${product.price}"></td>
+				</tr>
+				<tr>
+					<td class="container1__content__t1">판매가</td>
+					<td class="container1__content__t2 price"
+						th:text="${product.price}"
+						th:attr="data-product-price=${product.price}"></td>
+				</tr>
+				<tr>
+					<td class="container1__content__t1">원산지</td>
+					<td class="container1__content__t2">국내산</td>
+				</tr>
+				<tr>
+					<td class="container1__content__t1">택배배송</td>
+					<td class="container1__content__t2">3,000원</td>
+				</tr>
+				
+			</table>
+			<div class="container1__content__priceBox">
+				<p class="container1__content__priceBox__item"
+					th:text="|${product.productName} ${product.weight}|"></p>
+				<button class="container1__content__priceBox__btn" onclick="plus()">+</button>
+				<input id="productDetailInput" type="text" value="1" readonly>
+				<button class="container1__content__priceBox__btn" onclick="minus()">-</button>
+			</div>
+			<button class="container1__content__btn2"
+				th:attr="data-product-id=${product.productID}"
+				onclick="addPocket(this)">🛒</button>
+		</div>
+	</div>
+
+	<div class="productDetail_tabs">
+		<div class="productDetail_tab" onclick="toggleTab('tab1')">레시피</div>
+		
+		<div class="productDetail_tab" onclick="toggleTab('tab2')">
+			<a th:href="@{/ask/ask}" class="productDetail_tab_a">상품 문의하기</a>
+		</div>
+		<div class="productDetail_tab" onclick="toggleTab('tab3')">
+			<a th:href="@{/faq/}" class="productDetail_tab_a">교환 및 반품 등 안내</a>
+		</div>
+	</div>
+
+	<!-- 레시피 부분 -->
+	<div class="tab-content" id="tab1-content">
+		<h1 class="recipe_h1"
+			th:text="${product.productName} + '을(를) 넣어  이런 요리도 만들 수 있습니다.'"></h1>
+		<div class="recipe_container1"
+			th:each="recipeList, iterStat : ${recipes}"
+			th:if="${iterStat.index < 10}">
+			<img class="recipe_img" th:src="@{${recipeList.manualImg01}}"
+				th:alt="${'레시피 이미지 준비중'}"></img>
+			<p th:text="${recipeList.manual01}"></p>
+			<img class="recipe_img" th:src="@{${recipeList.manualImg02}}"
+				th:alt="${'레시피 이미지 준비중'}"></img>
+			<p th:text="${recipeList.manual02}"></p>
+			<img class="recipe_img" th:src="@{${recipeList.manualImg03}}"
+				th:alt="${'레시피 이미지 준비중'}"></img>
+			<p th:text="${recipeList.manual03}"></p>
+			<img class="recipe_img" th:src="@{${recipeList.manualImg04}}"
+				th:alt="${'레시피 이미지 준비중'}"></img>
+			<p th:text="${recipeList.manual04}"></p>
+			<img class="recipe_img" th:src="@{${recipeList.manualImg05}}"
+				th:alt="${'레시피 이미지 준비중'}"></img>
+			<p th:text="${recipeList.manual05}"></p>
+			<img class="recipe_img" th:src="@{${recipeList.manualImg06}}"
+				th:alt="${'레시피 이미지 준비중'}"></img>
+			<p th:text="${recipeList.manual06}"></p>
+		</div>
+	</div>
+<!-- 
+	<!-- 리뷰 부분 -->
+	<div class="tab-content" id="tab2-content">
+		<div class="productDetail_review">
+			<div class="productDetail_item">
+				<!-- 구매 만족도 부분 -->
+				<div class="left-section1">
+					<h2 class="review-title">구매 만족도</h2>
+					<span id="ratingDisplay">0</span>
+					<div class="left-section1 star-rating">
+						<input type="radio" id="star5" name="rating" value="5"> <label
+							for="star5" class="star">★</label> <input type="radio" id="star4"
+							name="rating" value="4"> <label for="star4" class="star">★</label>
+						<input type="radio" id="star3" name="rating" value="3"> <label
+							for="star3" class="star">★</label> <input type="radio" id="star2"
+							name="rating" value="2"> <label for="star2" class="star">★</label>
+						<input type="radio" id="star1" name="rating" value="1"> <label
+							for="star1" class="star">★</label>
+					</div>
+				</div>
+
+				<!-- 평점 비율 부분 -->
+				<div class="right-section1">
+					<h2 class="review-title">평점 비율</h2>
+					<div class="bar-graph">
+						<div class="bar" data-width="30" style="width: 30px;">
+							<span>1점</span>
+						</div>
+						<div class="bar" data-width="50" style="width: 50px;">
+							<span>2점</span>
+						</div>
+						<div class="bar" data-width="100" style="width: 100px;">
+							<span>3점</span>
+						</div>
+						<div class="bar" data-width="180" style="width: 180px;">
+							<span>4점</span>
+						</div>
+						<div class="bar" data-width="250" style="width: 250px;">
+							<span>5점</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="productDetail_item"> 끝 -->
+
+			<div class="sort-options">
+				<span class="totalCount" th:text="'총 '+${count}+' 건'"></span> <input
+					type="radio" id="recommend" name="sort" value="recommend" checked>
+				<label for="recommend">추천순</label> <input type="radio" id="newlist"
+					name="sort" value="highToLow"> <label for="newlist">최신순</label>
+				<input type="radio" id="highToLow" name="sort" value="highToLow">
+				<label for="highToLow">평점 높은순</label> <input type="radio"
+					id="lowToHigh" name="sort" value="lowToHigh"> <label
+					for="lowToHigh">평점 낮은순</label>
+			</div>
+		</div>
+	</div>
+	--->
+	<script>
+		let count = 0;
+		function plus() {
+			if (document.querySelector('#productDetailInput').value < 10) {
+				count += 1;
+				document.querySelector('#productDetailInput').value = count;
+			} else {
+				count = 10;
+				document.querySelector('#productDetailInput').value = count;
+				alert('그만추가해라');
+			}
+		}
+
+		function minus() {
+			if (document.querySelector('#productDetailInput').value > 0) {
+				count -= 1;
+				document.querySelector('#productDetailInput').value = count;
+			} else {
+				count = 0;
+				document.querySelector('#productDetailInput').value = count;
+				alert('하나는 사야지;;');
+			}
+		}
+
+
+
+		function addPocket(button) {
+			var productID = button.getAttribute('data-product-id');
+			var count = $('#productDetailInput').val(); // 선택한 상품의 개수를 가져옵니다.
+
+			$.ajax({
+				type : 'POST',
+				url : '/api/order/orderitem',
+				data : JSON.stringify({
+					productID : productID,
+					count : count
+				}),
+				contentType : 'application/json',
+				success : function(response) {
+					alert(response);
+				},
+				error : function(xhr, status, error) {
+					alert(xhr.responseText); // 서버에서 반환한 메시지
+					window.location.href = '/customer/login';
+				}
+
+			});
+		}
+	</script>
+	<script>
+		function toggleTab(tabId) {
+			// 모든 탭 콘텐츠를 숨깁니다
+			var allContents = document.getElementsByClassName('tab-content');
+			for (var i = 0; i < allContents.length; i++) {
+				allContents[i].style.display = 'none';
+			}
+
+			// 선택된 탭의 콘텐츠만 표시합니다
+			var selectedContent = document.getElementById(tabId + '-content');
+			if (selectedContent) {
+				selectedContent.style.display = 'block';
+			}
+
+			// 모든 탭을 비활성화 상태로 만듭니다
+			var allTabs = document.getElementsByClassName('productDetail_tab');
+			for (i = 0; i < allTabs.length; i++) {
+				allTabs[i].classList.remove('active');
+			}
+
+			// 현재 선택된 탭을 활성화 상태로 만듭니다
+			document.querySelector('[onclick="toggleTab(\'' + tabId + '\')"]').classList
+					.add('active');
+		}
+
+		$(document).ready(function() {
+			// 아코디언 버튼 클릭 이벤트를 설정합니다
+			$('.productDetail_accordion-button').click(function() {
+				/*
+				// 이 버튼에 연결된 아코디언 콘텐츠를 찾습니다
+				var content = $(this).next(
+						'.productDetail_accordion-content');
+
+				// 현재 열려있는 아코디언을 토글합니다
+				$(this).toggleClass('active');
+				content.slideToggle(200);
+
+				// 다른 모든 아코디언 콘텐츠를 닫습니다
+				$('.productDetail_accordion-content').not(
+						content).slideUp(200);
+				$('.productDetail_accordion-button').not(this)
+						.removeClass('active');*/
+			});
+
+			// 초기 탭 설정 (첫 번째 탭을 기본적으로 열린 상태로 설정)
+			toggleTab('tab1');
+		});
+	</script>
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

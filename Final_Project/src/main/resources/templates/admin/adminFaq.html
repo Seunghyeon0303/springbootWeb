@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>FAQ 목록_관리자게시판</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+
+<style>
+#faq_h1 {
+	font-size: 32px;
+	text-align: center;
+}
+
+#adminFaq_title {
+	text-decoration: none;
+	color: #0d6efd;
+}
+#faq_new {
+	width: 120px;
+	height: 35px;
+	padding: 7px;
+	margin:7px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: black;
+	text-decoration: none;
+	color: white;
+}
+
+#adminLink{
+width: 120px;
+	height: 35px;
+	padding: 7px;
+	margin:7px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #0D6AF4;
+	text-decoration: none;
+	color: white;
+}
+.faq_table {
+	min-width: 880px;
+}
+
+.adminFaq_table td:nth-child(1) {
+	min-width: 40px;
+	text-align: center;
+}
+
+.adminFaq_table td:nth-child(2) {
+	min-width: 115px;
+	text-align: center;
+}
+
+.adminFaq_table td:nth-child(3) {
+	min-width: 150px;
+}
+
+.adminFaq_table td:nth-child(4) {
+	min-width: 460px;
+}
+
+.adminFaq_table td:nth-child(5) {
+	min-width: 115px;
+	text-align: center;
+}
+
+.faq_table_td {
+	border: 1px solid;
+	height: 50px;
+	 /*text-overflow: ellipsis;*/ /* 내용이 셀 크기를 초과하는 경우 말줄임표(...)로 표시  */
+}
+
+#faq_nav {
+	padding: 15px;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+}
+
+.page-link {
+	text-decoration: none;
+	color: black;
+	padding: 10px;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<br>
+	<h1 id="faq_h1">FAQ 목록</h1>
+	<br>
+	<br>
+	<a id="adminLink" th:href="@{/admin/adminBoard}">관리자 전체 목록 </a>
+	<a id="faq_new" th:href="@{/faq/admin/adminFaqNew}">새 FAQ 작성</a>
+	<br>
+	<br>
+
+	<table class="adminFaq_table">
+		<thead>
+			<tr class="faq_table">
+				<th>번호</th>
+				<th>분류</th>
+				<th>제목</th>
+				<th>내용</th>
+				<th>작성일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- 타임리프 이용해서 게시글 출력 -->
+			<tr class="faq_table" th:each="faq : ${faqs}" >
+				<td class="faq_table_td" th:text="${faq.ocid}" ></td>
+				<td class="faq_table_td" th:text="${faq.category}" ></td>
+				<td class="faq_table_td" ><a
+					id="adminFaq_title"
+					th:href="@{'/faq/admin/adminFaqDetail/' + ${faq.ocid}}"> <span
+						th:text="${faq.title}"></span>
+				</a></td>
+				<td class="faq_table_td" th:text="${faq.content}" ></td>
+				<td class="faq_table_td"
+					th:text="${#temporals.format(faq.writeDate,'yyyy-MM-dd HH:mm')}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<nav id="faq_nav" aria-label="Page">
+		<ul class="pagination justify-content-center">
+
+			<!-- 이전 버튼 (첫번째 페이지로 이동) -->
+			<li th:class="${page.first}?'page-item disabled':'page-item'"><a
+				class="page-link"
+				th:href="@{${#httpServletRequest.requestURI}(page=0)}"> &laquo;
+			</a></li>
+
+			<!-- 숫자 부분 -->
+			<li th:each="i : ${#numbers.sequence(0,page.totalPages-1)}"
+				th:class="${page.number == i} ? 'page-item active'  : 'page-item' ">
+				<a class="page-link"
+				th:href="@{${#httpServletRequest.requestURI}(page=${i})}"
+				th:text="${i +1}"></a>
+			</li>
+
+			<!-- 이후 버튼 (마지막 페이지로 이동) -->
+			<li th:class="${page.last}?'page-item disabled':'page-item'"><a
+				class="page-link"
+				th:href="@{${#httpServletRequest.requestURI}(page=${page.totalPages -1})}">&raquo;</a>
+			</li>
+		</ul>
+	</nav>
+
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

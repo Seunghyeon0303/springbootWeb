@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>이벤트</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<style type="text/css">
+
+/* 폰트 */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+body {
+	margin: 0 16.2vw;
+}
+
+#event_body{
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+#event_title {
+	min-width: 880px;
+	text-align: center;
+	overflow: hidden;
+	font-family: 'NPSfontBold';
+	font-size: 32px;
+}
+
+#event_span {
+	color: #32B43A;
+}
+.event_span{
+text-decoration: none;
+color: black;
+}
+
+
+
+.event_accordion-content {
+	display: none;
+	padding: 15px;
+	border: 1px solid white;
+	border-top: none;
+	text-align: center;	
+}
+
+.event_accordion-button {
+	width: 100%;
+	padding: 10px;
+	text-align: left;
+	border: 1px solid white;
+	cursor: pointer;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	outline: none;
+	background-color: white;
+}
+
+.event_a{
+text-decoration: none;
+color: black;
+}
+
+.event_a_product{
+text-decoration: none;
+color: #32B43A;
+}
+
+.event_modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* 모달 내용 스타일 */
+.event_modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* 닫기 버튼 스타일 */
+.event_modal_close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.event_modal_close:hover,
+.event_modal_close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.event_sns_ul{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.event_sns_li{
+display: flex;
+padding:10px;
+}
+.event_icon{
+width: 45px;
+height: 45px;
+}
+.eventIcon{
+	cursor: pointer;
+}
+.eventPre-wrap {
+    white-space: pre-wrap;
+}
+</style>
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<script defer th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script defer src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- <script defer th:src="@{/js/event_main.js}"></script> -->
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<div id="event_body">
+	<div id="event_title">
+		<br>
+		<h1>이벤트</h1>
+		<br>
+	</div>
+	<!-- section 01 -->
+	<div id="event_accordion">
+		<div th:each="event : ${events}" class="event_accordion-item">
+			<button class="event_accordion-button">
+			<img th:src="@{${event.imageUrl}}" alt="이벤트 이미지" class="event_img">
+			<!-- 
+			<img id="event_img" alt="3_과일_이미지" src="/img/event/03fruit.JPG">
+			-->
+			</button>
+			<div class="event_accordion-content">
+			<!--
+			<p th:text="${event.title}" class="eventPre-wrap">
+			<p th:text="${event.getTitle()}">
+				-->
+					
+                        <p th:text="${event.content}" class="eventPre-wrap"></p><br>
+                        <p>
+                        	<a href="/product/category" class="event_span">
+                        		<span th:text="${event.productUrl}" class="eventPre-wrap "></span>
+                        		</a></p><br><br>
+                        <i class="xi-share-alt-o eventIcon">&nbsp이벤트 공유하기</i>
+                        <!-- 
+                        <p><a href="#" class="event_a">#딸기</a> <a href="#" class="event_a">#한라봉</a> 
+                        	<a href="#" class="event_a">#매실</a> <a href="#" class="event_a">#대저 토마토</a> </p><br>
+                      	<p><a href="#" class="event_a_product">과일 상품 페이지로 이동</a></p> -->
+			</div>
+		</div>
+
+		<!-- section 02 -->
+		<!-- 
+		<div class="event_accordion-item">
+			<button class="event_accordion-button">
+			<img id="event_img" alt="3_채소_이미지" src="/img/event/03vegetable.JPG">
+				</button>
+			<div class="event_accordion-content">
+				 <p>3월의 제철 채소를 담아보세요 &nbsp &nbsp &nbsp 
+					<i class="xi-share-alt-o"></i></p>
+                        <br>
+                        <p><a href="#" class="event_a">#쑥</a> <a href="#" class="event_a">#달래</a> 
+                        	<a href="#" class="event_a">#냉이</a> <a href="#" class="event_a">#취나물</a></p><br>
+                        <p><a href="#" class="event_a">#씀바귀</a> <a href="#" class="event_a">#더덕</a> 
+                        	<a href="#" class="event_a">#우엉</a></p><br>
+                        <p><a href="#" class="event_a_product">채소 상품 페이지로 이동</a></p>
+			</div>
+		</div> -->
+
+		<!-- section 03 -->
+		<!-- 
+		<div class="event_accordion-item">
+			<button class="event_accordion-button">
+				<img id="event_img" alt="3_해산물_이미지" src="/img/event/03seafood.JPG">
+			</button>
+			<div class="event_accordion-content">
+				<p>3월의 제철 해산물을 담아보세요 &nbsp &nbsp &nbsp 
+					<i class="xi-share-alt-o"></i></p>
+                        <br>
+                        <p><a href="#" class="event_a">#소라</a> <a href="#" class="event_a">#꼬막</a> 
+                        	<a href="#" class="event_a">#주꾸미</a> <a href="#" class="event_a">#바지락</a>
+                        	<a href="#" class="event_a">#도미</a></p><br>
+                        <p><a href="#" class="event_a_product">해산물 상품 페이지로 이동</a></p>
+			</div>
+		</div>
+ -->
+		<!-- section 04 -->
+		<!-- 
+		<div class="event_accordion-item">
+			<button class="event_accordion-button">
+			<img id="event_img" alt="3_육류_이미지" src="/img/event/03meat.JPG">
+				</button>
+			<div class="event_accordion-content">
+				<p>이런 메뉴는 어떠세요? &nbsp &nbsp &nbsp 
+					<i class="xi-share-alt-o"></i></p>
+                        <br>
+                        <p><a href="#" class="event_a">#소고기</a> <a href="#" class="event_a">#돼지고기</a> 
+                        	<a href="#" class="event_a">#닭고기</a> <a href="#" class="event_a">#양고기</a>
+                        	<a href="#" class="event_a">#오리고기</a></p><br>
+                        <p><a href="#" class="event_a_product">육류 상품 페이지로 이동</a></p>
+				</div>
+		</div>
+	</div>
+	 -->
+		<!-- section 05 -->
+		<!-- 
+		<div class="event_accordion-item">
+			<button class="event_accordion-button">
+			<img id="event_img" alt="3_밀키트_이미지" src="/img/event/03mealkit.JPG">
+				</button>
+			<div class="event_accordion-content">
+				<p>밀키트로 간편하지만 영양 가득한 식사를 위해 담아보세요
+				 &nbsp &nbsp &nbsp 
+					<i class="xi-share-alt-o"></i></p>
+				<br>
+                <p><a href="#" class="event_a_product">밀키트 상품 페이지로 이동</a></p>
+				</div>
+		</div>
+		-->
+	</div>
+	
+
+  <!-- 모달 내용 -->
+<div id="myModal" class="event_modal">
+  <div class="event_modal-content">
+    <span class="event_modal_close">&times;</span>
+    <p style="text-align: center;">이벤트를 공유하세요!</p>
+    <ul class="sns event_sns_ul" >
+		<li class="facebook event_sns_li"><a href="#n"
+			onclick="fn_sendFB('facebook');return false;" class="facebook"
+			target="_self" title="페이스북 새창열림"> <span class="skip"> <img class="event_icon"
+					th:src="@{'/img/event/icon-facebook.png'}" />
+			</span>
+		</a></li>
+		<li class="twitter event_sns_li"><a href="#n"
+			onclick="fn_sendFB('twitter');return false;" class="twitter"
+			target="_self" title="트위터 새창열림"><span class="skip"> <img class="event_icon"
+					th:src="@{'/img/event/icon-twitter.png'}" /></span></a></li>
+		
+		<li class="band event_sns_li"><a href="#n"
+			onclick="fn_sendFB('band');return false;" class="band" target="_self"
+			title="네이버밴드 새창열림"><span class="skip"> <img class="event_icon"
+					th:src="@{'/img/event/icon-band.png'}" /></span></a></li>
+		
+		<li class="kakaotalk event_sns_li"><a href="#n" id="btnKakao"
+			onclick="fn_sendFB('kakaotalk');return false;" class="kakaotalk"
+			target="_self" title="카카오톡 새창열림"><span class="skip"><img class="event_icon"
+					th:src="@{'/img/event/icon-kakao.png'}" /></span></a></li>
+	</ul>
+  </div>
+</div>	
+</div>	
+	<script>
+			
+	
+	
+	document.querySelectorAll('.event_accordion-button').forEach(button => {
+		  button.addEventListener('click', () => {
+		    const activeButton = document.querySelector('.event_accordion-button.active');
+		    if (activeButton && activeButton !== button) {
+		      activeButton.classList.remove('active');
+		      activeButton.nextElementSibling.style.display = 'none';
+		    }
+
+		    const accordionContent = button.nextElementSibling;
+		    const isCurrentlyActive = button.classList.contains('active');
+
+		    if (isCurrentlyActive) {
+		      button.classList.remove('active');
+		      accordionContent.style.display = 'none';
+		    } else {
+		      button.classList.add('active');
+		      accordionContent.style.display = 'block';
+		    }
+		  });
+		});
+
+			/*			
+//모달 변수 가져오기
+var modal = document.getElementById("myModal");
+
+// 모달을 여는 버튼 변수 가져오기
+var btn = document.querySelector(".xi-share-alt-o");
+
+// 모달을 닫는 <span> 요소 (x 버튼) 가져오기
+var span = document.getElementsByClassName("event_modal_close")[0];
+
+// 사용자가 버튼을 클릭하면 모달 열기
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// 사용자가 <span> (x)를 클릭하면 모달 닫기
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// 사용자가 모달 외부를 클릭하면 모달 닫기
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+*/
+
+//모달 변수 가져오기
+var modal = document.getElementById("myModal");
+
+// 모달을 여는 버튼 변수 가져오기
+var shareButtons = document.querySelectorAll('.xi-share-alt-o');
+
+// 각 공유 버튼에 대해 클릭 이벤트 처리
+shareButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        // 모달 열기
+        modal.style.display = "block";
+    });
+});
+
+// 모달을 닫는 <span> 요소 (x 버튼) 가져오기
+var span = document.getElementsByClassName("event_modal_close")[0];
+
+// 사용자가 <span> (x)를 클릭하면 모달 닫기
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// 사용자가 모달 외부를 클릭하면 모달 닫기
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function fn_sendFB(sns) {        
+    var thisUrl = "https://goldmodu.tistory.com/";
+	var snsTitle = "GreenBox";
+	if (sns == 'facebook') {
+		var url = "http://www.facebook.com/sharer/sharer.php?u="
+				+ encodeURIComponent("https://goldmodu.tistory.com/");
+		window.open(url, "", "width=486, height=286");
+	} else if (sns == 'twitter') {
+		var url = "http://twitter.com/share?url=" + encodeURIComponent("https://goldmodu.tistory.com/")
+				+ "&text=" + encodeURIComponent(snsTitle);
+		window.open(url, "tweetPop", "width=486, height=286,scrollbars=yes");
+	} else if (sns == 'band') {
+		var url = "http://www.band.us/plugin/share?body="
+				+ encodeURIComponent(snsTitle) + "&route="
+				+ encodeURIComponent("https://goldmodu.tistory.com/");
+		window.open(url, "shareBand", "width=400, height=500, resizable=yes");
+	
+	} else if (sns == 'kakaotalk') {
+		console.log("gkgk");
+		// 사용할 앱의 JavaScript 키 설정
+		Kakao.init('49331de396144142265acd380dc016dd');
+
+		// 카카오링크 버튼 생성
+		Kakao.Link.createDefaultButton({
+			container : '#btnKakao', // HTML에서 작성한 ID값
+			objectType : 'feed',
+			content : {
+				title : "GreenBox", // 보여질 제목
+				description : "GreenBox 이벤트 공유하기", // 보여질 설명
+				imageUrl : "https://goldmodu.tistory.com/", // 콘텐츠 URL
+				link : {
+					mobileWebUrl : "https://goldmodu.tistory.com/",
+					webUrl : "https://goldmodu.tistory.com/"
+				}
+			}
+		});
+	}
+    }
+/*
+$(document)
+.ready(
+		function() {
+			$('.xi-share-alt-o')
+			.click(
+					function(event) {
+						
+						// 링크의 기본 동작을 막는다.
+						event.preventDefault(); 
+						$.ajax({
+							success : function(response) {
+								// 모달의 요소값을 가져온다.
+								$('.sns').html(htmlContent);
+								// 모달을 연다.
+								$('#myModal').modal('show');
+							}
+					}
+					};
+					};
+					*/
+</script>
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

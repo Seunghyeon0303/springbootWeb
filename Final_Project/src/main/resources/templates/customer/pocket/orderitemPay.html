@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<!-- font어썸 -->
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<!--xeicon 아이콘 -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<!--  구글 폰트 아이콘 -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<title>주문결제</title>
+</head>
+<style>
+/* 기본세팅 코드 */
+/* 폰트 */
+/* header */
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+/* 좌우 마진 */
+body {
+	margin: 0 16.2vw;
+	min-width: 880px;
+}
+/* 헤더부분 */
+/* 장바구니 부분 */
+.header {
+	margin-top: 50px;
+	border-radius: 10px;
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	width: 100%;
+}
+
+.left h1 {
+	margin-left: 20px;
+	white-space: nowrap;
+}
+
+.right {
+	padding-right: 30px;
+	font-family: 'NPSfontBold';
+}
+
+.right ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.right ul li {
+	padding: 0 10px;
+	flex-shrink: 0;
+}
+
+.right ul li:nth-child(1) {
+	border: 1px solid rgb(201, 200, 200);
+	border-radius: 20px 0 0 20px;
+	padding: 13px 15px;
+	cursor: pointer;
+}
+
+.right ul li a:nth-child(1) {
+	text-decoration: none;
+	color: #000000;
+}
+
+.right ul li:nth-child(2) {
+	border: 1px solid rgb(201, 200, 200);
+	padding: 13px 15px;
+}
+
+.right ul li:nth-child(3) {
+	border: 1px solid rgb(201, 200, 200);
+	border-radius: 0 20px 20px 0;
+	padding: 13px 15px;
+}
+
+/* 배송정보*/
+.subheader {
+	margin-top: 1rem;
+	display: flex;
+	align-items: center;
+	padding: 1rem;
+	width: 70%;
+	/* 변경: .subheader의 너비를 70%로 설정합니다. */
+	min-width: 70%;
+}
+
+/* 옆에 뜨는 결제 금액란 */
+.subheader__2 {
+	position: fixed;
+	width: 17%;
+	min-width: 300px;
+	top: 31.5%;
+	/* margin-left: 48.5%; */
+	left: 64.3%;
+	padding: 0.5rem;
+	background-color: white;
+	z-index: 1;
+	border: 1px dashed #32B43A;
+}
+
+.hr {
+	margin-top: 1.2rem;
+}
+
+.subheader__2__title {
+	display: flex;
+	justify-content: space-between;
+	line-height: 2rem;
+}
+
+.subheader__2__title span {
+	flex-shrink: 0;
+}
+
+.subheader__2__content {
+	display: flex;
+	flex-direction: column;
+}
+
+.subheader__2__content .one {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+	white-space: nowrap;
+}
+
+.subheader__2__content .one span {
+	color: #2ea832;
+}
+
+.subheader__2__content .one:last-child {
+	margin-top: 2rem;
+}
+
+.subheader__2 span:nth-child(7) {
+	white-space: nowrap;
+}
+
+/* 아래 선 */
+.border {
+	border-bottom: 1px solid gray;
+	max-width: 70%;
+	width: 100%;
+}
+
+.subheader button {
+	margin-left: 1rem;
+	background-color: transparent;
+	border: 1px solid rgb(201, 200, 200);
+	padding: 0.5rem;
+}
+
+/* 배송지 선택 */
+.route {
+	display: flex;
+	gap: 1rem;
+	padding: 23px 0 22px 0;
+}
+
+.init_order_radio {
+	position: relative;
+}
+
+.init_order_radio input[type="radio"] {
+	display: none;
+}
+
+.init_order_radio>span {
+	display: inline-block;
+	position: relative;
+	padding-left: 29px;
+	font-size: 17px;
+	line-height: 22px;
+	color: #333;
+	letter-spacing: 0;
+	cursor: pointer;
+	margin-left: 0.6rem;
+	white-space: nowrap;
+}
+
+.init_order_radio>span:before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid #ddd;
+	border-radius: 100%;
+	box-sizing: border-box;
+}
+
+.init_order_radio input[type="radio"]:checked+span:before {
+	border-color: #ff0038;
+}
+
+.init_order_radio input[type="radio"]:checked+span:after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 3px;
+	transform: translateY(-50%);
+	width: 10px;
+	height: 10px;
+	border-radius: 100%;
+	background-color: #32B43A;
+	display: block;
+}
+/* 직접입력 눌렀을시 */
+.new-content {
+	margin-top: 10px;
+	line-height: 2.5;
+}
+
+.new-content input {
+	border: 1px solid gray;
+}
+
+.new-content input:first-child {
+	
+}
+
+.new-content input, button, select {
+	height: 30px;
+}
+/* 주소 찾기 버튼 */
+.new-button {
+	border: 1px solid crimson;
+	cursor: pointer;
+}
+
+#postcode {
+	width: 30%;
+}
+
+#roadAddress {
+	width: 50%;
+}
+
+/* 배송지 정보 칸 */
+.info {
+	max-width: 70%;
+	width: 100%;
+	line-height: 1.6em;
+	padding: 0.5rem;
+}
+
+.info .address {
+	/* 텍스트 한줄 고정 */
+	white-space: nowrap;
+}
+
+.changephonenumber {
+	margin-top: 1rem;
+}
+
+.changephonenumber .add__input {
+	margin-bottom: 1rem;
+	height: 30px;
+}
+
+.add__number {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.add__number label, .add__number select, .add__number input {
+	margin-right: 1rem;
+	flex-shrink: 0;
+}
+
+/* 연락처 추가 기입 시 나오는 창 크기 조절 */
+#phone-prefix, .phone-input {
+	height: 30px;
+}
+
+.changephonenumber input {
+	display: none;
+}
+
+.changephonenumber label {
+	margin-right: 2rem;
+}
+
+.add__number big {
+	transform: scale(1.5);
+	margin-right: 0.45rem;
+}
+
+.changephonenumber .add__input select, .changephonenumber .add__input input
+	{
+	margin-right: 10px;
+	/* 각 요소 사이의 간격 설정 */
+}
+
+/* 아이콘 */
+.fa-check-circle {
+	margin-right: 0.3rem;
+	transform: scale(1.5);
+}
+
+/* 체크박스가 체크되었을 때 아이콘 색상 변경 */
+#checkbox1:checked+label i, #checkbox2:checked+label i {
+	color: #32B43A;
+}
+
+/* 체크박스가 체크되지 않았을 때 아이콘 색상 변경 */
+#checkbox1:not (:checked )+label i, #checkbox2:not (:checked )+label i {
+	color: #666;
+}
+
+/* 추가 번호 입력 란 */
+.add__input {
+	margin-top: 1rem;
+	margin-left: auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+/* 배송 요청사항란 */
+.comment {
+	margin-top: 1rem;
+}
+
+.comment__select {
+	height: 30px;
+}
+
+.comment__select:focus {
+	outline: none;
+}
+
+.custom-delivery-comment-wrapper {
+	display: flex;
+	align-items: end;
+}
+
+#custom-delivery-comment {
+	margin-top: 1rem;
+	height: 30px;
+	width: 293px;
+}
+
+.comment__counter {
+	margin-left: 1rem;
+}
+
+/* 주문상품 */
+/* 밑에 줄 */
+/* 주문 상품 리스트 */
+.order__main__list {
+	display: flex;
+	width: 70%;
+}
+
+.order-title {
+	margin-top: 3rem;
+	display: flex;
+	justify-content: flex-start;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.order-title h1, .order-title p {
+	flex-shrink: 0;
+}
+
+.order-title h1 {
+	font-weight: bold;
+}
+
+.order-title p {
+	font-family: "NPSfontBold";
+}
+/* 주문 상품 제목 */
+.order__main {
+	overflow: hidden;
+}
+
+.order__main__title, .order__main__list {
+	width: 70%;
+	max-width: 70%;
+}
+
+.order__main__title {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ppl_product {
+	display: flex;
+	padding: 1rem;
+	padding: 0.5rem;
+	border: 1px solid rgb(210, 206, 206);
+	border-bottom: none;
+	border-right: none;
+	width: 60%;
+}
+
+.ppl_product img {
+	margin-top: 1rem;
+	margin-bottom: 10px;
+	object-fit: contain;
+}
+
+.ppl_product p {
+	margin: 0;
+	flex-shrink: 0;
+}
+
+/* 주문 상품 안 세부사항 */
+.ppl_product__detail {
+	margin-left: 0.5rem;
+	height: 22px;
+	line-height: 2.2;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.ppl_product__detail strong {
+	color: #2ea832;
+}
+
+.em {
+	display: inline-block;
+	color: #32B43A;
+	padding: 0 6px;
+	font-size: 12px;
+	border: 1px solid rgb(201, 200, 200);
+	cursor: default;
+}
+
+/* ? 대고 있을때*/
+.xi-help-o {
+	cursor: pointer;
+	color: #32B43A;
+}
+
+/* 상품 옆 개수 */
+.ppl_product__count, .ppl_product__price, .ppl_product__deliver {
+	text-align: center;
+	border: 1px solid rgb(210, 206, 206);
+	flex-grow: 1;
+	flex-shrink: 0;
+	min-width: 15%;
+}
+
+.ppl_product__count, .ppl_product__deliver {
+	border-bottom: none;
+}
+
+.ppl_product__price {
+	border: none;
+	border-top: 1px solid rgb(210, 206, 206);
+}
+
+.ppl_product__count span, .ppl_product__price span,
+	.ppl_product__deliver span {
+	display: inline-block;
+	margin-top: 2rem;
+	white-space: nowrap;
+}
+
+#deliver {
+	margin-top: 0;
+}
+
+/* 주문상품 옆에 뜨는 제품동의 */
+/* 결제하기 밑에 버튼 */
+#agree_show {
+	margin-top: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	outline: none;
+	font-family: 'NPSfontBold';
+	margin-bottom: 10px;
+}
+
+#agree {
+	width: 68%;
+	overflow-y: scroll;
+	min-width: 300px;
+	max-height: 100px;
+	margin-left: 30px;
+	font-family: 'NanumSquareNeo-Variable';
+	font-size: 12px;
+	line-height: 1.2em;
+}
+
+#agree strong {
+	font-weight: bold;
+}
+
+/* 할인 */
+.sale .border {
+	margin-top: 1rem;
+}
+
+.sale__coupon {
+	margin-top: 10px;
+	line-height: 1.5;
+}
+
+.sale__coupon span {
+	margin-top: 10px;
+}
+
+.sale button {
+	text-decoration: none;
+	color: #32B43A;
+	border: 1px solid crimson;
+}
+
+/* 결제 방법 */
+.payment {
+	margin-top: 10px;
+	max-width: 70%;
+	width: 70%;
+	border: 1px dashed #2ea832;
+}
+
+.payment a {
+	border: none;
+}
+
+.payment h1 {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.payment .route {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	gap: 1rem;
+	padding: 23px 0 22px 0;
+}
+
+.route .init_order_radio2 {
+	position: relative;
+}
+
+.route  .init_order_radio2 input[type="radio"] {
+	display: none;
+}
+
+.route  .init_order_radio2>span {
+	display: flex;
+	align-items: center;
+	position: relative;
+	padding-left: 29px;
+	font-size: 17px;
+	line-height: 22px;
+	color: #333;
+	letter-spacing: 0;
+	cursor: pointer;
+	margin-left: 0.6rem;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.route  .init_order_radio2>span:before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+	width: 1rem;
+	height: 1rem;
+	border: 2px solid #ddd;
+	border-radius: 100%;
+	box-sizing: border-box;
+}
+
+.route  .init_order_radio2 input[type="radio"]:checked+span:before {
+	border-color: #ff0038;
+}
+
+.route  .init_order_radio2 input[type="radio"]:checked+span:after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 3px;
+	transform: translateY(-50%);
+	width: 10px;
+	height: 10px;
+	border-radius: 100%;
+	background-color: #32B43A;
+	display: block;
+}
+
+/* 결제 버튼 */
+.payment__button {
+	margin-top: 20px;
+	background-color: #32B43A;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 20px;
+	display: block;
+	margin: 0 auto;
+	white-space: nowrap;
+	border-radius: 10px;
+	margin-bottom: 5px;
+}
+
+.payment__button:hover {
+	background-color: #2ea832;
+}
+/* 맨 아래 글 */
+.last {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	max-width: 70%;
+	font-size: 12px;
+	max-width: 70%;
+}
+
+/* 모달 창 */
+/* 모달 스타일 */
+.modal {
+	display: none; /* 기본적으로 모달은 숨겨진 상태여야 합니다. */
+	position: fixed; /* 고정 위치 */
+	z-index: 2; /* 다른 요소 위에 표시되어야 함 */
+	left: 0;
+	top: 0;
+	width: 100%; /* 화면 전체 너비 */
+	height: 100%; /* 화면 전체 높이 */
+	overflow: auto; /* 스크롤이 필요한 경우 스크롤 가능하도록 함 */
+	background-color: rgba(0, 0, 0, 0.4); /* 배경을 어둡게 함 */
+}
+
+/* 모달 내용 스타일 */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto; /* 위, 아래 여백을 조절하여 모달을 중앙에 위치시킵니다. */
+	padding: 20px;
+	width: 50%; /* 모달 너비 */
+}
+
+.coupont {
+	width: 100%;
+	/* 전체 너비를 가짐 */
+	margin-top: 5px;
+}
+
+.coupont th, .coupont td {
+	padding: 10px;
+	/* 셀 내부 여백 설정 */
+	text-align: center;
+	/* 셀 내부 텍스트 가운데 정렬 */
+	border: 1px solid #000;
+	white-space: nowrap;
+}
+/* 닫기 버튼 스타일 */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+</style>
+<header th:replace="hf/header"></header>
+<body>
+
+	<div class="header">
+		<div class="left">
+			<h1>주문서</h1>
+		</div>
+		<div class="right">
+			<ul>
+				<li><a href="/order/orderitem">01 장바구니</a></li>
+				<li><a>02 주문서</a></li>
+				<li><a>03 주문완료</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="subheader">
+		<h2>배송정보</h2>
+	</div>
+	<div class="subheader__2">
+		<div class="subheader__2__title">
+			<span style="font-size: large;">할인 혜택</span> <span
+				style="color: crimson;">할인 예정 0원</span>
+		</div>
+		<hr style="border: 1px dashed gray; opacity: 0.5;">
+		<h1>결제 예정금액</h1>
+		<br>
+		<div class="subheader__2__content">
+			<span class="one">총 상품금액 <span id="productPrice"
+				th:text="${allPrice}+'원'"></span></span> <br> <span class="one">배송비(선결제)
+				<span id="discountFirst">+3,000원</span>
+			</span><br> <span class="one" style="color: crimson">할인금액 <span
+				id="discountAmount">-0원</span></span> <span class="one"
+				style="color: crimson">합계 <span id="totalPrice"></span>
+			</span>
+		</div>
+		<hr class="hr" style="border: 1px dashed gray; opacity: 0.5;">
+		<span style="font-size: 12.5px;">필수약관을 확인하였으며 결제에 동의합니다.</span>
+		<button id="paymentButton"
+			style="width: 100%; margin: 0; margin-top: 2rem;"
+			class="payment__button">
+			<span id="totalPrice2"></span>
+		</button>
+	</div>
+	<div class="border"></div>
+	<div class="deliver__content">
+		<div class="subheader__route">
+			<ul class="route">
+				<li><label class="init_order_radio"> <input
+						type="radio" name="address_type" checked> <span>기본배송지</span>
+				</label></li>
+				<li><label class="init_order_radio"> <input id="pre"
+						type="radio" name="address_type" value="address"> <span>직접입력</span>
+				</label></li>
+			</ul>
+		</div>
+		<div style="opacity: 0.3;" class="border"></div>
+		<!-- 새로운 입력창 -->
+		<div class="new-content" style="display: none;">
+			<input type="text" class="new-input" placeholder="받는사람"><br>
+			<button class="new-button" id="findAddres">주소찾기</button>
+			<input type="text" id="postcode" class="new-input" placeholder="우편번호"
+				readonly><br> <input type="text" id="roadAddress"
+				class="new-input" placeholder="기본주소" readonly><br> <input
+				type="text" id="customerAddress3" class="new-input"
+				placeholder="상세주소 및 상세 건물명"><br> <select
+				id="phone-prefix">
+				<option value="010">010</option>
+				<option value="011">011</option>
+				<option value="016">016</option>
+				<option value="017">017</option>
+				<option value="018">018</option>
+				<option value="019">019</option>
+			</select> <strong> - </strong> <input type="text" class="phone-input1"
+				placeholder="휴대폰 앞자리" title="휴대폰 앞자리" maxlength="4"
+				required="required"
+				onkeypress="this.value=this.value.replace(/[^0-9]/g,'')"
+				onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"><strong>
+				- </strong> <input type="text" class="phone-input1" placeholder="휴대폰 뒷자리"
+				title="휴대폰 뒷자리" maxlength="4" required="required"
+				onkeypress="this.value=this.value.replace(/[^0-9]/g,'')"
+				onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+		</div>
+	</div>
+
+	<div class="info">
+		<div class="name">
+			<span th:text="${loggedInCustomer.customerName}"></span>
+		</div>
+		<div class="address">
+			<span th:if="${loggedInCustomer.customerAddress1 != null}"> (<span
+				th:text="${loggedInCustomer.customerAddress1}"></span>) <span
+				th:text="${loggedInCustomer.customerAddress2}"></span> (<span
+				th:text="${loggedInCustomer.customerAddress3}"></span>)
+			</span> <span th:unless="${loggedInCustomer.customerAddress1 != null}">
+				주소 정보가 없습니다. </span>
+		</div>
+		<div class="phonenumber">
+			<span th:text="${loggedInCustomer.customerPhone}"></span>
+		</div>
+		<div class="changephonenumber">
+			<input type="checkbox" id="checkbox1"> <label for="checkbox1">
+				<i class="fa fa-check-circle"></i> <span>기존 번호 사용</span>
+			</label> <input type="checkbox" id="checkbox2"> <label
+				for="checkbox2"> <i class="fa fa-check-circle"></i> <span>연락처
+					추가 기입</span>
+			</label>
+			<div class="add__input" style="display: none;">
+				<div class="add__number">
+					<label for="phone-prefix">전화번호:</label> <select id="phone-prefix1">
+						<option value="000">전국번호</option>
+						<option value="02">02</option>
+						<option value="031">031</option>
+						<option value="032">032</option>
+						<option value="033">033</option>
+						<option value="041">041</option>
+						<option value="042">042</option>
+						<option value="043">043</option>
+						<option value="044">044</option>
+						<option value="051">051</option>
+						<option value="052">052</option>
+						<option value="053">053</option>
+						<option value="054">054</option>
+						<option value="055">055</option>
+						<option value="061">061</option>
+						<option value="062">062</option>
+						<option value="063">063</option>
+						<option value="064">064</option>
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="017">017</option>
+						<option value="018">018</option>
+						<option value="019">019</option>
+						<option value="0130">0130</option>
+						<option value="070">070</option>
+						<option value="080">080</option>
+						<option value="0506">0506</option>
+						<option value="0505">0505</option>
+						<option value="0504">0504</option>
+						<option value="0503">0503</option>
+						<option value="0508">0508</option>
+						<option value="0502">0502</option>
+						<option value="0507">0507</option>
+						<option value="0303">0303</option>
+						<option value="050">050</option>
+					</select> <strong> -&nbsp;</strong> <input type="text" class="phone-input"
+						placeholder="휴대폰 앞자리" title="휴대폰 앞자리" maxlength="4"
+						required="required"
+						onkeypress="this.value=this.value.replace(/[^0-9]/g,'')"
+						onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"><strong>
+						-&nbsp; </strong> <input type="text" class="phone-input"
+						placeholder="휴대폰 뒷자리" title="휴대폰 뒷자리" maxlength="4"
+						required="required"
+						onkeypress="this.value=this.value.replace(/[^0-9]/g,'')"
+						onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+				</div>
+			</div>
+		</div>
+
+		<div class="comment">
+			<select class="comment__select">
+				<option value="배송시 요청사항 선택하기">배송시 요청사항 선택하기</option>
+				<option value="직접 수령하겠습니다">직접 수령하겠습니다</option>
+				<option value="문 앞에 놓아주세요">문 앞에 놓아주세요</option>
+				<option value="배송 전 휴대폰으로 연락주세요">배송 전 휴대폰으로 연락주세요</option>
+				<option value="파손위험이 있는 물품이니 조심히 다뤄주세요">파손위험이 있는 물품이니 조심히
+					다뤄주세요</option>
+				<option value="직접입력">직접입력</option>
+			</select>
+			<div class="custom-delivery-comment-wrapper">
+				<span class="custom-delivery-comment-label"
+					id="custom-delivery-comment-label"></span> <input type="text"
+					id="custom-delivery-comment" maxlength="50"
+					placeholder="수령 방법을 입력해주세요(최대50자)"> <span
+					class="comment__counter">0 / 50</span>
+			</div>
+		</div>
+	</div>
+	<div class="order">
+		<div class="order-title">
+			<h1>주문상품</h1>
+			<span th:text="'총 개수: '+${productCount}+'개'"></span>
+			<p class="text">상품수량 및 옵션변경은 상품상세 또는 장바구니에서 가능합니다.</p>
+		</div>
+		<div class="order__main" th:each="p : ${pocketList}">
+			<div class="order__main__list">
+				<p class="ppl_product">
+					<img th:src="@{${p.product.imageURL}}" width="150" height="150"
+						alt="이미지"> <span class="ppl_product__detail"> <em
+						class="em">최저가보상</em> <br> <span
+						th:text="${p.product.productName}"></span> <span
+						th:text="${p.product.weight}"></span><br> <span
+						style="color: crimson;" th:text="${p.product.category}"></span> <strong>내일
+					</strong> 도착 예정
+					</span>
+				<div class="ppl_product__count">
+					<span th:text="${p.count}+'개'"></span>
+				</div>
+				<div class="ppl_product__price">
+					<span th:text="${p.product.price}+'원'"></span>
+				</div>
+				<div class="ppl_product__deliver">
+					<span>3,000</span>원<br> <br> <span id="deliver">배송비
+						<i class="xi-help-o"></i>
+					</span>
+				</div>
+
+			</div>
+		</div>
+		<div style="opacity: 0.3;" class="border"></div>
+		<div class="subheader__2__down">
+			<button id="agree_show">
+				<i class="xi-angle-down-thin"></i> 개인정보 판매자 제공 동의
+			</button>
+			<div id="agree" style="display: none;">
+				<ul>
+					<li>고객님께서는 아래 내용에 대하여 동의를 거부하실 수 있으며, 거부시 상품 배송, CS가 제한됩니다.</li>
+					<li>개인정보를 제공받는 자 : <strong>[(유)바다해]</strong></li>
+					<li>개인정보를 제공받는 자의 개인정보 이용 목적 : <strong>주문상품의 배송, 고객상담
+							및 불만처리</strong></li>
+					<li>제공하는 개인정보의 항목 : 아이디(ID), 성명, 주소, 유무선 포함 연락처(안심번호 적용시 연락처는
+						제외), 이메일주소(입력시), 개인통관고유부호(선택시), 공동현관 출입번호(입력,저장선택시) <br>※
+						구매자와 수취인이 다른 경우에는 입력하신 수취인의 정보가 제공될 수 있습니다.
+					</li>
+					<li>개인정보를 제공받는 자의 개인정보 보유 및 이용기간 : <strong>구매확정 후
+							3개월까지(e쿠폰 상품의 경우 유효기간 연장, CS 등을 위해 1년까지)</strong></li>
+				</ul>
+			</div>
+		</div>
+		<div class="sale">
+			<h1 style="margin-top: 50px">할인</h1>
+			<div class="border"></div>
+			<div class="sale__coupon">
+				<h1>
+					<i class="xi-coupon">&nbsp;쿠폰할인</i>
+				</h1>
+				<span>상품쿠폰/배송비쿠폰&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+					style="color: crimson;" id="discountAmount2">-0원</span>
+				<!-- 쿠폰변경 버튼 -->
+				<button id="openModalBtn" style="cursor: pointer">쿠폰변경</button>
+
+			</div>
+			<div class="payment">
+				<h1>결제방법</h1>
+				<div class="payment__select">
+					<ul class="route">
+						<li><label class="init_order_radio2"> <input
+								type="radio" name="payment_method" value="kakaoPay"> <span
+								class="kakao_pay"><img style="margin-right: 5px;"
+									height="30" src="/img/orderitem/kakaopaysmall.png">카카오페이</span>
+						</label></li>
+						<li><label class="init_order_radio2"> <input
+								type="radio" name="payment_method" value="otherPayment">
+								<span class="kakao_pay">kg 이니시스 결제</span>
+						</label></li>
+					</ul>
+				</div>
+				<button id="paymentButton2" class="payment__button"
+					style="display: none; color: black;" onclick="KakaoPay()">카카오
+					페이 결제하기</button>
+				<button id="paymentButton3" class="payment__button"
+					style="display: none; color: black;" onclick="AllPayment()">결제하기</button>
+			</div>
+
+			<br> <br> <span class="last">GreenBox는 통신판매중개자로서
+				오픈마켓 GreenBox의 거래당사자가 아니며, 입점판매자가 등록한 상품정보 및 거래에 대해 GreenBox는 일체 책임을
+				지지 않습니다.</span>
+		</div>
+	</div>
+	<!-- 모달 창을 위한 HTML -->
+	<div id="myModal" class="modal">
+		<!-- 모달 내용 -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<table class="coupont">
+				<thead>
+					<tr>
+						<th style="border: none;" class="coupont__check"></th>
+						<th class="coupont__number">쿠폰번호</th>
+						<th class="coupont__name">쿠폰내용</th>
+						<th style="color: crimson;" class="coupont__deadline">쿠폰기한</th>
+						<th style="color: crimson;" class="coupont__price">할인금액</th>
+					</tr>
+				</thead>
+				<tbody id="couponList">
+				</tbody>
+			</table>
+			<div
+				style="display: flex; margin-top: 15px; justify-content: center;">
+				<button style="cursor: pointer" type="button" id="modal__setbutton">적용하기</button>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<footer th:replace="hf/footer"></footer>
+<script>
+
+// 변수 선언 한 곳
+// 가격들 변수 선언 오른쪽에 보이는 곳
+// 총 상품 금액 가져오기
+// 다 string 으로 보여져서 그거 삭제하고 정수형으로 변환
+var productPrice = parseInt($("#productPrice").text().replace('원', '').replace(',', ''));
+
+// 할인 금액 가져오기
+var discountFirst = 3000; // 고정 할인 금액
+
+var discountAmount = parseInt($("#discountAmount").text().replace('원', '').replace(',', ''));
+//합계 계산하기
+var totalPrice = productPrice + discountFirst - discountAmount;
+// 합계를 총 가격 요소에 표시하기
+$("#totalPrice").text(totalPrice.toLocaleString() + '원');
+// 버튼 부분
+$("#totalPrice2").text(totalPrice.toLocaleString() + '원 결제 하기!');
+// 선택된 배송 사항 옵션
+var selectOption = "";
+// 직접입력시 나오는 옵션
+var customDeliveryComment = "";
+	$(document)
+			.ready(
+					function() {
+						
+						
+						// 페이지 로드시에 input과 span 요소를 숨김
+						// select 직접입력 누르면 나오는거 안보이게 하기 
+						$('#custom-delivery-comment-label').css('display',
+								'none');
+						$('#custom-delivery-comment').css('display', 'none');
+						$('.comment__counter').css('display', 'none');
+
+						// 전화 번호 입력 란 숨기기 
+						$('#phone-prefix').css('display', 'none');
+						$('.phone-input').css('display', 'none');
+						createDropdown("dropdown1", 1, 10);
+						
+						 // address_type 요소의 변경 이벤트를 감지하여 route 함수 호출
+					    $('input[name="address_type"]').change(function() {
+					    	route();
+					    });
+					 	// 배송 요청사항 select 요소가 변경될 때마다 실행되는 이벤트 핸들러
+					    $('.comment__select').change(function() {
+					        var selectedOption = $(this).val();
+					        selectOption = selectedOption;
+					        if (selectedOption === '직접입력') {
+					            $('#custom-delivery-comment-label').css('display', 'block');
+					            $('#custom-delivery-comment').css('display', 'block');
+					            $('.comment__counter').css('display', 'block');
+					        } else {
+					            $('#custom-delivery-comment-label').css('display', 'none');
+					            $('#custom-delivery-comment').css('display', 'none');
+					            $('.comment__counter').css('display', 'none');
+					        }
+					
+							if(selectedOption === '직접입력'){
+								$('#custom-delivery-comment').on('input',function(){
+								// 배송 요청사항 값  직접입력시 나오는 값 
+								customDeliveryComment = $(this).val();		
+								});
+							}
+					    });
+						
+						// 오른쪽 바 alert 창 띄우기 결제 수단 클릭 안되어 있을 때만
+						$('#paymentButton')
+								.click(
+										function() {
+											var selectedMethod = $(
+													'input[name="payment_method"]:checked')
+													.val();
+											if (!selectedMethod) {
+												alert('결제수단 선택이 올바르지 않습니다.\n결제수단 선택 사항을 다시 선택해주세요.');
+											}else if(selectedMethod === "kakaoPay"){
+												KakaoPay();
+											}else if(selectedMethod === "otherPayment"){
+												AllPayment();
+											}
+										});
+
+						// input 요소에 입력이 발생할 때마다 실행되는 이벤트 핸들러
+						$('#custom-delivery-comment').on('input', function() {
+							// 입력된 글자 수 세기
+							var textLength = $(this).val().length;
+							$('.comment__counter').text(textLength + ' / 50');
+						});
+
+						$('#checkbox2').change(function() {
+							// 체크박스가 체크되었는지 확인
+							if ($(this).is(':checked')) {
+								// 체크되었으면 추가 입력 필드를 보이게 함
+								$('.add__input').show();
+								$('#phone-prefix').show();
+								$('.phone-input').show();
+							} else {
+								// 체크가 해제되었으면 추가 입력 필드를 숨김
+								$('.add__input').hide();
+								$('#phone-prefix').hide();
+								$('.phone-input').hide();
+							}
+						});
+						/* agree 눌렀을때 나오게끔  */
+						$("#agree_show").click(function() {
+							$("#agree").toggle();
+						});
+
+						$('input[name="payment_method"]').change(function() {
+							// 선택된 라디오 버튼의 값을 가져옵니다.
+							var selectedMethod2 = $(this).val();
+							console.log(selectedMethod2);
+							if (selectedMethod2 === "kakaoPay") {
+								$('#paymentButton3').hide();
+								$('#paymentButton2').css('display', 'block');
+							} else if (selectedMethod2 === "otherPayment") {
+								$('#paymentButton2').hide();
+								$('#paymentButton3').css('display', 'block');
+							}
+						});
+				
+						// 쿠폰변경 버튼 클릭 시 모달 열기
+						$("#openModalBtn").click(function() {
+						    $.ajax({
+						        url: "/api/order/coupon/change",
+						        method: "GET",
+						        dataType: "JSON",
+						        success: function(response) {
+						            $("#couponList").empty(); // 쿠폰 목록을 초기화합니다.
+						            if (response.length === 0) {
+						                $("#couponList").append("<tr><td colspan='4'>쿠폰이 없습니다.</td></tr>");
+						            } else {
+						                response.content.forEach(function(coupon) {
+						                    var deadlineDate = new Date(coupon.deadlineDate); // LocalDateTime을 JavaScript Date 객체로 변환
+
+						                    // 날짜 형식 지정
+						                    var formattedDateTime = deadlineDate.toLocaleString('ko-KR', {
+						                        year: 'numeric', // 년 부분 20XX 
+						                        month: '2-digit', // 달 부분
+						                        day: '2-digit', // 일 부분
+						                        hour: '2-digit', // 시간 부분
+						                        minute: '2-digit', // 분 부분
+						                        second: '2-digit', // 초 부분
+						                        hourCycle: 'h24' // 24시간 형식으로 표시
+						                    });
+
+						                    // 라디오 버튼 지정
+						                    var radioBtn = $("<input>").attr("type", "radio")
+						                        .attr("name", "couponCheck")
+						                        .data("discount", coupon.discount); // 할인 금액을 data-discount 속성에 저장합니다.
+
+						                    // 쿠폰 목록에 행 추가
+						                    var $row = $("<tr>").append(radioBtn)
+						                        .append("<td>" + coupon.code + "</td>")
+						                        .append("<td>" + coupon.message + "</td>")
+						                        .append("<td>" + formattedDateTime + "</td>")
+						                        .append("<td style='color:crimson'>" + coupon.discount + '원' + "</td>");
+						                    $("#couponList").append($row);
+						                });
+						            }
+						        },
+						        error: function() {
+						            alert("쿠폰 목록을 불러오는데 실패했습니다.");
+						        }
+						    });
+
+						    // 모달 보여주기 
+						    $("#myModal").css("display", "block");
+						});
+							
+						  
+						    // 적용하기 버튼 클릭 시 
+						    $("#modal__setbutton").click(function() {
+						    	// 라디오 버튼 클릭된 쿠폰에다가 data-discount 넣어주기 할인금액
+						    	 var selectedCouponDiscount = $("input[name='couponCheck']:checked").data("discount");
+						    	console.log(selectedCouponDiscount);
+						    	$.ajax({
+						            url: "/api/order/discount",
+						            method: "POST",
+						            data: { discount: selectedCouponDiscount },
+						            success: function(response) {
+						            	$("#discountAmount").text('-'+response+'원');
+						            	$("#discountAmount2").text(response+'원');
+						            	$("#myModal").css('display','none');
+						            	
+						            	//  여기서 또 하는이유가 서버 요청 받고 나서 다시 계산해줘야 값을 뽑을수 있어서
+						            	// 뺴내준 값 다시 계산
+						            	var resoponseInt = parseInt(response.replace('원', '').replace(',', ''));
+
+						            	// 합계 계산하기
+										var totalPrice = productPrice + discountFirst - resoponseInt;
+						            	
+										// 합계를 총 가격 요소에 표시하기
+										$("#totalPrice").text(totalPrice.toLocaleString() + '원');
+										
+										// 버튼 부분
+										$("#totalPrice2").text(totalPrice.toLocaleString() + '원 결제 하기!');
+										
+										
+						            },
+						            error: function() {
+						                alert("할인 금액을 적용하는데 실패했습니다.");
+						            }
+						            
+						        });
+						    });
+						  
+						  
+						  // 모달 닫기 버튼 클릭 시 모달 닫기
+						  $(".close").click(function() {
+						    $("#myModal").css("display", "none");
+						  });
+
+						
+						
+						  
+					});
+</script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+ // 주소 찾기 버튼 클릭 시
+    $("#findAddres").click(function() {
+        // 다음 주소 API 팝업 띄우기
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var postcode = data.zonecode; // 우편번호
+                var roadAddress = data.roadAddress; // 도로명주소
+                var extraRoadAddr = ''; // 참고항목
+
+                // 도로명 주소의 규칙에 따라 참고항목 설정
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                    extraRoadAddr += data.bname;
+                }
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                if (extraRoadAddr !== '') {
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 도로명주소를 각각의 입력 필드에 넣기
+                $("#postcode").val(postcode);
+                $("#roadAddress").val(roadAddress + extraRoadAddr);
+            }
+        }).open();
+    });
+    
+    // 주소 입력 필드에 대한 이벤트 리스너 추가
+    $("#postcode, #roadAddress, #customerAddress3").blur(addressInput);
+
+    // 주소 입력 필드에 대한 검사를 수행하는 함수
+    function addressInput() {
+        var postcode = $("#postcode").val().trim();
+        var roadAddress = $("#roadAddress").val().trim();
+        var customerAddress3 = $("#customerAddress3").val().trim();
+
+        if (postcode !== '' && roadAddress !== '' && customerAddress3 !== '') {
+            console.log("주소가 모두 입력되었습니다.");
+            reqAddr = true;
+        } else {
+            console.log("주소의 모든 부분을 입력해주세요.");
+            reqAddr = false;
+        }
+    }
+	
+	function route() {
+	    var addressType = $("input[name='address_type']:checked").val();
+	    if (addressType === "address") {
+	        // 직접입력 선택 시
+	        // 기존 내용 숨기기
+	        $('.name, .address, .phonenumber').hide();
+	        // 새로운 입력창 보이기
+	        $('.new-content').show();
+	    } else {
+	        // 기본배송지 선택 시
+	        // 기존 내용 보이기
+	        $('.name, .address, .phonenumber').show();
+	        // 새로운 입력창 숨기기
+	        $('.new-content').hide();
+	    }
+	}
+
+
+
+
+	function createDropdown(id, start, end) {
+		var select = $("#" + id);
+		for (var i = start; i <= end; i++) {
+			select.append($('<option>', {
+				value : i,
+				text : i
+			}));
+		}
+	}
+
+
+	function KakaoPay() {
+	    var kakaoPayUrl = "/payment/kakaoPay";
+	    var popupTitle = "카카오페이";
+	    
+	    // 필요한 값을 가져오기
+	    var recipient = $('.new-content .new-input[placeholder="받는사람"]').val();
+	    var postcode = $('#postcode').val();
+	    var roadAddress = $('#roadAddress').val();
+	    var customerAddress3 = $('#customerAddress3').val();
+	    var phonePrefixValue = $('#phone-prefix').val();
+	    var phonePrefix = $('.phone-input1[title="휴대폰 앞자리"]').val();
+	    var phoneSuffix = $('.phone-input1').eq(1).val();
+	    var phonePrefixValue1 = $('#phone-prefix1').val();
+	    var phonePrefix1 = $('.phone-input[title="휴대폰 앞자리"]').val();
+	    var phoneSuffix1 = $('.phone-input').eq(1).val();
+	    var productName = "[[${productName}]]";
+	    var count = [[${productCount}]];
+	    console.log(selectOption);
+	    // 유효성 검사
+	    $.ajax({
+	        url: "/api/order/check",
+	        type: "POST",
+	        data: {
+	            postcode: postcode,
+	            roadAddress: roadAddress,
+	            customerAddress3: customerAddress3,
+	            phonePrefixValue: phonePrefixValue,
+	            phonePrefix: phonePrefix,
+	            phoneSuffix: phoneSuffix,
+	            phonePrefixValue1: phonePrefixValue1,
+	            phonePrefix1: phonePrefix1,
+	            phoneSuffix1: phoneSuffix1
+	        },
+	        success: function(response) {
+	        	console.log(response);
+	        	if(response == 1){
+	            // 유효성 검사 성공
+	            // URL에 매개변수 추가
+	            kakaoPayUrl += "?productName=" + productName + "&count=" + count + "&totalPrice=" + totalPrice;
+	            kakaoPayUrl += "&recipient=" + recipient + "&postcode=" + postcode + "&roadAddress=" + roadAddress + "&customerAddress3=" + customerAddress3 + "&phonePrefix=" + phonePrefix + "&phoneSuffix=" + phoneSuffix + "&phonePrefix1=" + phonePrefix1 + "&phoneSuffix1=" + phoneSuffix1;
+	            kakaoPayUrl += "&phonePrefixValue=" + phonePrefixValue + "&phonePrefixValue1=" + phonePrefixValue1 + "&customDeliveryComment=" + customDeliveryComment + "&selectOption="+selectOption;
+	            
+	            // 팝업 창 열기
+	            var popupWidth = 600;
+	            var popupHeight = 600;
+	            var left = (screen.width - popupWidth) / 2;
+	            var top = (screen.height - popupHeight) / 2;
+	            var popupOptions = 'toolbar=no, directories=no, status=no, menubar=no, scrollbars=no,location=no, width=' + popupWidth + ', height=' + popupHeight + ', top=' + top + ', left=' + left;
+	            var popUp = window.open(kakaoPayUrl, popupTitle, popupOptions);
+
+	            // 팝업이 닫힐 때 이벤트 감지
+	            $(popUp).on('unload', function() {
+	                if (popUp.closed) {
+	                	console.log('함수아님');
+	                    xxx();
+	                }
+	            });
+	         }
+	      },
+	        error: function() {
+	        	  alert('주문 정보를 전부 기입해주세요.');
+	                return;
+	        }
+	    });
+	}
+	
+	function xxx(){
+		console.log('닫음');
+		window.location.href = "/";
+	}
+
+</script>
+
+<!-- iamport.payment.js -->
+
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+    // 이거는 제품 명 받기
+    var productName = "[[${productName}]]";
+
+    // 고객들 정보 받아오기 세션에 저장되어있는 값
+    var phoneNumber = "[[${loggedInCustomer.customerPhone}]]";
+    var customerName = "[[${loggedInCustomer.customerName}]]";
+    var customerAddress1 = "[[${loggedInCustomer.customerAddress1}]]";
+    var customerAddress2 = "[[${loggedInCustomer.customerAddress2}]]";
+    var customerEmail = "[[${loggedInCustomer.customerEmail}]]";
+
+    function AllPayment() {
+        IMP.init('imp27644041');
+        IMP.request_pay({
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: "Test1", // 상점에서 관리하는 주문 번호를 전달
+            name: productName,
+            amount: totalPrice,
+            buyer_email: customerEmail,
+            buyer_name: customerName,
+            buyer_tel: phoneNumber,
+            buyer_addr: customerAddress2,
+            buyer_postcode: customerAddress1,
+        }, function(rsp) { // callback 로직
+            if (rsp.success) {
+                // 결제가 성공하면 결제 정보를 서버로 전송하여 확인합니다.
+                verifyPayment(rsp.imp_uid);
+            } else {
+                alert('결제 실패 : ' + rsp.error_msg);
+            }
+        }); 
+    }
+
+    // 결제 확인을 위한 AJAX 요청 함수
+    function verifyPayment(imp_uid) {
+        $.ajax({
+            url: '/api/verify/' + imp_uid,
+            type: 'POST',
+            success: function(response) {
+                console.log('결제 확인 요청이 성공하였습니다.');
+                // 서버로부터 온 응답(response)을 여기서 처리합니다.
+                // 예를 들어, 결제 정보를 확인하여 추가적인 작업을 수행할 수 있습니다.
+                window.location.href = '/'; // 성공 시 메인 페이지로 이동
+            },
+            error: function(error) {
+                console.error('결제 확인 요청 중 오류가 발생하였습니다:', error);
+                alert('결제 확인 요청 중 오류가 발생하였습니다.');
+                // 오류 처리 로직을 여기에 추가합니다.
+            }
+        });
+    }
+</script>
+
+
+
+</html>

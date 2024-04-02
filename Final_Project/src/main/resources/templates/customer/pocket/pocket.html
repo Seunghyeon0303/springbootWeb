@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>장바구니</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<!-- font어썸 -->
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<!--xeicon 아이콘 -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+</head>
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+/* 좌우 마진 */
+body {
+	margin: 0 16.2vw;
+	min-width: 880px;
+}
+
+/* 장바구니 부분 */
+.pheader {
+	margin-top: 50px;
+	border-radius: 10px;
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	width: 100%;
+}
+
+.left h1 {
+	margin-left: 20px;
+}
+
+.right {
+	padding-right: 30px;
+	font-family: 'NPSfontBold';
+}
+
+.right ul {
+	display: flex;
+	justify-content: space-between;
+	/* ul 내부 요소들을 수평으로 배치합니다. */
+	align-items: center;
+}
+
+.right ul li {
+	padding: 0 10px;
+	/* 각 li의 내부 여백을 설정합니다. */
+}
+
+.right ul li:nth-child(1) {
+	border: 1px solid rgb(201, 200, 200);
+	border-radius: 20px 0 0 20px;
+	padding: 13px 15px;
+}
+
+.right ul li:nth-child(2) {
+	border: 1px solid rgb(201, 200, 200);
+	padding: 13px 15px;
+}
+
+.right ul li:nth-child(3) {
+	border: 1px solid rgb(201, 200, 200);
+	border-radius: 0 20px 20px 0;
+	padding: 13px 15px;
+}
+
+/* 전체선택 */
+.fa-check-circle {
+	color: #32B43A;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/* 옆에 두게 하게 */
+.select_all_two {
+	display: flex;
+}
+
+.select_all {
+	border: 1px solid rgb(201, 200, 200);
+	margin-top: 1.5rem;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.all::after {
+	content: '|';
+	width: 120%;
+	opacity: 0.8;
+	color: rgb(200, 199, 199);
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.select_all>span:last-child {
+	margin-left: auto;
+}
+
+.pocket_show {
+	display: flex;
+	width: 100%
+}
+
+.pocket_div {
+	/*	position: relative;*/
+	width: 83%;
+}
+
+.select_all_1 {
+	/* position: absolute; */
+	/* position: fixed; */
+	/* width: 17%;
+	min-width: 300px; */
+	margin-top: 1.5rem;
+	width: 17%;
+	min-width: 300px; height : 350px; top : 0px; right : 0px;
+	/*	top: 25.2%;
+	left: 65%; */
+	padding: 0.5rem;
+	background-color: white;
+	z-index: 1;
+	border: 1px dashed #32B43A;
+	white-space: nowrap;
+	padding: 0.5rem;
+	top: 0px;
+	height: 350px;
+	top: 0px;
+	right: 0px;
+}
+
+.select_all_1 h1 {
+	margin-bottom: 10px;
+}
+
+.select_all_1 h1::before {
+	font-size: 20px;
+	width: 200%;
+	opacity: 0.8;
+	color: rgb(201, 200, 200);
+	margin-left: -13px;
+	margin-right: 8px;
+}
+
+.ppl_product {
+	margin-right: 1rem; /* 이미지와 상품 정보 사이 간격 설정 */
+}
+
+.ppl_lowest_price {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #32B43A;
+	width: 74px;
+	height: 28px;
+	font-size: 12px;
+	border: 1px solid rgb(201, 200, 200);
+	cursor: default;
+	align-items: center;
+}
+
+.ppl_product_price {
+	width: 100%;
+	height: 5rem;
+}
+
+/* 오른쪽 창  */
+.preprice {
+	border-top: none;
+	width: 300px;
+	padding: 10px;
+	height: 200px;
+}
+
+.item {
+	display: flex;
+	padding-bottom: 10px;
+	justify-content: space-between;
+}
+
+.item_1 {
+	margin-top: 1rem;
+}
+
+.item span {
+	font-size: 14px;
+}
+
+.preprice .item:nth-child(4) b {
+	color: crimson;
+	font-size: 18px;
+}
+
+.preprice .pocketOrderBtn {
+	margin: 0.5rem auto;
+	display: block;
+	background-color: #32B43A;
+	color: white;
+	padding: 0.5rem 1.3rem;
+}
+
+.preprice .pocketOrderBtn {
+	cursor: pointer;
+}
+
+.ppl_all {
+	width: 100%;
+	text-align: center;
+}
+
+.ppl_all td {
+	vertical-align: middle; /* 셀 내용을 수직 중앙에 배치합니다 */
+	padding: 10px; /* 셀의 패딩을 조정하여 더 좋은 레이아웃을 제공합니다 */
+}
+
+.ppl_all img {
+	display: block; /* 이미지를 블록 요소로 만들어 중앙 정렬을 가능하게 합니다 */
+	margin: auto; /* 이미지를 수평 중앙에 배치합니다 */
+}
+
+.ppl_alltd_i {
+	display: flex;
+}
+
+.hr {
+	margin-top: 1rem;
+	border: 1px dashed rgb(201, 200, 200);
+}
+
+.ppls {
+	
+}
+
+.xi-heart-o {
+	cursor: pointer;
+}
+
+.pocket_icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.pocket_div {
+	position: relative;
+}
+
+#pocket_a {
+	color: #32B43A;
+}
+</style>
+
+<header th:replace="hf/header"></header>
+<body>
+	<form id="orderForm" 	action="/order/orderPay" 	method="POST" >
+		<div class="pheader">
+			<div class="left">
+				<h1>장바구니</h1>
+			</div>
+			<div class="right">
+				<ul>
+					<li><a id="pocket_a">01 장바구니</a></li>
+					<li><a>02 주문서</a></li>
+					<li><a>03 주문완료</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="pocket_show">
+			<div class="pocket_div">
+				<div class="select_all_two   select_all">
+					<i class="xi-check-circle-o" id="selectAll"></i>
+					<div class="all">
+						<span id="selectCount">전체선택</span>
+					</div>
+				</div>
+				<table class="ppl_all">
+					<tr>
+						<th>선택</th>
+						<th colspan="2">상품명</th>
+						<th>가격</th>
+						<th>수량</th>
+						<th>삭제</th>
+					</tr>
+					<tr th:each="pocket : ${pocketList}">
+
+						<td class="ppl_alltd"><input type="hidden" name="productId"
+							th:value="${pocket.product.productID}" /> <input type="hidden"
+							name="count" th:value="${pocket.count}" /> <input type="hidden"
+							name="priceAll" th:value="${pocket.product.price}" /> <input
+							type="checkbox" class="checkbox" onchange="checkboxChanged(this)"
+							th:data-product-id="${pocket.product.productID}"
+							th:data-count="${pocket.count}"
+							th:data-product-price="${pocket.product.price}" /> <input
+							type="hidden" name="check" value="false"></td>
+
+						<td class="ppl_alltd ppl_alltd_i pocket_icon "><img
+							th:src="${pocket.product.imageURL}" width="100" height="100"
+							alt="이미지" /><i class="xi-heart-o "></i></td>
+
+						<td class="ppl_alltd" th:text="${pocket.product.productName}"
+							th:name="productName"></td>
+
+						<!-- <td class="ppl_alltd" th:text="${pocket.product.price} + '원'"></td>  -->
+						<td class="ppl_alltd" data-type="price" th:text="${pocket.product.price} + '원'"></td>						
+
+						<td class="ppl_alltd">
+							<div class="dropdown">
+								<select class="btn btn-secondary quantity-dropdown" name="count"
+									onchange="updateQuantity(this)">
+									<option th:each="i: ${#numbers.sequence(1, 10)}"
+										th:value="${i}" th:text="${i}"
+										th:data-pocket-id="${pocket.pocketId}"
+										th:selected="${i == pocket.count}"></option>
+								</select>
+							</div>
+						</td>
+
+						<td class="ppl_alltd">
+							<button type="button" class="removeButton">X</button>
+						</td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(pocketList)}">
+						<td colspan="7" style="text-align: center;">장바구니에 상품이 없습니다.</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="select_all_1">
+				<h1>적립혜택</h1>
+				<span>적립 혜택이 없습니다.</span>
+				<div class="hr"></div>
+				<div class="preprice">
+					<h1>결제 예정금액</h1>
+					<div class="prepriceForm">
+						<div class="item">
+							<div class="item_1">상품금액</div>
+							<div style="margin-top: 1rem;">
+								<b id="priceAll">0원</b>
+							</div>
+						</div>
+						<div class="item">
+							<div class="item_2">배송비(선결제)</div>
+							<span style="color: crimson">+3,000원</span>
+						</div>
+						<div class="item" style="visibility: hidden;">
+							<div class="item_3">할인금액</div>
+							<b style="color: crimson">-***원</b>
+						</div>
+						<div class="item">
+							<b class="item_4">합계</b> <b id="priceAllResult">0원</b>
+						</div>
+						<div class="item">
+							<button type="submit" onclick="submitOrder(event)"
+								class="pocketOrderBtn">주문하기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<footer th:replace="hf/footer"></footer>
+<script>
+$(document).ready(function() {
+    // "전체선택" 클릭 이벤트 처리
+    $('#selectAll').click(function() {
+        var allChecked = $(this).hasClass('xi-check-circle-o');
+        if(allChecked) {
+            $(this).removeClass('xi-check-circle-o').addClass('xi-check-circle');
+        } else {
+            $(this).removeClass('xi-check-circle').addClass('xi-check-circle-o');
+        }
+        $('.checkbox').prop('checked', allChecked).change();
+    });
+
+
+
+
+    // 콤마 추가 함수
+    function addCommas(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    
+				$('.checkbox').change(
+						function() {
+							var totalPrice = 0;
+							var priceAllResult = 0;
+							$('.checkbox:checked').each(
+									function() {
+										var price = $(this).data(
+												'product-price').toString()
+												.replace(/,/g, '').replace(
+														/원/g, '');
+										var count = parseInt($(this).data(
+												'count'));
+
+										var priceInt = parseInt(price) * count;
+
+										totalPrice += priceInt;
+									});
+
+							$('#priceAll').text(addCommas(totalPrice) + '원');
+
+							$('#priceAllResult').text(
+									addCommas(totalPrice + 3000) + '원');
+
+						});
+		
+				// 삭제 버튼 눌렸을떄
+				$(".removeButton").click(
+						function() {
+							if (confirm("해당 상품을 장바구니에서 삭제 하시겠습니까?")) {
+								var row = $(this).closest('tr');
+								var orderItemId = row.find(
+										'input[name="productId"]').val(); // 상품 ID 가져오기
+								console.log(orderItemId);
+								$.ajax({
+									url : "/api/pocket/delete",
+									type : "GET",
+									data : {
+										orderItemId : orderItemId
+									},
+									success : function(response) {
+										row.remove();
+										location.reload();
+									},
+									error : function() {
+										console.log('응 안돼~');
+									}
+								});
+							} else {
+								// 사용자가 취소한 경우
+							}
+						});
+		
+
+				// 콤마 추가 함수
+				function addCommas(price) {
+					return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+							",");
+				}
+			});
+
+
+function submitOrder(event) {
+    event.preventDefault();
+
+    // 체크된 상품이 없을 경우 경고하고 함수 종료
+    if ($('.checkbox:checked').length === 0) {
+        alert('체크된 상품이 없습니다.');
+        return;
+    }
+
+    var products = $('.checkbox:checked').map(function() {
+        return {
+            productId: $(this).data('product-id'),
+            count: $(this).data('count')
+        };
+    }).get();
+    
+	
+    fetch('/api/product/checkStock', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(products),
+    })
+    .then(response => response.json())
+    .then(data => {
+    	console.log(data);
+        if (data.isStockAvailable) {
+            $('#orderForm').submit();
+        } else {
+            alert(data.result || '재고가 부족한 상품이 있습니다. 재고를 확인해주세요.');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('재고 확인 중 오류가 발생했습니다.');
+    });
+}
+
+	function checkboxChanged(checkbox) {
+		// 체크박스가 체크된 경우, 숨겨진 필드의 값을 'true'로 설정
+		if (checkbox.checked) {
+			checkbox.nextElementSibling.value = 'true';
+		} else {
+			// 체크박스가 체크되지 않은 경우, 숨겨진 필드의 값을 'false'로 유지
+			checkbox.nextElementSibling.value = 'false';
+		}
+	}
+
+	// 드롭다운으로 갯수 변경시 
+	function updateQuantity(dropdown) {
+		var newQuantity = dropdown.value;
+		// 념겨줄떄 상품아이디 를 넘겨줘야 되서
+		var pocketId = $(dropdown).find(':selected').data('pocket-id');
+		console.log(pocketId);
+		$.ajax({
+			url : "/api/pocket/countChange",
+			type : "POST",
+			data : {
+				changeCount : newQuantity,
+				pocketId : pocketId
+			},
+			success : function(response) {
+				alert('개수 변경에 성공하였습니다.');
+				location.reload();
+				
+			},
+			error : function() {
+				alert('개수 변경에 실패하였습니다.');
+			}
+		});
+
+	}
+</script>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<style>
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+	cursor: pointer;
+	position: relative;
+	right: 35px;
+	top: 7px;
+	opacity: 0.5;
+}
+
+.myContainer {
+	margin: 0 auto;
+	padding: 30px 10px;
+	min-width: 680px;
+}
+
+h3 {
+	margin-bottom: 20px;
+}
+
+th {
+	padding: 10px 25px;
+	text-align: left;
+	background-color: #FBFBFB;
+}
+
+td {
+	padding: 15px 0px 15px 15px;
+	width: 70%;
+}
+
+.long {
+	padding: 0px 10px;
+	outline: none;
+	font-size: 16px;
+	width: 70%;
+	height: 31px;
+}
+
+table {
+	width: 100%;
+	border-top: 2px solid gray;
+}
+
+.short {
+	padding: 0px 10px;
+	outline: none;
+	font-size: 16px;
+	width: 35%;
+	height: 31px;
+}
+
+.addr {
+	margin: 8px 0px;
+}
+
+#sample4_extraAddress {
+	display: none;
+}
+
+.lev {
+	margin-top: 80px;
+	padding: 12px 50px;
+	background-color: white;
+	border: none;
+	cursor: pointer;
+}
+
+.bef {
+	border: 1px solid gray;
+}
+
+.aft {
+	background-color: red;
+	color: white;
+}
+
+.btnBox {
+	text-align: center;
+}
+
+tr {
+	border-bottom: 1px solid gray;
+}
+
+.signUpBtn {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+	border: 1px solid black;
+	padding: 5px 10px;
+	border-radius: 6px;
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+	<div>
+		<div class="myContainer">
+			<h3>기본정보</h3>
+			<table>
+				<tr>
+					<th>아이디</th>
+					<td><input type="text" class="long" name="customerId"
+						id="customerId"
+						placeholder="6자~12자 이내, 영문, 숫자 혼용 (최소 영문 1자 이상 필수)">
+						
+						<input type="button"
+						id="idDuplicateCheck" value="아이디 중복 확인" class="signUpBtn">
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input type="password" class="long" id="password"
+						name="customerPw"
+						placeholder="영문자(대,소문자), 숫자, 특수문자를 포함하여 8자~20자 이내로 작성"> <span
+						class="material-symbols-outlined"
+						onclick="passwordView(); pwIcon(this)">visibility_off</span></td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인</th>
+					<td><input type="password" class="long" id="passwordCheck">
+						<span class="material-symbols-outlined"
+						onclick="passwordCheckView(); pwIcon(this)">visibility_off</span>
+					</td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td><input type="text" class="short" name="customerName"
+						id="customerName"></td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+					<td><input type="email" id="email" class="long"
+						name="customerEmail"> <input type="button" id="sendMail"
+						value="이메일 인증" class="signUpBtn"> <input type="text"
+						id="codeCheck" class="short addr"> <input type="button"
+						id="mailCheck" value="인증번호 확인" class="signUpBtn">
+						<p id="timeLeftp">
+							남은 시간 : <span id="time">180</span>초
+						</p></td>
+				</tr>
+				<tr>
+					<th>휴대폰번호</th>
+					<td><input type="text" placeholder="-없이 입력하세요." class="short"
+						name="customerPhone" id="customerPhone"></td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td>
+						<div>
+							<input type="text" id="sample4_postcode" placeholder="우편번호"
+								class="short addr customerAddress1" readonly
+								name="customerAddress1"> <input type="button"
+								onclick="sample4_execDaumPostcode()" value="우편번호 찾기"
+								class="signUpBtn"> <br> <input type="text"
+								id="sample4_roadAddress" placeholder="도로명주소"
+								class="long addr customerAddress1" readonly
+								name="customerAddress2"> <input type="text"
+								placeholder="상세주소" class="long addr" id="customerAddress3"
+								name="customerAddress3"> <span id="guide"
+								style="color: #999; display: none"></span> <input type="text"
+								id="sample4_extraAddress">
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div class="btnBox">
+				<button class="lev bef" id="cancel" type="button">취소</button>
+				<button class="lev aft" id="register" type="button">회원가입</button>
+			</div>
+		</div>
+	</div>
+</body>
+<footer th:replace="hf/footer"></footer>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+	function sample4_execDaumPostcode() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+						// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+						var roadAddr = data.roadAddress; // 도로명 주소 변수
+						var extraRoadAddr = ''; // 참고 항목 변수
+
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						// 우편번호와 주소 정보를 해당 필드에 넣는다.
+						document.getElementById('sample4_postcode').value = data.zonecode;
+						document.getElementById("sample4_roadAddress").value = roadAddr;
+
+						// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+						if (roadAddr !== '') {
+							document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+						} else {
+							document.getElementById("sample4_extraAddress").value = '';
+						}
+
+						var guideTextBox = document.getElementById("guide");
+						// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+						if (data.autoRoadAddress) {
+							var expRoadAddr = data.autoRoadAddress
+									+ extraRoadAddr;
+							guideTextBox.innerHTML = '(예상 도로명 주소 : '
+									+ expRoadAddr + ')';
+							guideTextBox.style.display = 'block';
+
+						} else if (data.autoJibunAddress) {
+							var expJibunAddr = data.autoJibunAddress;
+							guideTextBox.innerHTML = '(예상 지번 주소 : '
+									+ expJibunAddr + ')';
+							guideTextBox.style.display = 'block';
+						} else {
+							guideTextBox.innerHTML = '';
+							guideTextBox.style.display = 'none';
+						}
+
+					}
+				}).open();
+	}
+
+	function passwordView() {
+
+		var passwordInput = document.getElementById('password');
+		if (passwordInput.type === 'password') {
+			passwordInput.type = 'text';
+		} else {
+			passwordInput.type = 'password';
+		}
+
+	}
+
+	function passwordCheckView() {
+		var passwordInput = document.getElementById('passwordCheck');
+		if (passwordInput.type === 'password') {
+			passwordInput.type = 'text';
+		} else {
+			passwordInput.type = 'password';
+		}
+	}
+
+	function pwIcon(element) {
+		if (element.textContent === 'visibility_off') {
+			element.textContent = 'visibility';
+		} else {
+			element.textContent = 'visibility_off';
+		}
+	}
+
+
+</script>
+<script type="text/JavaScript">
+	{
+		const sendMail = document.querySelector("#sendMail");
+
+		const mailCheck = document.querySelector("#mailCheck");
+
+		const cancel = document.querySelector("#cancel");
+
+		const register = document.querySelector("#register");
+
+		const customerId = document.querySelector("#customerId");
+		
+		const idDuplicateCheck = document.querySelector("#idDuplicateCheck");
+
+		const customerPw = document.querySelector("#password");
+
+		const passwordCheck = document.querySelector("#passwordCheck");
+		
+		const customerPhone = document.querySelector("#customerPhone");
+		
+		const customerName = document.querySelector("#customerName");
+		
+		const customerAddress1 = document.querySelector("#sample4_postcode");
+		const customerAddress2 = document.querySelector("#sample4_roadAddress");
+		const customerAddress3 = document.querySelector("#customerAddress3");
+
+		var reqId = false;
+
+		var isId = false;
+		
+		var reqPw = false;
+
+		var reqName = false;
+		
+		var reqAddr = false;
+
+		mailCheck.disabled = true;
+		
+		var reqPhone = false;
+
+		var timerId = null;
+
+		var isEmail = false;
+
+		const timer = document.querySelector("#timeLeftp");
+
+		timer.style.display = 'none';
+		
+		customerPhone.addEventListener("blur", phoneInput);
+		
+		function phoneInput(){
+			if (customerPhone.value.trim() !== '') {
+				console.log("번호가 입력되었습니다.");
+				reqPhone = true;
+			} else {
+				console.log("번호를 입력해주세요.");
+				reqPhone = false;
+			}
+		}
+
+		customerId.addEventListener("blur", idInput);
+
+		function idInput() {
+			const regex = /^[a-zA-Z0-9-_]{6,12}$/; // 기본 조건: 6~12자의 영문, 숫자 및 특정 기호(-, _) 사용
+			const containsLetter = /[a-zA-Z]/; // 추가 조건: 최소 하나의 영문자 포함
+
+			if (regex.test(customerId.value) && containsLetter.test(customerId.value)) {
+				console.log("유효한 아이디입니다.");
+				reqId = true;
+			} else {
+				console.log("유효하지 않은 아이디입니다. 아이디는 6~12자의 영문, 숫자 및 특정 기호(-, _)만 사용할 수 있으며, 최소 한 개의 영문자를 포함해야 합니다.");
+				reqId = false;
+			}
+		}
+		// 비밀번호 입력 필드와 비밀번호 확인 필드에 대한 이벤트 리스너 추가
+		customerPw.addEventListener("input", pwInput);
+		passwordCheck.addEventListener("input", pwInput);
+
+		function pwInput() { // 비밀번호 검사
+			const pwValue = customerPw.value;
+			const pwCheckValue = passwordCheck.value;
+			const regexLength = /^.{8,20}$/; // 8자에서 20자 사이
+			const regexRepeatedChar = /(.)\1\1/; // 동일한 문자 3번 이상 반복 검사
+
+			// 영문, 숫자, 특수문자 중 2가지 이상 조합을 확인하기 위한 정규식
+			let pwCount = 0;
+			if (/[a-zA-Z]/.test(pwValue))
+				pwCount++;
+			if (/[0-9]/.test(pwValue))
+				pwCount++;
+			if (/[^a-zA-Z0-9]/.test(pwValue))
+				pwCount++;
+
+			// 모든 조건 검사
+			if (regexLength.test(pwValue) && // 길이 조건
+			pwCount >= 2 && // 조합 조건
+			!regexRepeatedChar.test(pwValue) && // 반복 문자 조건
+			pwValue === pwCheckValue // 비밀번호 일치 조건
+			) {
+				reqPw = true;
+			} else {
+				reqPw = false;
+			}
+		}
+
+		// 이름 입력 필드에 대한 이벤트 리스너 추가
+		customerName.addEventListener("blur", nameInput);
+
+		function nameInput() {
+			if (customerName.value.trim() !== '') {
+				console.log("이름이 입력되었습니다.");
+				reqName = true;
+			} else {
+				console.log("이름을 입력해주세요.");
+				reqName = false;
+			}
+		}
+
+		// 주소 입력 필드에 대한 이벤트 리스너 추가
+		customerAddress1.addEventListener("blur", addressInput);
+		customerAddress2.addEventListener("blur", addressInput);
+		customerAddress3.addEventListener("blur", addressInput);
+
+		// 주소 입력 필드에 대한 검사를 수행하는 함수
+		function addressInput() {
+			if (customerAddress1.value.trim() !== ''
+					&& customerAddress2.value.trim() !== ''
+					&& customerAddress3.value.trim() !== '') {
+				console.log("주소가 모두 입력되었습니다.");
+				reqAddr = true;
+			} else {
+				console.log("주소의 모든 부분을 입력해주세요.");
+				reqAddr = false;
+			}
+		}
+		
+		idDuplicateCheck.addEventListener("click", function() {
+		    if(reqId) {
+		        const idDup = { id: customerId.value };
+
+		        fetch('/api/customer/idDuplicateCheck', {
+		            method: "POST",
+		            headers: {
+		                "Content-Type": "application/json", // 이 부분이 중요합니다
+		            },
+		            body: JSON.stringify(idDup) // ID를 JSON 객체로 감싼 후 문자열화
+		        })
+		        .then(response => {
+		            if(response.ok) {
+		                isId = true;
+		                return response.text(); // 또는 response.json()을 사용할 수 있습니다, 서버 응답 형식에 따라 달라집니다.
+		            } else {
+		            	isId = false;
+		                throw new Error('이미 사용 중인 아이디입니다.');
+		            }
+		        })
+		        .then(data => {
+		            alert(data); // "사용 가능한 아이디입니다." 또는 오류 메시지
+		        })
+		        .catch(error => {
+		            console.error("Error:", error);
+		            alert(error.message);
+		        });
+		    }
+		});
+
+		
+		
+		
+
+		// 회원가입 버튼 클릭 시 최종 검증을 수행하는 로직 (예시)
+		register.addEventListener("click", function(event) {
+
+			// 모든 요구사항이 충족되었는지 확인
+			if (reqId && reqPw && reqName && reqAddr && isEmail && reqPhone) {
+
+
+		        // 폼 데이터를 JSON 객체로 변환
+		        const customerData = {
+		            customerId: document.getElementById('customerId').value,
+		            customerPw: document.getElementById('password').value,
+		            customerEmail: document.getElementById('email').value,
+		            customerPhone: document.getElementById('customerPhone').value, 
+		            customerName: document.getElementById('customerName').value,
+		            customerAddress1: document.getElementById('sample4_postcode').value, 
+		            customerAddress2: document.getElementById('sample4_roadAddress').value, 
+		            customerAddress3: document.getElementById('customerAddress3').value
+		        };	
+				
+		        fetch('/api/customer/signUp',{
+		            method: 'POST',
+		            headers: {
+		                'Content-Type': 'application/json',
+		            },
+		            body:JSON.stringify(customerData)
+		        })
+				.then(response => response.json())
+        		.then(data => {
+            			console.log('회원가입 성공:', data);
+            			alert('회원가입 성공!');
+          				window.location.replace("/"); // 메인 페이지로 리디렉션
+      			 }).catch((error) => {
+      	            console.error('회원가입 실패:', error);
+      	            alert('회원가입 실패.');
+      	        });
+				
+				
+				
+				// 폼 제출 로직
+			} else {
+				console.log("입력 요구사항을 모두 충족시켜주세요.");
+				event.preventDefault(); // 폼 제출을 방지
+			}
+		});
+
+		// 인증코드 발송(완)
+		sendMail.addEventListener('click', function() {
+			console.log("버튼이 클릭되었습니다!");
+
+			const email = document.querySelector("#email").value;
+
+			const url = '/util/sendEmail';
+
+			fetch(url, {
+				method : 'POST',
+				body : email
+			}).then(function(response) {
+				console.log(response);
+				if (response.ok) {
+					start();
+					mailCheck.disabled = false;
+					timer.style.display = 'block';
+					alert('이메일이 발송되었습니다.');
+				} else {
+					alert('이메일이 발송되지 않았습니다.');
+				}
+			});
+		});
+
+		// 인증코드 확인
+		mailCheck.addEventListener('click', function() {
+
+			const code = document.querySelector("#codeCheck").value;
+
+			const url = '/util/verifyCode';
+
+			fetch(url, {
+				method : 'POST',
+				body : code
+			}).then(function(response) {
+				console.log(response);
+				if (response.ok) {
+					if (timerId !== null) {
+						clearInterval(timerId); // 기존 타이머가 있으면 중지
+					}
+					alert('인증되었습니다.');
+					mailCheck.disabled = true;
+					isEmail = true;
+					console.log(isEmail);
+					timer.style.display = 'none';
+				} else {
+					alert('인증번호가 일치하지 않습니다.');
+				}
+			});
+		});
+
+		// 취소 버튼 이벤트 리스너 추가
+		cancel.addEventListener('click', function() {
+			// 현재 위치를 "/"로 변경
+			window.location = "/";
+		});
+
+	}
+	
+
+	function start() {
+		if (timerId !== null) {
+			clearInterval(timerId); // 기존 타이머가 있으면 중지
+		}
+		var timeLeft = 180;
+		var timerElem = document.getElementById('time');
+		timerId = setInterval(function() {
+			if (timeLeft <= 0) {
+				clearInterval(timerId); // 타이머 중지
+				timeOut();
+			} else {
+				timeLeft--;
+				timerElem.innerHTML = timeLeft;
+			}
+		}, 1000);
+	}
+
+	function timeOut() {
+		mailCheck.disabled = true;
+		alert("시간이 만료되었습니다!");
+	}
+</script>
+</html>

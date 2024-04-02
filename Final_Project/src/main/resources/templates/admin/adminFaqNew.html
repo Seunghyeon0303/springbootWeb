@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>FAQ 게시글 등록 페이지</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+    #faqNew_h1{
+    font-size: 32px;
+    text-align: center;
+    }
+    #faq_create{
+    width:120px;
+height:35px;
+padding: 7px;
+border:1px solid gray;
+border-radius:5px;
+background-color:black;
+text-decoration: none;
+color: white;
+    }
+    </style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+
+<h1 id="faqNew_h1">FAQ 게시글 등록 페이지</h1>
+
+<form method="post" th:action="@{/faq/admin/adminFaqCreate}"> 
+	<table>
+	<tr style="height: 50px">
+			<th>분류</th>
+			<td><select class="inputField_select" name="category">
+			<option value="주문/배송">주문/배송</option>
+			<option value="상품">상품</option>
+			<option value="회원가입/정보">회원가입/정보</option>
+			<option value="취소/교환/환불">취소/교환/환불</option>
+			</select>			
+			<p class="displayField_select"></p></td>
+		</tr>
+		<tr style="height: 50px">
+			<th>제목</th>
+			<td><input class="inputField_title" type="text" name="title" placeholder="제목을 입력하세요." />
+			<p class="displayField_title"></p></td>
+		</tr>
+		<tr style="height: 50px">
+			<th>내용</th>
+			<td><input class="inputField_content"  type="text"  name="content" placeholder="내용을 입력하세요."  />
+			<p class="displayField_content"></p></td>
+		</tr>
+	</table>
+	
+	<input type="submit" id="faq_create" value="등록" />
+	
+	</form>
+	 <script>
+    $(document).ready(function() {
+    	/*
+    	// 분류 필수 선택
+    	 $('.inputField_select').on('select',function(){
+             
+             // 입력된 값을 가져오기
+             var inputValue = $(this).val();
+             console.log(inputValue);
+             
+             // 입력된 값이 1자리 이상이면 가입가능
+             // 만약 1자리 미만이면 등록 불가 (4자리 이상 입력해주세요)
+             // 메시지를 출력하는 displayField 요소값 가져오기
+             if(inputValue.length >= 1){
+                 console.log("가능?");
+                 $('.displayField_title').text('등록가능');
+                 $('.displayField_title').css('color','green');
+                 
+             }else{
+                 $('.displayField_title')
+                     .text('반드시 선택하세요');
+                 $('.displayField_title').css('color','red');
+
+             }           
+         });
+    	*/
+    	// 제목 필수 입력
+    $('.inputField_title').on('input',function(){
+            
+            // 입력된 값을 가져오기
+            var inputValue = $(this).val();
+            console.log(inputValue);
+            
+            // 입력된 값이 1자리 이상이면 가입가능
+            // 만약 1자리 미만이면 등록 불가 (4자리 이상 입력해주세요)
+            // 메시지를 출력하는 displayField 요소값 가져오기
+            if(inputValue.length >= 1){
+                console.log("가능?");
+                $('.displayField_title').text('등록가능');
+                $('.displayField_title').css('color','green');
+                
+            }else{
+                $('.displayField_title')
+                    .text('등록불가(반드시 입력하세요)');
+                $('.displayField_title').css('color','red');
+
+            }           
+        });
+    	// 내용 필수 입력
+    $('.inputField_content').on('input',function(){
+        
+        // 입력된 값을 가져오기
+        var inputValue = $(this).val();
+        console.log(inputValue);
+        
+        // 입력된 값이 1자리 이상이면 가입가능
+        // 만약 1자리 미만이면 등록 불가 (4자리 이상 입력해주세요)
+        // 메시지를 출력하는 displayField 요소값 가져오기
+        if(inputValue.length >= 1){
+            console.log("가능?");
+            $('.displayField_content').text('등록가능');
+            $('.displayField_content').css('color','green');
+            
+        }else{
+            $('.displayField_content')
+                .text('반드시 입력하세요');
+            $('.displayField_content').css('color','red');
+
+        }           
+    });
+    	
+ // 폼 제출 이벤트 처리
+    $('form').on('submit', function(e){
+        var titleInputValue = $('.inputField_title').val();
+
+        // 제목 입력 필드 검사
+        if(titleInputValue.length < 1){
+            e.preventDefault(); // 폼 제출 방지
+            $('.displayField_title').text('등록 불가(제목을 반드시 입력하세요)');
+            $('.displayField_title').css('color', 'red');
+            alert('제목을 반드시 입력해야 합니다.'); // 사용자에게 알림
+        }
+    });
+    });
+     
+    </script>
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

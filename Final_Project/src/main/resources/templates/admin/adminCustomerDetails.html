@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style type="text/css">
+
+/* 폰트 */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* 아이콘 */
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+
+body {
+	margin: 0 16.2vw;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.adminCate {
+	padding: 15px 13px 15px 20px;
+	border: 1px solid rgb(242, 242, 242);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 200px;
+	font-family: 'NanumSquareNeo-Variable';
+}
+/*
+a {
+	color: inherit;
+	text-decoration: none;
+}*/
+
+/* 메인 */
+.adminBox {
+	min-width: 880px;
+	font-family: '나눔고딕', sans-serif;
+}
+
+.admin_container {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	min-height: 650px;
+}
+
+.adminBtnList {
+	background-color: #32B43A;
+	color: white;
+	border-radius: 20px;
+}
+
+#adminPa {
+	font-family: 'NPSfontBold';
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+.list {
+	cursor: pointer;
+	font-family: 'NPSfontBold';
+	text-decoration: none;
+	color: white;
+}
+
+.admin_total {
+	width: 200px;
+	height: 500px;
+}
+
+.main {
+	min-height: 500px;
+} /* 왼쪽 카테고리 끝 */
+
+/* adminCustomerDetails 2 css */
+/*메인*/
+.adminBox {
+	display: flex;
+	margin: 0 auto;
+	min-width: 620px;
+	padding: 30px 10px;
+}
+
+.adminBtnList {
+	background-color: #32B43A;
+	color: white;
+	border-radius: 20px;
+}
+
+#adminPa {
+	margin-top: 30px;
+	height: 75px;
+	padding: 5px 0px 35px 1px;
+	font-size: 28px;
+	line-height: 35px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -1px;
+}
+
+.adminContent_1 {
+	margin-left: 1%;
+	width: 100%;
+	height: 100%;
+	min-width: 500px;
+	/* border: 1px solid #32B43A; */
+	border-radius: 10px;
+	/* background-color: whitesmoke; */
+}
+
+/* 타이틀 */
+.adminMemberTitle {
+	text-align: center;
+	font-size: 2em;
+	margin-bottom: 2%;
+	font-family: 'NPSfontBold';
+}
+
+/*왼쪽 리스트 */
+.listBtn {
+	border: 1px solid black;
+}
+
+/**/
+.itemRegi {
+	margin-left: 3%;
+}
+/* table */
+.topName {
+	color: #32B43A;
+}
+
+.itemRegiLineTop {
+	font-size: 1.2em;
+}
+
+.itemRegiTable {
+	border-collapse: separate;
+	border-spacing: 0 1.3em;
+	padding-right: 1em;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.itemRegiTable th {
+	/* background-color: #32B43A;*/
+	text-align: left;
+	font-weight: 400;
+	vertical-align: middle;
+}
+
+.itemRegiTable td {
+	padding-left: 3%;
+	/* border: none;
+            outline: none; */
+	vertical-align: middle;
+}
+
+.itemRegiInput {
+	outline: none;
+	border: 1px solid #ccc;
+	line-height: 150%;
+	text-indent: 2%;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+.itemRegiInputMail {
+	outline: none;
+	border: 1px solid #ccc;
+	line-height: 150%;
+	text-indent: 1%;
+	font-family: 'NanumSquareNeo-Variable';
+	width: 400px;
+}
+
+.itemRegiInputAdd {
+	outline: none;
+	border: 1px solid #ccc;
+	line-height: 150%;
+	text-indent: 1%;
+	font-family: 'NanumSquareNeo-Variable';
+	width: 400px;
+	height: 100px;
+}
+
+.itemRegiInputAdd:focus, .itemRegiInputMail:focus, .itemRegiInput:focus
+	{
+	border: 1px solid #32B43A;
+}
+
+/* 이전으로 버튼 */
+.close_btn {
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+.close {
+	width: 100px;
+	height: 40px;
+	background-color: #32B43A;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-family: 'NanumSquareNeo-Variable';
+}
+
+/* adminCustomerDetails css 끝 */
+</style>
+</head>
+<header th:replace="hf/header"></header>
+
+<body>
+	<section>
+		<div class="adminBox">
+
+			<div class="admin_container">
+
+				<div class="admin_total">
+					<div id="adminPa">
+						<h1>관리자</h1>
+					</div>
+					<div class="adminBtnList">
+						<ul>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">add_chart</span> <a
+								class="list" href="/admin/">매출조회</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">group</span> <a class="list"
+								href="/admin/adminCustomer">회원조회</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">support_agent</span> <a
+								class="list" href="/admin/adminAsk">1:1문의</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">settings</span> <a
+								class="list" href="/admin/adminBoard">게시관리</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+							<li class="adminCate"><span
+								class="material-symbols-outlined">package_2</span> <a
+								class="list" href="/admin/adminItem">상품관리</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+
+							<li class="adminCate"><span
+								class="material-symbols-outlined">price_change</span> <a
+								class="list" href="/admin/adminCoupon">쿠폰조회</a> <span
+								class="material-symbols-outlined">chevron_right</span></li>
+							
+							<li class="adminCate"><span
+								class="material-symbols-outlined">fact_check</span>
+								<a class="list" href="/admin/adminQuitReason">탈퇴사유조회</a>
+								<span class="material-symbols-outlined">chevron_right</span></li>	
+						</ul>
+					</div>
+				</div>
+				<div class="main">
+					<!-- 메인시작 -->
+					<div id="dynamic-content">
+						<!-- adminCustomerDetails 시작  -->
+						<div class="adminBox">
+							<!-- 내용 -->
+							<div class="adminContent_1">
+								<div class="adminMember">
+									<div class="adminMemberTitle">
+										<h1>회원조회</h1>
+									</div>
+
+									<!-- 상품 리스트 -->
+									<div>
+										<!-- 1:1 문의 작성페이지 -->
+										<div class="itemRegi">
+											<div class="itemRegiForm">
+
+												<table class="itemRegiTable">
+													<tr>
+														<th colspan="2" class="itemRegiLineTop"><span
+															class="topName"
+															th:text="${cus != null ? cus.customerName : '정보없음'}">ㅇㅇㅇ</span>님의
+															회원정보</th>
+													</tr>
+													<tr>
+														<th class="itemRegiLine">이름</th>
+														<td><input type="text" name="title" readonly
+															class="itemRegiInput" th:value="${cus.customerName}"></td>
+													</tr>
+													<tr>
+														<th class="itemRegiLine">아이디</th>
+														<td><input type="text" name="title" readonly
+															class="itemRegiInput" th:value="${cus.customerId}"></td>
+													</tr>
+													<tr>
+														<th class="itemRegiLine">전화번호</th>
+														<td><input type="text" name="title" readonly
+															class="itemRegiInput" th:value="${cus.customerPhone}"></td>
+													</tr>
+													<tr>
+														<th class="itemRegiLine">이메일</th>
+														<td><input type="text" name="title" readonly
+															class="itemRegiInputMail" th:value="${cus.customerEmail}"></td>
+													</tr>
+
+													<tr>
+														<th class="itemRegiLine">주소</th>
+														<td><input type="text" name="title" readonly
+															class="itemRegiInputAdd"
+															th:if="${cus.customerAddress1 != null}"
+															th:value="${'(우편번호:' + cus.customerAddress1 + ') ' + cus.customerAddress2 + ' ' + cus.customerAddress3}">
+															<span th:if="${cus.customerAddress1 == null}"> <!-- 주소가 null인 경우 -->
+																등록된 주소가 없습니다.
+														</span>
+													</tr>
+
+												</table>
+
+												<div class="close_btn">
+													<button class="close" onclick="history.go(-1)">이전으로</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 회원 리스트 끝-->
+
+								</div>
+								<!-- adminMember 끝 -->
+							</div>
+							<!-- admin_total 끝 -->
+						</div>
+						<!-- adminBox 끝 -->
+						<!-- adminCustomerDetails 시작  -->
+
+
+
+
+					</div>
+				</div>
+				<!-- 메인끝 -->
+			</div>
+		</div>
+	</section>
+</body>
+
+<footer th:replace="hf/footer"></footer>
+
+</html>

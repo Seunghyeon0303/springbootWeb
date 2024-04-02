@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+</head>
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+section {
+	width: 40%;
+	text-align: center;
+}
+
+.register {
+	border: 1px solid #32B43A;
+	padding: 1.5rem;
+	margin: 20px 0px;
+	font-family: 'NPSfontBold';
+	height: 70px;
+	width: 80%;
+	margin: 20px auto;
+}
+
+.signUpTypeImg {
+	height: 1rem;
+}
+
+.soregister {
+	display: grid;
+	grid-template-columns: 1fr 8fr;
+}
+.signTypeImg{
+	width: 100%;
+	height: 100%;
+}
+#SR a {
+	text-decoration: none;
+	/* 밑줄 제거 */
+	color: inherit;
+	/* 링크 색상을 부모 요소의 색상과 동일하게 설정 */
+}
+
+#con {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 880px;
+}
+
+.s{
+	text-decoration: none;
+	color: inherit;
+	height: 60px;
+}
+.signTypeImgBox{
+	padding: 0;
+	width: 80%;
+	height: 80px;
+	margin: 15px auto;
+	border: none;
+}
+</style>
+<header th:replace="hf/header"></header>
+<body>
+	<div id="con">
+		<section>
+			<div id="SR" class="register">
+				<a href="/customer/signUpAgree">GreenBox 회원가입</a>
+			</div>
+			<hr>
+			<div id="SR" class="register signTypeImgBox">
+				<a th:href="@{|${kakaoUrl}|}" class="s"><img src="/img/kakao_login_large_wide.png" class="signTypeImg"></a>
+			</div>
+			<div id="SR" class="register signTypeImgBox">
+				<a th:href="@{|${naverUrl}|}" class="s"><img src="/img/naver_signUp.png" class="signTypeImg"></a>
+			</div>
+		</section>
+	</div>
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>

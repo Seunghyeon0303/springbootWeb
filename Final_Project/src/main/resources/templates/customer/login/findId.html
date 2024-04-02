@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>이메일 인증</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f2f2f2;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 50px;
+	color: #333;
+}
+
+#emailForm {
+	width: 300px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+	color: #333;
+}
+
+input[type="email"], input[type="text"] {
+	width: calc(100% - 10px);
+	padding: 8px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	box-sizing: border-box;
+}
+
+button {
+	width: 100%;
+	padding: 10px;
+	background-color: #32b43a;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	transition: background-color 0.3s;
+}
+
+button:hover {
+	background-color: #2aa630;
+}
+
+#successMessage {
+	text-align: center;
+	margin-top: 20px;
+	color: #32b43a;
+}
+
+#userIdDisplay {
+	display: none;
+	text-align: center;
+	margin-top: 20px;
+	color: #333;
+}
+</style>
+</head>
+<body>
+
+	<h1>이메일 인증</h1>
+
+	<form id="emailForm">
+		<label for="email">이메일:</label> <input type="email" id="email"
+			name="email" required>
+		<button type="button" id="sendCodeButton">이메일 인증</button>
+		<br> <label for="code">인증 코드:</label> <input type="text"
+			id="code" name="code" required>
+		<button type="button" id="verifyCodeButton">확인</button>
+		<span id="userIdDisplay"></span>
+	</form>
+
+<script>
+    $(document).ready(function() {
+        // 이메일 인증 버튼 클릭 시 이메일로 코드 전송
+        $('#sendCodeButton').click(function() {
+            var email = $('#email').val();
+            // 이메일을 서버로 보내어 이메일로 코드 전송하는 로직을 구현해야 함
+            
+            if(email === ''){
+            	alert('이메일을 입력해주세요.');
+            	$('#email').focus();
+            	return;
+            }
+	
+            const url = '/util/sendEmailFindId';
+
+            fetch(url, {
+                method: 'POST',
+                body: email
+            }).then(function(response) {
+                return response.json(); // 서버로부터 받은 응답을 JSON 형태로 변환
+            }).then(function(data) {
+                if (data.success) {
+                    alert('이메일이 발송되었습니다.');
+                } else {
+                    // 여기서 서버로부터 받은 메시지를 alert로 보여줍니다.
+                    alert(data.message);
+                    $('#email').val() = '';
+                    $('#email').focus();
+                }
+            }).catch(function(error) {
+            });
+            
+        });
+
+        // 코드 확인 버튼 클릭 시 입력한 코드 확인
+        $('#verifyCodeButton').click(function() {
+            var code = $('#code').val();
+            const url = '/util/verifyCodeFindId';
+            fetch(url, {
+                method: 'POST',
+                body: code
+            }).then(function(response) {
+                console.log(response);
+                if (response.ok) {
+                    response.json().then(function(data) {
+                        console.log(data);
+                        if(data.success) {
+                            var userId = data.userId;
+                            alert('인증되었습니다.');
+                            $('#userIdDisplay').text('인증에 성공하였습니다! 아이디: ' + userId).show();
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+                } else {
+                    alert('인증번호가 일치하지 않습니다.');
+                }
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<style>
+@font-face {
+	font-family: 'NanumSquareNeo-Variable';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* content */
+@font-face {
+	font-family: 'NPSfontBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+		format('woff2');
+	font-weight: 700;
+	font-style: normal;
+}
+
+
+.container1 {
+	display: flex;
+	justify-content: space-around;
+	font-family: 'NanumSquareNeo-Variable';
+}
+.inq_div {
+	font-family: 'NPSfontBold';
+}
+
+.container2 {
+	border: 1px solid gray;
+	width: 25%;
+	text-align: center;
+	min-width: 180px;
+}
+
+.container3 {
+	display: flex;
+	justify-content: space-between;
+	padding: 16px 5%;
+}
+
+.container4 {
+	border: 1px solid gray;
+	margin: 0px 7%;
+	margin-bottom: 20px;
+	padding: 8px;
+	cursor: pointer;
+}
+
+.container5 {
+	border-bottom: 1px solid gray;
+}
+
+.ptg {
+	padding: 8px;
+}
+
+.count {
+	font-weight: bold;
+}
+
+.inqAtag {
+	text-decoration: none;
+	color: inherit;
+}
+</style>
+</head>
+<body>
+	<div class="container1">
+		<div class="container2">
+			<div class="container3 container5">
+				<div class="inq_div">1:1문의</div>
+				<a href="">더보기</a>
+			</div>
+			<div class="container3">
+				<div>
+					<p class="ptg">답변대기</p>
+					<p class="ptg">답변완료</p>
+				</div>
+				<div>
+					<p class="ptg">
+						<span class="count">0</span>건
+					</p>
+					<p class="ptg">
+						<span class="count">0</span>건
+					</p>
+				</div>
+			</div>
+			<div class="container4" onclick="a('one')">
+				<a href="/ask/ask" class="inqAtag">1:1문의하기</a>
+			</div>
+		</div>
+		<div class="container2">
+			<div class="container3 container5">
+				<div class="inq_div">상품문의</div>
+				<a href="">더보기</a>
+			</div>
+			<div class="container3">
+				<div>
+					<p class="ptg">답변대기</p>
+					<p class="ptg">답변완료</p>
+				</div>
+				<div>
+					<p class="ptg">
+						<span class="count">0</span>건
+					</p>
+					<p class="ptg">
+						<span class="count">1</span>건
+					</p>
+				</div>
+			</div>
+			<div class="container4">
+				<a href="#" class="inqAtag">상품문의하기</a>
+			</div>
+		</div>
+		<div class="container2">
+			<div class="container3 container5">
+				<div class="inq_div">상품후기</div>
+				<a href="">더보기</a>
+			</div>
+			<div class="container3">
+				<div>
+					<p class="ptg">작성가능 후기</p>
+					<p class="ptg">작성완료 후기</p>
+				</div>
+				<div>
+					<p class="ptg">
+						<span class="count">2</span>건
+					</p>
+					<p class="ptg">
+						<span class="count">1</span>건
+					</p>
+				</div>
+			</div>
+			<div class="container4">
+				<a href="#" class="inqAtag">후기작성하기</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

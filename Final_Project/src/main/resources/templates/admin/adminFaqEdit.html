@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>FAQ 게시글 수정 페이지</title>
+<link rel="stylesheet" th:href="@{/resetcss/reset.css}"></link>
+<style type="text/css">
+#faq_h1 {
+	font-size: 32px;
+	text-align: center;
+}
+.faqEdit_div{
+display: flex;
+flex-direction:column;
+justify-content: center;
+align-items: center;
+}
+#faqEdit_board th {
+	width: 80px;
+	height: 50px;
+}
+#faqEdit_board input {
+	border: 1px solid black;
+	width: 700px;
+	height: 50px;
+}
+
+.faqEdit_button {
+	width: 120px;
+	height: 35px;
+	padding: 7px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #198754;
+	text-decoration: none;
+	color: white;
+	text-align: center;	
+}
+</style>
+</head>
+<header th:replace="hf/header"></header>
+<body>
+<div class="faqEdit_div" >
+<br>
+<h1 id="faq_h1">FAQ 게시글 수정 페이지</h1>
+<br>
+	<form 
+		method="post"
+		th:action="@{'/faq/admin/adminFaqDetail/'+ ${faq.ocid}}">
+		<table id="faqEdit_board">
+			<tr>
+				<th>글번호</th>
+				<td><input type="text" name="ocid"
+					th:value="${faq.getOcid()}" readonly="readonly" disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<th>작성 일자</th>
+				<td><input type="text" name="writeDate"
+					th:value="${#temporals.format(faq.writeDate,'yyyy-MM-dd HH:mm')}"
+					readonly="readonly" disabled="disabled"/></td>
+			</tr>
+			<tr>
+				<th>제 목</th>
+				<td><input type="text" th:value="${faq.getTitle()}"
+					name="title" /></td>
+			</tr>
+			<tr>
+				<th>내 용</th>
+				<td><input type="text" th:value="${faq.getContent()}"
+					name="content" /></td>
+			</tr>
+		</table>
+		<br>
+		<input class="faqEdit_button" type="submit" value="수정" />
+		<br><br>
+	</form>
+</div>
+
+</body>
+<footer th:replace="hf/footer"></footer>
+</html>
